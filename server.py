@@ -1,14 +1,29 @@
 #!/usr/bin/env python3
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 
-app = Flask('riddle me this')
+app = Flask('Cookbook')
 app.secret_key = os.environ.get('APP_SECRET') if os.environ.get('APP_SECRET') else 'notsecurekey'
 
 
 @app.route('/')
 def index():
     return render_template('home.html')
+
+
+@app.route('/js/<path:path>')
+def send_js(path):
+    return send_from_directory('public/js', path)
+
+
+@app.route('/css/<path:path>')
+def send_css(path):
+    return send_from_directory('public/css', path)
+
+
+@app.route('/images/<path:path>')
+def send_images(path):
+    return send_from_directory('public/images', path)
 
 
 if __name__ == '__main__':
