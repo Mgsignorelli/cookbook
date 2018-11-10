@@ -1,4 +1,4 @@
-require('jquery');
-require('popper.js');
+window.Popper = require('popper.js').default;
+window.$ = require('jquery');
 require('bootstrap');
 
