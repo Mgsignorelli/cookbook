@@ -42,5 +42,5 @@ class User(db.Entity):
     password = Required(str)
 
 
-db.bind(provider='sqlite', filename='database.sqlite')
-db.generate_mapping()
+db.bind(provider='sqlite', filename='database.sqlite', create_db=True)
+db.generate_mapping(create_tables=True)
