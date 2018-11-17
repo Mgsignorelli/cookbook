@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% block content %}
+
+    <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Allergy index</h1>
+            <a class="btn btn-success" href="{{ url_for('allergy_create') }}">Create</a>
+        </div>
+    </div>
+    </div>
+
+    <div class="container">
+        <table class="table">
+        <thead><tr><th>Allergy Name</th><th>Actions</th></tr></thead>
+        <tbody>
+        {% for allergy in allergies %}
+        <tr>
+            <td>{{ allergy.name }}</td>
+            <td>
+                <form class="d-none" action="{{ url_for('allergy_delete', allergy_id=allergy.id) }}" method="POST">
+                </form>
+            <div class="btn-group btn-group-sm">
+            <a class="btn btn-info" href="{{ url_for('allergy_edit', allergy_id=allergy.id) }}">Edit</a>
+            <a class="btn btn-danger onClickSubmitDeleteRequest">Delete</a>
+
+</div>
+</td>
+        </tr>
+        {% endfor %}
+</tbody>
+</table>
+    </div>
+
+{% endblock %}

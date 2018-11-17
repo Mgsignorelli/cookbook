@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %}
+
+    <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Read allergy</h1>
+        </div>
+    </div>
+    </div>
+
+    <h2>{{ allergy.name }}</h2>
+
+    <a class="btn btn-info" href="{{ url_for('allergy_edit', allergy_id=allergy.id) }}">Edit Allergy</a>
+
+{% endblock %}
