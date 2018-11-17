@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %}
+
+    <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Read ingredient</h1>
+        </div>
+    </div>
+    </div>
+
+    <h2>{{ ingredient.name }}</h2>
+
+    <a class="btn btn-info" href="{{ url_for('ingredient_edit', ingredient_id=ingredient.id) }}">Edit Ingredient</a>
+
+{% endblock %}
