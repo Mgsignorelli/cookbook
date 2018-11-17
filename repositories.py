@@ -49,6 +49,43 @@ class CategoryRepository():
     def create(name):
         return Category(name=name)
 
+
+    @staticmethod
+    @db_session
+    def find(id):
+        try:
+            return Category[id]
+        except ObjectNotFound:
+            return None
+
+    @staticmethod
+    @db_session
+    def update(id, name):
+        try:
+            category = Category[id]
+        except ObjectNotFound:
+            return None
+
+        category.name = name
+        return category
+
+    @staticmethod
+    @db_session
+    def get():
+        return select(a for a in Category).order_by(Category.name)[:]
+
+
+    @staticmethod
+    @db_session
+    def delete(id):
+        try:
+            category = Category[id]
+        except ObjectNotFound:
+            return None
+
+        category.delete()
+        return True
+
 class IngredientRepository():
     @staticmethod
     @db_session
