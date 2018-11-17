@@ -92,6 +92,44 @@ class IngredientRepository():
     def create(name):
         return Ingredient(name=name)
 
+
+    @staticmethod
+    @db_session
+    def find(id):
+        try:
+            return Ingredient[id]
+        except ObjectNotFound:
+            return None
+
+    @staticmethod
+    @db_session
+    def update(id, name):
+        try:
+            ingredients = Ingredient[id]
+        except ObjectNotFound:
+            return None
+
+        ingredients.name = name
+        return ingredients
+
+    @staticmethod
+    @db_session
+    def get():
+        return select(a for a in Ingredient).order_by(Ingredient.name)[:]
+
+
+    @staticmethod
+    @db_session
+    def delete(id):
+        try:
+            ingredients = Ingredient[id]
+        except ObjectNotFound:
+            return None
+
+        ingredients.delete()
+        return True
+
+
 class RecipeRepository():
     @staticmethod
     @db_session
