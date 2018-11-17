@@ -175,6 +175,57 @@ def ingredient_index():
     return render_template('ingredient_index.html', ingredients=IngredientRepository.get())
 
 
+@app.route('/user/create')
+def user_create():
+    return render_template('user_create.html')
+
+
+@app.route('/user', methods=['POST'])
+def user_store():
+    name = request.form['name']
+    email = request.form['email']
+    password = request.form['password']
+    UserRepository.create(name, email, password)
+    return redirect(url_for('user_index'))
+
+
+@app.route('/user/<user_id>')
+def user_show(user_id):
+    user = UserRepository.find(user_id)
+    if user is None:
+        return abort(404)
+    return render_template('user_show.html', user=user)
+
+
+@app.route('/user/<user_id>/edit')
+def user_edit(user_id):
+    user = UserRepository.find(user_id)
+    if user is None:
+        return abort(404)
+    return render_template('user_edit.html', user=user)
+
+
+@app.route('/user/<user_id>', methods=['POST'])
+def user_update(user_id):
+    user = UserRepository.update(user_id, request.form['name'], request.form['email'], request.form['password'])
+    if user is None:
+        return abort(404)
+    return redirect(url_for('user_index'))
+
+
+@app.route('/user/<user_id>/delete', methods=['POST'])
+def user_delete(user_id):
+    deleted = UserRepository.delete(user_id)
+    if deleted is None:
+        return abort(404)
+    return redirect(url_for('user_index'))
+
+
+@app.route('/user')
+def user_index():
+    return render_template('user_index.html', users=UserRepository.get())
+
+
 
 if __name__ == '__main__':
     host = os.environ.get('IP') if os.environ.get('IP') else '0.0.0.0'
