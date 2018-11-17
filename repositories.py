@@ -139,8 +139,50 @@ class RecipeRepository():
 class UserRepository():
     @staticmethod
     @db_session
-    def create(name):
-        return User(name=name)
+    def create(name, email, password):
+        return User(name=name, email=email, password=password)
+
+
+    @staticmethod
+    @db_session
+    def find(id):
+        try:
+            return User[id]
+        except ObjectNotFound:
+            return None
+
+    @staticmethod
+    @db_session
+    def update(id, name, email, password):
+        try:
+            user = User[id]
+        except ObjectNotFound:
+            return None
+
+        user.name = name
+        user.email = email
+        user.password = password
+        return user
+
+    @staticmethod
+    @db_session
+    def get():
+        return select(a for a in User).order_by(User.name)[:]
+
+
+    @staticmethod
+    @db_session
+    def delete(id):
+        try:
+            users = User[id]
+        except ObjectNotFound:
+            return None
+
+        users.delete()
+        return True
+
+
+
 '''
 @db_session
 def add_allergy(name):
