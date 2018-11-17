@@ -77,6 +77,55 @@ def allergy_index():
     return render_template('allergy_index.html', allergies=AllergyRepository.get())
 
 
+@app.route('/category/create')
+def category_create():
+    return render_template('category_create.html')
+
+
+@app.route('/category', methods=['POST'])
+def category_store():
+    name = request.form['name']
+    CategoryRepository.create(name)
+    return redirect(url_for('category_index'))
+
+
+@app.route('/category/<category_id>')
+def category_show(category_id):
+    category = CategoryRepository.find(category_id)
+    if category is None:
+        return abort(404)
+    return render_template('category_show.html', category=category)
+
+
+@app.route('/category/<category_id>/edit')
+def category_edit(category_id):
+    category = CategoryRepository.find(category_id)
+    if category is None:
+        return abort(404)
+    return render_template('category_edit.html', category=category)
+
+
+@app.route('/category/<category_id>', methods=['POST'])
+def category_update(category_id):
+    category = CategoryRepository.update(category_id, request.form['name'])
+    if category is None:
+        return abort(404)
+    return redirect(url_for('category_index'))
+
+
+@app.route('/category/<category_id>/delete', methods=['POST'])
+def category_delete(category_id):
+    deleted = CategoryRepository.delete(category_id)
+    if deleted is None:
+        return abort(404)
+    return redirect(url_for('category_index'))
+
+
+@app.route('/category')
+def category_index():
+    return render_template('category_index.html', categories=CategoryRepository.get())
+
+
 if __name__ == '__main__':
     host = os.environ.get('IP') if os.environ.get('IP') else '0.0.0.0'
     port = int(os.environ.get('PORT') if os.environ.get('PORT') else 8080)
