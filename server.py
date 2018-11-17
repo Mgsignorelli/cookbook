@@ -126,6 +126,56 @@ def category_index():
     return render_template('category_index.html', categories=CategoryRepository.get())
 
 
+@app.route('/ingredient/create')
+def ingredient_create():
+    return render_template('ingredient_create.html')
+
+
+@app.route('/ingredient', methods=['POST'])
+def ingredient_store():
+    name = request.form['name']
+    IngredientRepository.create(name)
+    return redirect(url_for('ingredient_index'))
+
+
+@app.route('/ingredient/<ingredient_id>')
+def ingredient_show(ingredient_id):
+    ingredient = IngredientRepository.find(ingredient_id)
+    if ingredient is None:
+        return abort(404)
+    return render_template('ingredient_show.html', ingredient=ingredient)
+
+
+@app.route('/ingredient/<ingredient_id>/edit')
+def ingredient_edit(ingredient_id):
+    ingredient = IngredientRepository.find(ingredient_id)
+    if ingredient is None:
+        return abort(404)
+    return render_template('ingredient_edit.html', ingredient=ingredient)
+
+
+@app.route('/ingredient/<ingredient_id>', methods=['POST'])
+def ingredient_update(ingredient_id):
+    ingredient = IngredientRepository.update(ingredient_id, request.form['name'])
+    if ingredient is None:
+        return abort(404)
+    return redirect(url_for('ingredient_index'))
+
+
+@app.route('/ingredient/<ingredient_id>/delete', methods=['POST'])
+def ingredient_delete(ingredient_id):
+    deleted = IngredientRepository.delete(ingredient_id)
+    if deleted is None:
+        return abort(404)
+    return redirect(url_for('ingredient_index'))
+
+
+@app.route('/ingredient')
+def ingredient_index():
+    return render_template('ingredient_index.html', ingredients=IngredientRepository.get())
+
+
+
 if __name__ == '__main__':
     host = os.environ.get('IP') if os.environ.get('IP') else '0.0.0.0'
     port = int(os.environ.get('PORT') if os.environ.get('PORT') else 8080)
