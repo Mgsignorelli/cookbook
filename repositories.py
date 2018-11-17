@@ -6,6 +6,42 @@ class AllergyRepository():
     def create(name):
         return Allergy(name=name)
 
+    @staticmethod
+    @db_session
+    def find(id):
+        try:
+            return Allergy[id]
+        except ObjectNotFound:
+            return None
+
+    @staticmethod
+    @db_session
+    def update(id, name):
+        try:
+            allergy = Allergy[id]
+        except ObjectNotFound:
+            return None
+
+        allergy.name = name
+        return allergy
+
+    @staticmethod
+    @db_session
+    def get():
+        return select(a for a in Allergy).order_by(Allergy.name)[:]
+
+
+    @staticmethod
+    @db_session
+    def delete(id):
+        try:
+            allergy = Allergy[id]
+        except ObjectNotFound:
+            return None
+
+        allergy.delete()
+        return True
+
 
 class CategoryRepository():
     @staticmethod
