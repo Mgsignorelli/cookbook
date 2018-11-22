@@ -112,13 +112,18 @@ class IngredientRepository():
             return None
 
         ingredient.name = name
+        newAllergies = []
         for allergy in allergies:
             print(allergy, file=sys.stderr)
 
             try:
-                ingredient.allergies.add(Allergy[allergy])
+                newAllergies.append(Allergy[allergy])
             except ObjectNotFound:
                 return None
+
+        ingredient.allergies.clear()
+        for allergy in newAllergies:
+            ingredient.allergies.add(allergy)
 
         return ingredient
 
