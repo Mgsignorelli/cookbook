@@ -16,7 +16,11 @@
                     <br>
                     <select name="allergies" multiple>
                     {% for allergy in allergies %}
-                    <option value="{{ allergy.id }}">{{ allergy.name }}</option>
+                    <option value="{{ allergy.id }}"
+                            {% if allergy in ingredient.allergies %}
+                            selected
+                            {% endif %}
+                    >{{ allergy.name }}</option>{
                     {% endfor %}
                     </select>
                     <br>
