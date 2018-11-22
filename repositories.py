@@ -1,4 +1,6 @@
+import sys
 from models import *
+
 
 class AllergyRepository():
     @staticmethod
@@ -103,14 +105,22 @@ class IngredientRepository():
 
     @staticmethod
     @db_session
-    def update(id, name):
+    def update(id, name, allergies):
         try:
-            ingredients = Ingredient[id]
+            ingredient = Ingredient[id]
         except ObjectNotFound:
             return None
 
-        ingredients.name = name
-        return ingredients
+        ingredient.name = name
+        for allergy in allergies:
+            print(allergy, file=sys.stderr)
+
+            try:
+                ingredient.allergies.add(Allergy[allergy])
+            except ObjectNotFound:
+                return None
+
+        return ingredient
 
     @staticmethod
     @db_session
