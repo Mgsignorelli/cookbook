@@ -147,6 +147,7 @@ def ingredient_show(ingredient_id):
 
 
 @app.route('/ingredient/<ingredient_id>/edit')
+@db_session
 def ingredient_edit(ingredient_id):
     ingredient = IngredientRepository.find(ingredient_id)
     if ingredient is None:
