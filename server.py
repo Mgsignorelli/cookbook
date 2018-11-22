@@ -151,12 +151,12 @@ def ingredient_edit(ingredient_id):
     ingredient = IngredientRepository.find(ingredient_id)
     if ingredient is None:
         return abort(404)
-    return render_template('ingredient_edit.html', ingredient=ingredient)
+    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository.get())
 
 
 @app.route('/ingredient/<ingredient_id>', methods=['POST'])
 def ingredient_update(ingredient_id):
-    ingredient = IngredientRepository.update(ingredient_id, request.form['name'])
+    ingredient = IngredientRepository.update(ingredient_id, request.form['name'], request.form.getlist('allergies'))
     if ingredient is None:
         return abort(404)
     return redirect(url_for('ingredient_index'))
@@ -171,6 +171,7 @@ def ingredient_delete(ingredient_id):
 
 
 @app.route('/ingredient')
+@db_session
 def ingredient_index():
     return render_template('ingredient_index.html', ingredients=IngredientRepository.get())
 
