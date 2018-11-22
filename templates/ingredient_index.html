@@ -15,7 +15,12 @@
         <tbody>
         {% for ingredient in ingredients %}
         <tr>
-            <td>{{ ingredient.name }}</td>
+            <td>
+            {{ ingredient.name }}
+            {% for allergy in ingredient.allergies %}
+            <span class="badge badge-info">{{ allergy.name }}</span>
+            {% endfor %}
+            </td>
             <td>
                 <form class="d-none" action="{{ url_for('ingredient_delete', ingredient_id=ingredient.id) }}" method="POST">
                 </form>
