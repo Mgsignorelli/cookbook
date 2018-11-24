@@ -16,14 +16,9 @@ def index():
     return render_template('home.html')
 
 
-@app.route('/js/<path:path>')
-def send_js(path):
-    return send_from_directory('public/js', path)
-
-
-@app.route('/css/<path:path>')
-def send_css(path):
-    return send_from_directory('public/css', path)
+@app.route('/assets/<path:path>')
+def send_assets(path):
+    return send_from_directory('public/assets', path)
 
 
 @app.route('/images/<path:path>')
