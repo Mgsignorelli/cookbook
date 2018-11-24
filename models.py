@@ -1,5 +1,8 @@
+import os
 from pony.orm import *
+from dotenv import load_dotenv
 
+load_dotenv()
 
 db = Database()
 
@@ -42,5 +45,9 @@ class User(db.Entity):
     password = Required(str)
 
 
-db.bind(provider='sqlite', filename='database.sqlite', create_db=True)
+db.bind(
+    provider=os.environ.get('DB_PROVIDER'),
+    filename=os.environ.get('DB_DATABASE'),
+    create_db=True
+)
 db.generate_mapping(create_tables=True)

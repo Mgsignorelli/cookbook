@@ -2,6 +2,9 @@
 import os
 from repositories import *
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, abort
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 app = Flask('Cookbook')
