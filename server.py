@@ -129,6 +129,55 @@ def category_index():
     return render_template('category_index.html', categories=CategoryRepository.get())
 
 
+@app.route('/recipe/create')
+def recipe_create():
+    return render_template('recipe_create.html')
+
+
+@app.route('/recipe', methods=['POST'])
+def recipe_store():
+    name = request.form['name']
+    RecipeRepository.create(name)
+    return redirect(url_for('recipe_index'))
+
+
+@app.route('/recipe/<recipe_id>')
+def recipe_show(recipe_id):
+    recipe = RecipeRepository.find(recipe_id)
+    if recipe is None:
+        return abort(404)
+    return render_template('recipe_show.html', recipe=recipe)
+
+
+@app.route('/recipe/<recipe_id>/edit')
+def recipe_edit(recipe_id):
+    recipe = RecipeRepository.find(recipe_id)
+    if recipe is None:
+        return abort(404)
+    return render_template('recipe_edit.html', recipe=recipe)
+
+
+@app.route('/recipe/<recipe_id>', methods=['POST'])
+def recipe_update(recipe_id):
+    recipe = RecipeRepository.update(recipe_id, request.form['name'])
+    if recipe is None:
+        return abort(404)
+    return redirect(url_for('recipe_index'))
+
+
+@app.route('/recipe/<recipe_id>/delete', methods=['POST'])
+def recipe_delete(recipe_id):
+    deleted = RecipeRepository.delete(recipe_id)
+    if deleted is None:
+        return abort(404)
+    return redirect(url_for('recipe_index'))
+
+
+@app.route('/recipe')
+def recipe_index():
+    return render_template('recipe_index.html', recipes=RecipeRepository.get())
+
+
 @app.route('/ingredient/create')
 def ingredient_create():
     return render_template('ingredient_create.html')

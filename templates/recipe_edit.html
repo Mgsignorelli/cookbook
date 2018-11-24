@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Edit recipe</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-auto text-center">
+                <form action="{{ url_for('recipe_update', recipe_id=recipe.id) }}" method="POST">
+                    <input type="text" name="name" placeholder="Recipe" value="{{ recipe.name }}" />
+                    <br>
+                    <br>
+                    <button type="submit" class="btn btn-secondary">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

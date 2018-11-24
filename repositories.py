@@ -88,6 +88,49 @@ class CategoryRepository():
         category.delete()
         return True
 
+class RecipeRepository():
+    @staticmethod
+    @db_session
+    def create(title):
+        return Recipe(title=title)
+
+    @staticmethod
+    @db_session
+    def find(id):
+        try:
+            return Recipe[id]
+        except ObjectNotFound:
+            return None
+
+    @staticmethod
+    @db_session
+    def update(id, title):
+        try:
+            recipe = Recipe[id]
+        except ObjectNotFound:
+            return None
+
+        recipe.title = title
+        return recipe
+
+
+    @staticmethod
+    @db_session
+    def get():
+        return select(a for a in Recipe).order_by(Recipe.title)[:]
+
+
+    @staticmethod
+    @db_session
+    def delete(id):
+        try:
+            recipe = Recipe[id]
+        except ObjectNotFound:
+            return None
+
+        recipe.delete()
+        return True
+
 class IngredientRepository():
     @staticmethod
     @db_session
@@ -144,12 +187,6 @@ class IngredientRepository():
         ingredients.delete()
         return True
 
-
-class RecipeRepository():
-    @staticmethod
-    @db_session
-    def create(name):
-        return Recipe(name=name)
 
 class UserRepository():
     @staticmethod
