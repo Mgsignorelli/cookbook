@@ -1,20 +1,53 @@
 #!/usr/bin/env python3
 import os
+import sys
 from repositories import *
-from flask import Flask, request, redirect, url_for, render_template, send_from_directory, abort
+from flask import Flask, request, redirect, url_for, render_template, send_from_directory, abort, flash
 from dotenv import load_dotenv
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 
 load_dotenv()
 
-
 app = Flask('Cookbook')
 app.secret_key = os.environ.get('APP_SECRET') if os.environ.get('APP_SECRET') else 'notsecurekey'
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return UserRepository.find(user_id)
 
 
 @app.route('/')
 def index():
     return render_template('home.html')
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # Here we use a class of some kind to represent and validate our
+    # client-side form data. For example, WTForms is a library that will
+    # handle this for us, and we use a custom LoginForm to validate.
+    if request.method == 'POST':
+        user = UserRepository.authenticate(request.values.get('email'), request.values.get('password'))
+
+        if user is not None:
+            login_user(user)
+
+            flash('Logged in successfully.')
+
+            return redirect(request.args.get('next') or url_for('index'))
+
+    return render_template('login.html')
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.route('/assets/<path:path>')
 def send_assets(path):
@@ -27,6 +60,7 @@ def send_images(path):
 
 
 @app.route('/allergy/create')
+@login_required
 def allergy_create():
     return render_template('allergy_create.html')
 
@@ -273,7 +307,6 @@ def user_delete(user_id):
 @app.route('/user')
 def user_index():
     return render_template('user_index.html', users=UserRepository.get())
-
 
 
 if __name__ == '__main__':

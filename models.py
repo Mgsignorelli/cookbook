@@ -1,5 +1,6 @@
 import os
 from pony.orm import *
+from flask_login import UserMixin
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -37,11 +38,11 @@ class Ingredient(db.Entity):
     recipes = Set(Recipe)
 
 
-class User(db.Entity):
+class User(db.Entity, UserMixin):
     id = PrimaryKey(int, auto=True)
     recipes = Set(Recipe)
     name = Required(str)
-    email = Required(str)
+    email = Required(str, unique=True)
     password = Required(str)
 
 

@@ -233,6 +233,13 @@ class UserRepository():
         users.delete()
         return True
 
+    @staticmethod
+    @db_session
+    def authenticate(email, password):
+        user = User.get(email=email)
+        if user is not None and user.password == password:
+            return user
+        return None
 
 
 '''

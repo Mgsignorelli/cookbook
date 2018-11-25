@@ -9,9 +9,22 @@
     <link rel="stylesheet" href="/assets/app.css">
 </head>
 <body>
+{% with messages = get_flashed_messages() %}
+
+    {% if messages %}
+
+        <div class="alert alert-info">
+            <ul class="list-group-flush">
+                {% for message in messages %}
+                    <li class="list-group-item">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endwith %}
 
 
-        {% block content %} {% endblock %}
+{% block content %} {% endblock %}
 
 <script src="/assets/app.js"></script>
 </body>
