@@ -46,9 +46,26 @@ class User(db.Entity, UserMixin):
     password = Required(str)
 
 
-db.bind(
-    provider=os.environ.get('DB_PROVIDER'),
-    filename=os.environ.get('DB_DATABASE'),
-    create_db=True
-)
+provider = os.environ.get('DB_PROVIDER')
+
+if provider == 'sqlite':
+    db.bind(
+        provider=provider,
+        filename=os.environ.get('DB_DATABASE'),
+        create_db=True,
+    )
+
+elif provider == 'postgres':
+    db.bind(
+        provider=provider,
+        user=os.environ.get('DB_USERNAME'),
+        password=os.environ.get('DB_PASSWORD'),
+        host=os.environ.get('DB_HOSTNAME'),
+        database=os.environ.get('DB_DATABASE'),
+    )
+
+else:
+    raise EnvironmentError('DB_PROVIDER not set to either postgres or sqlite')
+
+
 db.generate_mapping(create_tables=True)
