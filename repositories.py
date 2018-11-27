@@ -1,15 +1,16 @@
 import sys
+
+from pony.orm import ObjectNotFound, select
+
 from models import *
 
 
 class AllergyRepository():
     @staticmethod
-    @db_session
     def create(name):
         return Allergy(name=name)
 
     @staticmethod
-    @db_session
     def find(id):
         try:
             return Allergy[id]
@@ -17,7 +18,6 @@ class AllergyRepository():
             return None
 
     @staticmethod
-    @db_session
     def update(id, name):
         try:
             allergy = Allergy[id]
@@ -28,13 +28,11 @@ class AllergyRepository():
         return allergy
 
     @staticmethod
-    @db_session
     def get():
         return select(a for a in Allergy).order_by(Allergy.name)[:]
 
 
     @staticmethod
-    @db_session
     def delete(id):
         try:
             allergy = Allergy[id]
@@ -47,13 +45,11 @@ class AllergyRepository():
 
 class CategoryRepository():
     @staticmethod
-    @db_session
     def create(name):
         return Category(name=name)
 
 
     @staticmethod
-    @db_session
     def find(id):
         try:
             return Category[id]
@@ -61,7 +57,6 @@ class CategoryRepository():
             return None
 
     @staticmethod
-    @db_session
     def update(id, name):
         try:
             category = Category[id]
@@ -72,13 +67,11 @@ class CategoryRepository():
         return category
 
     @staticmethod
-    @db_session
     def get():
         return select(a for a in Category).order_by(Category.name)[:]
 
 
     @staticmethod
-    @db_session
     def delete(id):
         try:
             category = Category[id]
@@ -90,12 +83,11 @@ class CategoryRepository():
 
 class RecipeRepository():
     @staticmethod
-    @db_session
+    def create(title, user, method, ingredients, categories):
     def create(title):
         return Recipe(title=title)
 
     @staticmethod
-    @db_session
     def find(id):
         try:
             return Recipe[id]
@@ -103,7 +95,6 @@ class RecipeRepository():
             return None
 
     @staticmethod
-    @db_session
     def update(id, title):
         try:
             recipe = Recipe[id]
@@ -115,13 +106,11 @@ class RecipeRepository():
 
 
     @staticmethod
-    @db_session
     def get():
         return select(a for a in Recipe).order_by(Recipe.title)[:]
 
 
     @staticmethod
-    @db_session
     def delete(id):
         try:
             recipe = Recipe[id]
@@ -133,13 +122,11 @@ class RecipeRepository():
 
 class IngredientRepository():
     @staticmethod
-    @db_session
     def create(name):
         return Ingredient(name=name)
 
 
     @staticmethod
-    @db_session
     def find(id):
         try:
             return Ingredient[id]
@@ -147,7 +134,6 @@ class IngredientRepository():
             return None
 
     @staticmethod
-    @db_session
     def update(id, name, allergies):
         try:
             ingredient = Ingredient[id]
@@ -171,13 +157,11 @@ class IngredientRepository():
         return ingredient
 
     @staticmethod
-    @db_session
     def get():
         return select(a for a in Ingredient).order_by(Ingredient.name)[:]
 
 
     @staticmethod
-    @db_session
     def delete(id):
         try:
             ingredients = Ingredient[id]
@@ -190,13 +174,11 @@ class IngredientRepository():
 
 class UserRepository():
     @staticmethod
-    @db_session
     def create(name, email, password):
         return User(name=name, email=email, password=password)
 
 
     @staticmethod
-    @db_session
     def find(id):
         try:
             return User[id]
@@ -204,7 +186,6 @@ class UserRepository():
             return None
 
     @staticmethod
-    @db_session
     def update(id, name, email, password):
         try:
             user = User[id]
@@ -217,13 +198,11 @@ class UserRepository():
         return user
 
     @staticmethod
-    @db_session
     def get():
         return select(a for a in User).order_by(User.name)[:]
 
 
     @staticmethod
-    @db_session
     def delete(id):
         try:
             users = User[id]
@@ -234,7 +213,6 @@ class UserRepository():
         return True
 
     @staticmethod
-    @db_session
     def authenticate(email, password):
         user = User.get(email=email)
         if user is not None and user.password == password:

@@ -4,13 +4,15 @@ import sys
 from repositories import *
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, abort, flash
 from dotenv import load_dotenv
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
+from flask_login import LoginManager, login_required, login_user, logout_user, current_user
+from pony.flask import Pony
 
 load_dotenv()
 
 app = Flask('Cookbook')
 app.secret_key = os.environ.get('APP_SECRET') if os.environ.get('APP_SECRET') else 'notsecurekey'
 
+Pony(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
@@ -27,17 +29,11 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # Here we use a class of some kind to represent and validate our
-    # client-side form data. For example, WTForms is a library that will
-    # handle this for us, and we use a custom LoginForm to validate.
     if request.method == 'POST':
         user = UserRepository.authenticate(request.values.get('email'), request.values.get('password'))
-
         if user is not None:
             login_user(user)
-
             flash('Logged in successfully.')
-
             return redirect(request.args.get('next') or url_for('index'))
 
     return render_template('login.html')
@@ -228,7 +224,6 @@ def ingredient_show(ingredient_id):
 
 
 @app.route('/ingredient/<ingredient_id>/edit')
-@db_session
 def ingredient_edit(ingredient_id):
     ingredient = IngredientRepository.find(ingredient_id)
     if ingredient is None:
@@ -253,7 +248,6 @@ def ingredient_delete(ingredient_id):
 
 
 @app.route('/ingredient')
-@db_session
 def ingredient_index():
     return render_template('ingredient_index.html', ingredients=IngredientRepository.get())
 
