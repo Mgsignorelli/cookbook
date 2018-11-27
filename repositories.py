@@ -84,8 +84,32 @@ class CategoryRepository():
 class RecipeRepository():
     @staticmethod
     def create(title, user, method, ingredients, categories):
-    def create(title):
-        return Recipe(title=title)
+        recipe = user.recipes.create(
+            title=title,
+            method=method,
+            upvotes=0,
+            downvotes=0
+        )
+
+        for ingredient in ingredients:
+            if ingredient.isdigit():
+                try:
+                    recipe.ingredients.add(Ingredient[ingredient])
+                except ObjectNotFound:
+                    continue
+            else:
+                recipe.ingredients.create(name=ingredient)
+
+        for category in categories:
+            if category.isdigit():
+                try:
+                    recipe.categories.add(Category[category])
+                except ObjectNotFound:
+                    continue
+            else:
+                recipe.categories.create(name=category)
+
+        return recipe
 
     @staticmethod
     def find(id):
@@ -143,8 +167,6 @@ class IngredientRepository():
         ingredient.name = name
         newAllergies = []
         for allergy in allergies:
-            print(allergy, file=sys.stderr)
-
             try:
                 newAllergies.append(Allergy[allergy])
             except ObjectNotFound:
@@ -218,35 +240,3 @@ class UserRepository():
         if user is not None and user.password == password:
             return user
         return None
-
-
-'''
-@db_session
-def add_allergy(name):
-    Allergy(name=name)
-
-
-
-@db_session
-def add_ingredient(name):
-    Ingredient(name=name)
-
-
-@db_session
-def add_peanuts():
-    allergy = Allergy.select(lambda a: a.name == 'nuts').first()
-    ingredient = Ingredient.select(lambda i: i.name == 'peanuts').first()
-    ingredient.allergies.add(allergy)
-
-#add_peanuts()
-
-@db_session
-def get_ingredients():
-    ingredients = Ingredient.select()
-    for i in ingredients:
-        print(i.name)
-        for a in i.allergies:
-            print(a.name)
-
-get_ingredients()
-'''

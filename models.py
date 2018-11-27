@@ -1,5 +1,5 @@
 import os
-from pony.orm import *
+from pony.orm import Database, Required, Optional, PrimaryKey, Set, LongStr
 from flask_login import UserMixin
 from dotenv import load_dotenv
 

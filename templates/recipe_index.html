@@ -1,34 +1,45 @@
 {% extends 'base.html' %} {% block content %}
 
     <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1>Recipe index</h1>
-            <a class="btn btn-success" href="{{ url_for('recipe_create') }}">Create</a>
+        <div class="row">
+            <div class="col-12">
+                <h1>Recipe index</h1>
+                <a class="btn btn-success" href="{{ url_for('recipe_create') }}">Create</a>
+            </div>
         </div>
-    </div>
     </div>
 
     <div class="container">
         <table class="table">
-        <thead><tr><th>Recipe Name</th><th>Actions</th></tr></thead>
-        <tbody>
-        {% for recipe in allergies %}
-        <tr>
-            <td>{{ recipe.name }}</td>
-            <td>
-                <form class="d-none" action="{{ url_for('recipe_delete', recipe_id=recipe.id) }}" method="POST">
-                </form>
-            <div class="btn-group btn-group-sm">
-            <a class="btn btn-info" href="{{ url_for('recipe_edit', recipe_id=recipe.id) }}">Edit</a>
-            <a class="btn btn-danger onClickSubmitDeleteRequest">Delete</a>
+            <thead>
+            <tr>
+                <th>Recipe Name</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for recipe in recipes %}
+                <tr>
+                    <td>
+                        <h4>{{ recipe.title }}</h4>
 
-</div>
-</td>
-        </tr>
-        {% endfor %}
-</tbody>
-</table>
+                        {% for ingredient in recipe.ingredients %}
+                            <span class="badge badge-info">{{ ingredient.name }}</span>
+                        {% endfor %}
+                    </td>
+                    <td class="text-right">
+                        <form class="d-none" action="{{ url_for('recipe_delete', recipe_id=recipe.id) }}" method="POST">
+                        </form>
+                        <div class="btn-group btn-group-sm">
+                            <a class="btn btn-info" href="{{ url_for('recipe_edit', recipe_id=recipe.id) }}">Edit</a>
+                            <a class="btn btn-danger onClickSubmitDeleteRequest">Delete</a>
+
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 
 {% endblock %}

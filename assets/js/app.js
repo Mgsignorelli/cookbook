@@ -8,4 +8,9 @@ $('.onClickSubmitDeleteRequest').on('click', (ev) => {
     $target.parent().parent().find('form').submit();
 });
 
-$('.select2').select2();
+$('.select2').each(function (index, el) {
+    el = $(el);
+    el.select2({
+        tags: el.data('tags') === 'true',
+    });
+});

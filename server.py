@@ -155,14 +155,21 @@ def category_index():
 
 
 @app.route('/recipe/create')
+@login_required
 def recipe_create():
-    return render_template('recipe_create.html')
+    return render_template('recipe_create.html', ingredients=IngredientRepository.get(), categories=CategoryRepository.get())
 
 
 @app.route('/recipe', methods=['POST'])
+@login_required
 def recipe_store():
-    name = request.form['name']
-    RecipeRepository.create(name)
+    RecipeRepository.create(
+        user=current_user,
+        title=request.form['title'],
+        method=request.form['method'],
+        ingredients=request.form.getlist('ingredients'),
+        categories=request.form.getlist('categories'),
+    )
     return redirect(url_for('recipe_index'))
 
 
