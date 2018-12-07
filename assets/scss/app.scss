@@ -5,3 +5,55 @@
 .select2 {
   width: 100%;
 }
+@media (max-width: 767px) {
+  .main-title {
+    padding-top: 15px;
+    padding-bottom: 10px;
+    font-size: 2.5rem;
+    line-height: 50px;
+    text-align: center;
+  }
+  .card-header {
+    .index-title {
+      font-size: 3rem;
+      padding-top: 30px
+    }
+  }
+  .main-link {
+    a {
+      font-family: 'Josefin Slab', serif;
+      font-size: 2rem;
+      line-height: 20px;
+      align: center;
+    }
+  }
+  .table {
+    background-color: $color-4;
+    color: $color-7;
+
+    h4 {
+      font-size: medium;
+    }
+  }
+}
+
+@media (min-width: 991.98px) {
+  .main-title {
+    padding-top: 150px;
+    padding-bottom: 10px;
+    font-size: 3.5rem;
+    line-height: 50px;
+    text-align: center;
+  }
+
+  .main-link {
+    a {
+      font-family: 'Josefin Slab', serif;
+      font-size: 2.5rem;
+      line-height: 20px;
+      text-align: center;
+    }
+  }
+
+
+}
