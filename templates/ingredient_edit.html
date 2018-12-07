@@ -3,11 +3,11 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>Edit ingredient</h1>
+                <h1 class="index-title align-content-center mt-5 mb-5">Edit ingredient</h1>
             </div>
         </div>
      <div class="row">
-            <div class="col-6 offset-3">
+            <div class="col-10">
                 <form action="{{ url_for('ingredient_update', ingredient_id=ingredient.id) }}" method="POST">
                 <div class="form-group">
                     <label for="name-input">Name</label>

@@ -5,27 +5,65 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>What's for dinner?</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Indie+Flower|Josefin+Slab|Montserrat:400,800">
     <link rel="stylesheet" href="/assets/app.css">
 </head>
 <body>
-{% with messages = get_flashed_messages() %}
+<header>
 
-    {% if messages %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ url_for('index') }}"><img src="https://i.pinimg.com/originals/1c/33/35/1c3335436c5bbcd5d1843a7d8a43d47e.png" alt="Click for random recipe"
+                             class="img-fluid rounded"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <div class="alert alert-info">
-            <ul class="list-group-flush">
-                {% for message in messages %}
-                    <li class="list-group-item">{{ message }}</li>
-                {% endfor %}
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('allergy_index') }}">Allergies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('ingredient_index') }}">Ingredients</a>
+                </li>
+                <li class="nav-item">
+                    <a class="strong nav-link" href="{{ url_for('recipe_index') }}">Recipes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="strong nav-link" href="#">Cuisine?</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Other tags?</a>
+                </li>
             </ul>
         </div>
-    {% endif %}
-{% endwith %}
+    </nav>
 
+</header>
 
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            <div class="alert alert-info">
+                <ul class="list-group-flush">
+                    {% for message in messages %}
+                        <li class="list-group-item">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
 {% block content %} {% endblock %}
 
-<script src="/assets/app.js"></script>
+<footer class="mt-5">
+    <p>by <a href="https://www.micaelasignorelli.com">MiSigno</a>
+</footer>
 </body>
+
+<script src="/assets/app.js"></script>
 </html>

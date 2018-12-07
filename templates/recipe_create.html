@@ -2,44 +2,52 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-6 offset-3">
-                <div class="card">
+            <div class="col-sm-8 offset-sm-2" align="center">
+
+            <div class="card mb-3 mt-5">
                     <div class="card-header">
-                        Create Recipe
+                        <h1 class="index-title align-content-center">
+                            Recipes
+                        </h1>
                     </div>
-                </div>
-                <div class="card-body">
-                    <form action="{{ url_for('recipe_store') }}" method="POST">
-                        <div class="form-group">
-                            <select class="select2" name="categories" multiple data-tags="true"
-                                    title="Select Categories">
-                                {% for category in categories %}
-                                    <option value="{{ category.id }}">{{ category.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" type="text" name="title" placeholder="Title" />
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control" name="method" placeholder="Method..."></textarea>
-                        </div>
-                         <div class="form-group">
-                            <select class="select2" name="ingredients" multiple data-tags="true"
-                                    title="Select Ingredients">
-                                {% for ingredient in ingredients %}
-                                    <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-secondary">
-                                Create
-                            </button>
-                        </div>
 
+                    <div class="card-body">
+                        <form action="{{ url_for('recipe_store') }}" method="POST">
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select id="category" class="select2" name="categories" multiple data-tags="true"
+                                        title="Select Categories">
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Title of Recipe</label>
+                                <input id="name" class="form-control" type="text" name="title" placeholder="Title"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="method">Cooking Method</label>
+                                <textarea id="method" class="form-control" name="method"
+                                          placeholder="Method..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="ingredients">Ingredients</label>
+                                <select id="tags" class="select2" name="ingredients" multiple data-tags="true"
+                                        title="Select Ingredients">
+                                    {% for ingredient in ingredients %}
+                                        <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-dark">
+                                    Create
+                                </button>
+                            </div>
 
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

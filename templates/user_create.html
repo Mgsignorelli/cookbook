@@ -1,25 +1,37 @@
 {% extends 'base.html' %} {% block content %}
 
     <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1>Create user</h1>
-        </div>
-    </div>
-    </div>
+        <div class="row">
+            <div class="col-sm-8 offset-sm-2" align="center">
+                <div class="card text-white bg-secondary mb-3 mt-5">
+                    <div class="card-header">
+                        <h1 class="index-title align-content-center mt-5 mb-5"> User </h1>
+                    </div>
 
-    <div class="container">
-    <div class="row justify-content-center mt-5 mb-5">
-        <div class="col-auto text-center">
-            <form action="{{ url_for('user_store') }}" method="POST">
-                <input type="text" name="name" placeholder="User" required />
-                <br>
-                <input type="email" name="email" placeholder="Email" required />
-                <br>
-                <input type="password" name="password" placeholder="Password" required />
-                <br>
-                <button type="submit" class="btn btn-secondary my-2 my-sm-0">Send</button>
-            </form>
+                    <div class="card-body">
+                        <form action="{{ url_for('user_store') }}" method="POST">
+                            <div class="form-group">
+                                <label for="username">User</label>
+                                <input id="username" class="form-control" type="text" name="name" placeholder="Username"
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input id="email" class="form-control" type="email" name="email" placeholder="Email"
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input id="password" class="form-control" type="password" name="password"
+                                       placeholder="Password" required/>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-secondary">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

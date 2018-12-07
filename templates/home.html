@@ -1,6 +1,23 @@
 {% extends 'base.html' %} {% block content %}
+    <div class="container">
+        <h1 class="main-title align-content-center mt-5">What's for dinner?</h1>
 
-<h1>HOME</h1>
+        <div class="row-chicken mt-5 mb-5" align="center">
+            <a href="{{ url_for('recipe_index') }}">
+                <img src="https://i.pinimg.com/originals/ff/38/c4/ff38c402cf333893128cd8f3ef2800de.png" alt="Click for random recipe" class="img-fluid rounded">
+            </a>
+        </div>
 
-<a>Section 1</a>
+        <div class="row mt-5">
+            <div class="col-sm offset-md-1 col-offset-1 main-link mt-5">
+                <a href={{ url_for('allergy_index') }}>Allergies</a>
+            </div>
+            <div class="col-sm main-link mt-5">
+                <a href={{ url_for('ingredient_index') }}>Ingredients</a>
+            </div>
+            <div class="col-sm main-link mt-5">
+                <a href={{ url_for('recipe_index') }}>Recipes</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
