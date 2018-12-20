@@ -3,14 +3,13 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="index-title align-content-center mt-5 mb-5">Edit User</h1>
+                <h1 class="index-title align-content-center my-5">Edit User</h1>
             </div>
         </div>
     </div>
 
     <div class="container">
-        <div class="row justify-content-center mt-5 mb-5">
-            <div class="col-auto text-center">
+            <div class="col-auto text-center form-group">
                 <form action="{{ url_for('user_update', user_id=user.id) }}" method="POST">
                     <input type="text" name="name" placeholder="User" value="{{ user.name }}" />
                     <br>

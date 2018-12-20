@@ -9,16 +9,15 @@
     </div>
 
     <div class="container">
-        <div class="row justify-content-center mt-5 mb-5">
-            <div class="col-auto text-center">
+            <div class="col-auto text-center form-group">
                 <form action="{{ url_for('allergy_update', allergy_id=allergy.id) }}" method="POST">
-                    <input type="text" name="name" placeholder="Allergy" value="{{ allergy.name }}" />
+                    <input type="text" class="form-control" name="name" placeholder="Allergy"
+                           value="{{ allergy.name }}"/>
                     <br>
                     <br>
                     <button type="submit" class="btn btn-secondary my-2 my-sm-0">Send</button>
                 </form>
             </div>
-        </div>
     </div>
 
 {% endblock %}

@@ -14,8 +14,10 @@
 <header>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ url_for('index') }}"><img src="https://i.pinimg.com/originals/1c/33/35/1c3335436c5bbcd5d1843a7d8a43d47e.png" alt="Click for random recipe"
-                             class="img-fluid rounded"></a>
+        <a class="navbar-brand" href="{{ url_for('index') }}"><img
+                src="https://i.pinimg.com/originals/1c/33/35/1c3335436c5bbcd5d1843a7d8a43d47e.png"
+                alt="Click for random recipe"
+                class="img-fluid rounded"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
                 aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -23,41 +25,53 @@
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-                <li class="nav-item">
+                <h5 class="nav-item">
                     <a class="nav-link" href="{{ url_for('allergy_index') }}">Allergies</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('ingredient_index') }}">Ingredients</a>
-                </li>
-                <li class="nav-item">
-                    <a class="strong nav-link" href="{{ url_for('recipe_index') }}">Recipes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="strong nav-link" href="#">Cuisine?</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Other tags?</a>
-                </li>
+                </h5>
+                <h5 class="nav-item">
+                    <a class="nav-link hvr-underline-reveal" href="{{ url_for('ingredient_index') }}">Ingredients</a>
+                </h5>
+                <h5 class="nav-item">
+                    <a class="nav-link hvr-underline-reveal" href="{{ url_for('recipe_index') }}">Recipes</a>
+                </h5>
+                <h5 class="nav-item">
+                    <a class="nav-link" href="{{ url_for('category_index') }}">Categories</a>
+                </h5>
+
+                {% if session['login_user'] %}
+                    <h5 class="nav-link">Welcome {{ session['username'] }}
+                    </h5>
+
+                    <h5>
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout <i
+                                class="fas fa-door-open ml-2"></i></a>
+                    </h5>
+                {% else %}
+                    <h5>
+                        <a class="nav-link" href="{{ url_for('login') }}">Login <i
+                                class="fas fa-door-closed ml-2"></i></a>
+                    </h5>
+                {% endif %}
             </ul>
         </div>
     </nav>
 
 </header>
 
-    {% with messages = get_flashed_messages() %}
+{% with messages = get_flashed_messages() %}
 
-        {% if messages %}
+    {% if messages %}
 
-            <div class="alert alert-info">
-                <ul class="list-group-flush">
-                    {% for message in messages %}
-                        <li class="list-group-item">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-    {% endwith %}
+        <div class="alert alert-dark">
+            <ul class="list-group-flush">
+                {% for message in messages %}
+                    <li class="list-group-item">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endwith %}
+
 {% block content %} {% endblock %}
 
 <footer class="mt-5">
