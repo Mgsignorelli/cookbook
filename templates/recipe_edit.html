@@ -10,12 +10,40 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-auto text-center">
+            <div class="col-auto text-left">
                 <form action="{{ url_for('recipe_update', recipe_id=recipe.id) }}" method="POST">
-                    <input type="text" name="name" placeholder="Recipe" value="{{ recipe.name }}" />
-                    <br>
-                    <br>
-                    <button type="submit" class="btn btn-secondary">Send</button>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" class="select2" name="categories" multiple data-tags="true"
+                                title="Select Categories">
+                            {% for category in categories %}
+                                <option value="{{ category.name }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Title of Recipe</label>
+                        <input id="name" class="form-control" type="text" name="title" placeholder="{{ recipe.title }}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="method">Cooking Method</label>
+                        <textarea id="method" class="form-control" name="method"
+                                 >{{ recipe.method }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredients">Ingredients</label>
+                        <select id="tags" class="select2" name="ingredients" multiple data-tags="true"
+                                title="Select Ingredients">
+                            {% for ingredient in ingredients %}
+                                <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-dark">
+                            Update
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

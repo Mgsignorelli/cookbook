@@ -35,6 +35,8 @@
                                         </form>
                                         <div class="btn-group btn-group-sm">
                                             <a class="btn btn-light btn-edit"
+                                               href="{{ url_for('recipe_show', recipe_id=recipe.id) }}">Show</a>
+                                            <a class="btn btn-light btn-edit"
                                                href="{{ url_for('recipe_edit', recipe_id=recipe.id) }}">Edit</a>
                                             <a class="btn btn-dark btn-delete onClickSubmitDeleteRequest">Delete</a>
                                         </div>

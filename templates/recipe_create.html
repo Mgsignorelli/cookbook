@@ -18,7 +18,8 @@
                                 <select id="category" class="select2" name="categories" multiple data-tags="true"
                                         title="Select Categories">
                                     {% for category in categories %}
-                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                        <option value="{{ category.id }}"
+                                        >{{ category.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
