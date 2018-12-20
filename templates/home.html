@@ -1,14 +1,14 @@
 {% extends 'base.html' %} {% block content %}
     <div class="container">
         <h1 class="main-title align-content-center mt-5">What's for dinner?</h1>
-
-        <div class="row-chicken mt-5 mb-5" align="center">
+        <div class="row-chicken mb-5" align="center">
             <a href="{{ url_for('recipe_index') }}">
-                <img src="https://i.pinimg.com/originals/ff/38/c4/ff38c402cf333893128cd8f3ef2800de.png" alt="Click for random recipe" class="img-fluid rounded">
+                <img src="https://i.pinimg.com/originals/ff/38/c4/ff38c402cf333893128cd8f3ef2800de.png"
+                     alt="Click for random recipe" class="img-fluid rounded">
             </a>
         </div>
 
-        <div class="row mt-5">
+        <div class="row text-center my-5">
             <div class="col-sm offset-md-1 col-offset-1 main-link mt-5">
                 <a href={{ url_for('allergy_index') }}>Allergies</a>
             </div>
@@ -17,6 +17,107 @@
             </div>
             <div class="col-sm main-link mt-5">
                 <a href={{ url_for('recipe_index') }}>Recipes</a>
+            </div>
+            <div class="col-sm main-link mt-5">
+                <a href={{ url_for('category_index') }}>Categories</a>
+            </div>
+        </div>
+
+        <div class="row text-center my-5">
+            <div class="card-deck">
+                <div class="card">
+                    <img class="card-img-top" src="https://via.placeholder.com/100" alt="Card image cap">
+                    <div class="card-body bg-dark text-white">
+                        <a href="{{ url_for('category_index') }}">Breakfast</a>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This card has even longer content than the first to show that equal
+                            height
+                            action.</p>
+                        <p class="card-text">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img-top" src="https://via.placeholder.com/100" alt="Card image cap">
+                    <div class="card-body bg-dark text-white">
+                        <a class="" href="{{ url_for('category_index') }}">Dinner</a>
+                        <p class="card-text">
+                            This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This card has even longer content than the first to show that equal
+                            height
+                            action.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img-top" src="https://via.placeholder.com/100" alt="Card image cap">
+                    <div class="card-body bg-dark text-white">
+                        <a href="{{ url_for('category_index') }}">Desserts</a>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This card has even longer content than the first to show that equal
+                            height
+                            action.</p>
+                        <p class="card-text">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card-deck">
+                <div class="card">
+                    <img src="https://via.placeholder.com/100" alt="Card image cap">
+                    <div class="card-body bg-dark text-white">
+                        <a href="{{ url_for('category_index') }}">Breakfast</a>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This card has even longer content than the first to show that equal
+                            height
+                            action.</p>
+                        <p class="card-text">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://via.placeholder.com/100" alt="Card image cap">
+                    <div class="card-body bg-dark text-white">
+                        <a class="" href="{{ url_for('category_index') }}">Dinner</a>
+                        <p class="card-text">
+                            This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This card has even longer content than the first to show that equal
+                            height
+                            action.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://via.placeholder.com/100" alt="Card image cap">
+                    <div class="card-body bg-dark text-white">
+                        <a href="{{ url_for('category_index') }}">Desserts</a>
+                        <p class="card-text">
+                            This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This card has even longer content than the first to show that equal
+                            height
+                            action.</p>
+                        <p class="card-text">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://via.placeholder.com/100" alt="Card image cap">
+                    <div class="card-body bg-dark text-white">
+                        <a href="{{ url_for('category_index') }}">Desserts</a>
+                        <p class="card-text">
+                            This is a wider card with supporting text below as a natural lead-in to
+                            additional content. This card has even longer content than the first to show that equal
+                            height
+                            action.</p>
+                        <p class="card-text">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
