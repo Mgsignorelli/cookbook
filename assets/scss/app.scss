@@ -23,126 +23,152 @@ body {
   background-color: $color-3;
   font-family: 'Montserrat', sans-serif;
   color: $color-2;
-}
 
-a:hover {
-  color: $color-3;
-  text-decoration: none;
-  transition: all 0.35s ease-in-out;
-  -moz-transition: all 0.35s ease-in-out;
-  -webkit-transition: all 0.35s ease-in-out;
-  -o-transition: all 0.35s ease-in-out;
-}
-
-nav {
-  padding-top: 1rem;
-
-  a {
-    font-family: 'Montserrat', serif;
-    color: $color-7;
-    text-shadow: 1px 2px $color-4;
-    font-size: 1rem;
-  }
-
-  .navbar-toggler-icon {
+  a:hover {
     color: $color-3;
+    text-decoration: none;
+    transition: all 0.75s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.75s ease-in-out;
   }
-}
 
-.main-title {
-  font-family: 'Indie Flower', cursive;
-  color: $color-6;
-  padding-top: 130px;
-  padding-bottom: 120px;
-  text-shadow: 4px 5px 6px $color-5;
-  font-size: 5rem;
-  line-height: 30px;
-  text-align: center;
-}
+  nav {
+    .nav-link {
+      padding-top: 2rem;
+    }
 
-.index-title {
-  font-family: 'Indie Flower', cursive;
-  color: $color-6;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  text-shadow: 3px 3px 5px $color-5;
-  font-size: 4rem;
-  line-height: 30px;
-  text-align: center;
-}
 
-.main-link {
-  a {
-    font-family: 'Josefin Slab', serif;
-    color: $color-7;
-    text-shadow: 2px 2px 4px $color-2;
-    font-size: 3rem;
+    .navbar-toggler-icon {
+      color: $color-3;
+    }
+  }
+
+
+  .main-title {
+    font-family: 'Indie Flower', cursive;
+    color: $color-6;
+    padding-top: 120px;
+    padding-bottom: 150px;
+    text-shadow: 4px 5px 6px $color-5;
+    font-size: 7rem;
     line-height: 30px;
     text-align: center;
   }
-}
 
-.btn-create {
-  border-radius: 25px;
-  border-width: 1px;
-  border-color: $color-2;
-  font-family: 'Indie Flower', serif;
-  color: $color-7;
-  text-shadow: 2px 2px 2px $color-2;
-  font-size: 1.5rem;
-  line-height: 30px;
-  text-align: center;
-  background-color: $color-4;
-  padding: auto;
-}
-
-.table {
-  background-color: $color-4;
-  border: 2px $color-2;
-  color: $color-7;
-  line-height: 15px;
-  width: 75%;
-}
-
-.btn-group {
-  border-color: $text-warning;
-  background-color: $color-5;
-  align-content: center;
-
-  a {
-    color: $color-4;
+  .row-chicken {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
+
+  .index-title {
+    font-family: 'Indie Flower', cursive;
+    color: $color-6;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-shadow: 3px 3px 5px $color-5;
+    font-size: 4rem;
+    line-height: 30px;
+    text-align: center;
+  }
+
+  .main-link {
+    a {
+      font-family: 'Josefin Slab', serif;
+      color: $color-7;
+      text-shadow: 2px 2px 4px $color-2;
+      font-size: 3rem;
+      line-height: 30px;
+      text-align: center;
+      padding-top: 3rem;
+      padding-bottom: 2rem;
+    }
+  }
+
+  .btn-create {
+    border-radius: 25px;
+    border-width: 1px;
+    border-color: $color-2;
+    font-family: 'Indie Flower', serif;
+    color: $color-7;
+    font-size: 1.5rem;
+    line-height: 30px;
+    text-align: center;
+    background-color: $color-4;
+    padding: auto;
+  }
+
+  .table {
+    background-color: $color-4;
+    border: 2px $color-2;
+    border-radius: 20px;
+    color: $color-7;
+    line-height: 15px;
+    width: 75%;
+  }
+
+  .btn-group {
+    border-color: $text-warning;
+    background-color: $color-5;
+    align-content: center;
+
+    a {
+      color: $color-4;
+    }
+  }
+
+  .badge-ingredient {
+    border-color: $color-2;
+    background-color: $color-5;
+    text-shadow: 1px 2px 5px $color-2;
+    color: $color-4;
+    font-size: 0.8rem;
+  }
+
+  .card-deck {
+
+    .card {
+      background-color: $color-4;
+      border-radius: 20px;
+      color: $color-1;
+
+      a {
+        color: $color-7;
+      }
+    }
+  }
+
+
+  footer {
+    p {
+      font-size: 1rem;
+      line-height: 30px;
+      padding-top: 20px;
+      padding-bottom: 40px;
+      text-align: center;
+      color: $color-4;
+    }
+
+    a {
+      color: $color-7;
+      font-size: 1rem;
+      line-height: 30px;
+    }
+  }
+
 }
 
-.badge-ingredient {
-  border-color: $color-2;
-  background-color: $color-5;
-  text-shadow: 1px 2px 5px $color-2;
-  color: $color-4;
-  font-size: 0.8rem;
-}
 
-.card {
-  background-color: $color-4;
+body > div > div > div > div > div.card-body > form > div:nth-child(1) > span > span.selection > span > ul {
   color: $color-2;
 }
 
-footer {
-  p {
-    font-size: 1rem;
-    line-height: 30px;
-    padding-top: 150px;
-    padding-bottom: 40px;
-    text-align: center;
-    color: $color-4;
-  }
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  color: $color-2;
 
-  a {
-    color: $color-7;
-    font-size: 1rem;
-    line-height: 30px;
-  }
+
 }
+
 
 .select2 {
   width: 100%;
@@ -151,52 +177,68 @@ footer {
 /*-------------------------------------------------------------- Media queries*/
 
 @media (max-width: 767px) {
-  .main-title {
-    padding-top: 15px;
-    padding-bottom: 10px;
-    font-size: 2.5rem;
-    line-height: 50px;
-    text-align: center;
-  }
-  .card-header {
+  body {
+    .main-title {
+      padding-top: 10px;
+      padding-bottom: 13px;
+      font-size: 4rem;
+      line-height: 55px;
+      text-align: center;
+    }
+
     .index-title {
       font-size: 3rem;
-      padding-top: 30px
+      padding-top: 10px
     }
-  }
-  .main-link {
-    a {
-      font-family: 'Josefin Slab', serif;
-      font-size: 2rem;
-      line-height: 20px;
-      align: center;
-    }
-  }
-  .table {
-    background-color: $color-4;
-    color: $color-7;
 
-    h4 {
-      font-size: medium;
+    .row-chicken {
+      padding-top: 0.2rem;
+      padding-bottom: 3rem;
+    }
+
+    .main-link {
+      a {
+        font-family: 'Josefin Slab', serif;
+        font-size: 2rem;
+        line-height: 10px;
+        align: center;
+      }
+    }
+
+    .table {
+      background-color: $color-4;
+      color: $color-7;
+
+      h4 {
+        font-size: medium;
+      }
     }
   }
+
 }
 
-@media (min-width: 991.98px) {
-  .main-title {
-    padding-top: 150px;
-    padding-bottom: 10px;
-    font-size: 3.5rem;
-    line-height: 50px;
-    text-align: center;
-  }
-
-  .main-link {
-    a {
-      font-family: 'Josefin Slab', serif;
-      font-size: 2.5rem;
-      line-height: 20px;
+@media (min-width: 768px) and (max-width: 1199px) {
+  body {
+    .main-title {
+      padding-top: 50px;
+      padding-bottom: 50px;
+      font-size: 6rem;
+      line-height: 80px;
       text-align: center;
+    }
+
+    .row-chicken {
+      padding-top: 0.2rem;
+      padding-bottom: 3rem;
+    }
+
+    .main-link {
+      a {
+        font-family: 'Josefin Slab', serif;
+        font-size: 2.5rem;
+        line-height: 20px;
+        text-align: center;
+      }
     }
   }
 
