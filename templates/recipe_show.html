@@ -21,7 +21,8 @@
                     <p class="card-text">
                         <small class="text-muted">{{ recipe.ingredient }}</small>
                         {% for ingredient in recipe.ingredients %}
-                            <span class="badge badge-light">{{ ingredient.name }}</span>
+                            <a class="badge badge-light"
+                               href="{{ url_for('ingredient_show', ingredient_id=ingredient.id) }}">{{ ingredient.name }}</a>
                         {% endfor %}
                     </p>
                     <a class="btn btn-light" href="{{ url_for('recipe_edit', recipe_id=recipe.id) }}">Edit Recipe</a>
