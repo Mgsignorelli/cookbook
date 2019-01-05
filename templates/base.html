@@ -41,9 +41,10 @@
                 <h5 class="nav-item">
                     <a class="nav-link" href="{{ url_for('category_index') }}">Categories</a>
                 </h5>
-
-                {% if session['login_user'] %}
-                    <h5 class="nav-link">Welcome {{ session['username'] }}
+            </ul>
+            <ul class="navbar-nav text-right">
+                {% if current_user.is_authenticated %}
+                    <h5 class="nav-link user-hello">Hello {{ current_user.name }}!
                     </h5>
 
                     <h5>
