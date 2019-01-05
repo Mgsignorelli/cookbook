@@ -9,16 +9,14 @@
     </div>
 
     <div class="container">
-            <div class="col-auto text-center form-group" >
-                <form action="{{ url_for('category_update', category_id=category.id) }}" method="POST">
-                    <input type="text" class="form-control" name="name" placeholder="Category" value="{{ category.name }}"/>
-                    <br>
-                    <textarea id="method" class="form-control" name="method"
-                              placeholder="Method..."></textarea>
-                    <br>
-                    <button type="submit" class="btn btn-secondary my-2 my-sm-0">Send</button>
-                </form>
-            </div>
+        <div class="col-auto text-center form-group">
+            <form action="{{ url_for('category_update', category_id=category.id) }}" method="POST">
+                <input type="text" class="form-control" name="name" placeholder="Category" value="{{ category.name }}"/>
+
+                <br>
+                <button type="submit" class="btn btn-dark my-2 my-sm-0">Update</button>
+            </form>
+        </div>
     </div>
 
 {% endblock %}
