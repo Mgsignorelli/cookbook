@@ -172,13 +172,28 @@ def recipe_store():
     )
     return redirect(url_for('recipe_index'))
 
-
+'''@TODO modify request to add a vote and get the votes from database'''
 @app.route('/recipe/<recipe_id>')
 def recipe_show(recipe_id):
     recipe = RecipeRepository.find(recipe_id)
     if recipe is None:
         return abort(404)
-    return render_template('recipe_show.html', recipe=recipe)
+    votes = RecipeRepository.get_votes_for_recipe(recipe)
+    return render_template('recipe_show.html', recipe=recipe, votes=votes)
+
+
+@app.route('/recipe/<recipe_id>/<vote>', methods=['POST'])
+def recipe_vote(recipe_id, vote):
+    recipe = RecipeRepository.find(recipe_id)
+    if recipe is None:
+        return abort(404)
+    if vote == 'up':
+        vote = 1
+    elif vote == 'down':
+        vote = -1
+    vote = recipe.recipe_votes.create(vote=vote)
+    current_user.recipe_votes.add(vote)
+    return redirect(url_for('recipe_show', recipe_id=recipe.id))
 
 
 @app.route('/recipe/<recipe_id>/edit')
