@@ -20,7 +20,11 @@
                     {% for allergy in allergies %}
                         <tr>
                             <td>
-                                <h4>{{ allergy.name }}</h4>
+
+                                <a href="{{ url_for('allergy_show', allergy_id=allergy.id) }}">
+                                    <h4>{{ allergy.name }}</h4>
+                                </a>
+
                             </td>
                             <td class="text-right">
                                 <form class="d-none" action="{{ url_for('allergy_delete', allergy_id=allergy.id) }}"
