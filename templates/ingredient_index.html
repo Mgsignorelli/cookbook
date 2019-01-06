@@ -22,9 +22,14 @@
                     {% for ingredient in ingredients %}
                         <tr>
                             <td>
-                                <h4>{{ ingredient.name }}</h4>
+
+                                <a href="{{ url_for('ingredient_show', ingredient_id=ingredient.id) }}">
+                                    <h4>{{ ingredient.name }}</h4>
+                                </a>
+
                                 {% for allergy in ingredient.allergies %}
-                                    <span class="badge badge-light">{{ allergy.name }}</span>
+                                    <a href="{{ url_for('allergy_show', allergy_id=allergy.id) }}"><span
+                                            class="badge badge-light">{{ allergy.name }}</span></a>
                                 {% endfor %}
                             </td>
                             <td class="text-right">
