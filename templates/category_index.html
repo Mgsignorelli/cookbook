@@ -22,8 +22,11 @@
                     <tbody>
                     {% for category in categories %}
                         <tr>
-                            <td><h4 class="text-warning">{{ category.name }}</h4></td>
                             <td>
+                                <a href="{{ url_for('category_show', category_id=category.id) }}"><h4>{{ category.name }}</h4>
+                                </a>
+                            </td>
+                            <td class="text-right">
                                 <form class="d-none" action="{{ url_for('category_delete', category_id=category.id) }}"
                                       method="POST">
                                 </form>
