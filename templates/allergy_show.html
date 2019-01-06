@@ -1,15 +1,26 @@
 {% extends 'base.html' %} {% block content %}
 
     <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="index-title align-content-center mt-5 mb-5">Read allergy</h1>
+        <div class="row">
+            <div class="col-12">
+                <h1 class="index-title align-content-center my-5">Allergy</h1>
+            </div>
+            <div class="col-8 offset-2">
+                <div class="card align-content-center">
+                    <div class="card-header bg-dark text-white text-center">
+                        <h2 class="card-title">{{ allergy.name }}</h2>
+
+                        {% for ingredient in allergy.ingredients %}
+                            <p class="card-text">
+                                <a class="badge badge-light"
+                                   href="{{ url_for('ingredient_show', ingredient_id=ingredient.id) }}">{{ ingredient.name }}</a>
+                            </p>
+                        {% endfor %}
+                            <a class="btn btn-edit btn-light text-center"
+                               href="{{ url_for('allergy_edit', allergy_id=allergy.id) }}">Edit</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
-
-    <h2>{{ allergy.name }}</h2>
-
-    <a class="btn btn-info" href="{{ url_for('allergy_edit', allergy_id=allergy.id) }}">Edit Allergy</a>
-
 {% endblock %}
