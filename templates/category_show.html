@@ -5,19 +5,17 @@
             <div class="col-12">
                 <h1 class="index-title align-content-center mt-5 mb-5">Category</h1>
             </div>
-        </div>
-    </div>
+            <div class="col-8 offset-2">
 
-    <div class="container">
-        <div class="row text-center my-5">
-            <div class="col-sm">
-                <h2 class="text-warning">{{ category.name }}</h2>
-
-                <a class="btn btn-edit btn-dark" href="{{ url_for('category_edit', category_id=category.id) }}">Edit
-                    Category</a>
-
+                <div class="card align-content-center">
+                    <div class="card-header bg-dark text-white text-center">
+                        <h2 class="card-title">{{ category.name }}</h2>
+                        <a class="btn btn-edit btn-light" href="{{ url_for('category_edit', category_id=category.id) }}">Edit</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 
 {% endblock %}
