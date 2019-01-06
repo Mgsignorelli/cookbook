@@ -26,9 +26,8 @@ class Recipe(db.Entity):
     categories = Set(Category)
     title = Required(str)
     method = Required(LongStr)
-    upvotes = Optional(int, unsigned=True)
-    downvotes = Optional(int, unsigned=True)
     ingredients = Set('Ingredient')
+    recipe_votes = Set('RecipeVote')
 
 
 class Ingredient(db.Entity):
@@ -44,6 +43,14 @@ class User(db.Entity, UserMixin):
     name = Required(str)
     email = Required(str, unique=True)
     password = Required(str)
+    recipe_votes = Set('RecipeVote')
+
+
+class RecipeVote(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    recipe = Required(Recipe)
+    user = Optional(User)
+    vote = Required(int, size=8)
 
 
 provider = os.environ.get('DB_PROVIDER')
