@@ -87,8 +87,6 @@ class RecipeRepository():
         recipe = user.recipes.create(
             title=title,
             method=method,
-            upvotes=0,
-            downvotes=0
         )
 
         for ingredient in ingredients:
@@ -143,6 +141,13 @@ class RecipeRepository():
 
         recipe.delete()
         return True
+
+    @staticmethod
+    def get_votes_for_recipe(recipe):
+        upvotes = len(recipe.recipe_votes.filter(lambda vote: vote.vote > 0)[:])
+        downvotes = len(recipe.recipe_votes.filter(lambda vote: vote.vote < 0)[:])
+        return [upvotes, downvotes]
+
 
 class IngredientRepository():
     @staticmethod
