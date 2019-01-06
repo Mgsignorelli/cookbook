@@ -21,12 +21,14 @@
                             <tbody>
                                     {% for user in users %}    <tr>
                                         <td>{{ user.name }}</td>
-                                        <td>
+                                        <td class="text-right">
                                             <form class="d-none" action="{{ url_for('user_delete', user_id=user.id) }}" method="POST">
                                             </form>
                                         <div class="btn-group btn-group-sm">
-                                        <a class="btn btn-light btn-edit" href="{{ url_for('user_edit', user_id=user.id) }}">Edit</a>
-                                        <a class="btn btn-dark btn-delete onClickSubmitDeleteRequest">Delete</a>
+                                        <a class="btn btn-light btn-edit" href="{{ url_for('user_edit', user_id=user.id) }}"><i
+                                            class="far fa-edit"></i></a>
+                                        <a class="btn btn-dark btn-delete onClickSubmitDeleteRequest"><i
+                                            class="far fa-trash-alt"></i></a>
 
                             </div>
                             </td>
