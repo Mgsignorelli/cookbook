@@ -1,23 +1,23 @@
 {% extends 'base.html' %} {% block content %}
 
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="index-title align-content-center mt-5">Read Recipe</h1>
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="index-title align-content-center mt-5">Recipe</h1>
         </div>
-        <div class="row text-center">
-            <div class="card-recipe-show">
-                <img class="my-5" src="https://via.placeholder.com/100" width="35%" align="center" alt="Card image cap">
-                <div class="card-body bg-dark text-white">
+    </div>
+    <div class="row">
+    <div class="col-12">
+
+        <div class="card-recipe-show text-center">
+            <img class="my-5" src="https://via.placeholder.com/100" width="35%" align="center" alt="Card image cap">
+            <div class="card-body bg-dark text-white">
+                <div class="card-title">
                     <h2>{{ recipe.title }}</h2>
+                </div>
+                <div class="card-body">
                     <h3 class="card-text">{{ recipe.method }}</h3>
 
-                    <p class="card-text">{{ recipe.method }}
-                        This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This card has even longer content than the first to show that equal
-                        height
-                        action.</p>
                     <p class="card-text">
                         <small class="text-muted">{{ recipe.ingredient }}</small>
                         {% for ingredient in recipe.ingredients %}
@@ -25,6 +25,20 @@
                                href="{{ url_for('ingredient_show', ingredient_id=ingredient.id) }}">{{ ingredient.name }}</a>
                         {% endfor %}
                     </p>
+                    <div class="card-footer">
+                        <p>
+                        <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='up') }}" method="post">
+                            <button class="btn" type="submit"><i class="far fa-thumbs-up"></i></button>
+                        </form>
+                        </p>
+                        <p>
+                        <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='down') }}" method="post">
+                            <button class="btn" type="submit"><i class="far fa-thumbs-down"></i></button>
+                        </form>
+                        </p>
+                        <p class="card-text">upvotes : {{ votes[0] }}</p>
+                        <p class="card-text">downvotes : {{ votes[1] }}</p>
+                    </div>
                     <a class="btn btn-light" href="{{ url_for('recipe_edit', recipe_id=recipe.id) }}">Edit Recipe</a>
 
                 </div>
