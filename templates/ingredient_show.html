@@ -1,15 +1,20 @@
 {% extends 'base.html' %} {% block content %}
 
     <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="index-title align-content-center mt-5 mb-5">Read ingredient</h1>
+        <div class="row">
+            <div class="col-12">
+                <h1 class="index-title align-content-center mt-5 mb-5">Ingredient</h1>
+            </div>
+            <div class="col-8 offset-2">
+
+                <div class="card align-content-center">
+                    <div class="card-header bg-dark text-white text-center">
+                        <h2 class="card-title">{{ ingredient.name }}</h2>
+                        <a class="btn btn-light"
+                           href="{{ url_for('ingredient_edit', ingredient_id=ingredient.id) }}">Edit</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
-
-    <h2>{{ ingredient.name }}</h2>
-
-    <a class="btn btn-info" href="{{ url_for('ingredient_edit', ingredient_id=ingredient.id) }}">Edit Ingredient</a>
-
 {% endblock %}
