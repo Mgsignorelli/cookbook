@@ -14,12 +14,16 @@ $color-1: #fafafa;
 
 
 body {
-  background-color: $color-3;
+  background-color: $primary-color;
   font-family: 'Montserrat', sans-serif;
-  color: $color-2;
+  color: $text-info;
+
+  a {
+    color: $text-info;
+  }
 
   a:hover {
-    color: $color-3;
+    color: $primary-color;
     text-decoration: none;
     transition: all 0.75s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
@@ -29,10 +33,10 @@ body {
 
   .main-title {
     font-family: 'Indie Flower', cursive;
-    color: $color-6;
+    color: $text-light;
     padding-top: 120px;
     padding-bottom: 150px;
-    text-shadow: 4px 5px 6px $color-5;
+    text-shadow: 4px 5px 6px $text-success;
     font-size: 7rem;
     line-height: 30px;
     text-align: center;
@@ -45,10 +49,10 @@ body {
 
   .index-title {
     font-family: 'Indie Flower', cursive;
-    color: $color-6;
+    color: $text-light;
     padding-top: 50px;
     padding-bottom: 50px;
-    text-shadow: 3px 3px 5px $color-5;
+    text-shadow: 3px 3px 5px $text-success;
     font-size: 4rem;
     line-height: 30px;
     text-align: center;
@@ -57,8 +61,8 @@ body {
   .main-link {
     a {
       font-family: 'Josefin Slab', serif;
-      color: $color-7;
-      text-shadow: 2px 2px 4px $color-2;
+      color: $secondary-color;
+      text-shadow: 2px 2px 4px $text-info;
       font-size: 3rem;
       line-height: 30px;
       text-align: center;
@@ -70,52 +74,51 @@ body {
   .btn-create {
     border-radius: 25px;
     border-width: 1px;
-    border-color: $color-2;
-    font-family: 'Indie Flower', serif;
-    color: $color-7;
-    font-size: 1.5rem;
+    border-color: $text-info;
+    text-shadow: 2px 2px 4px $text-info;
+    font-size: 1rem;
     line-height: 30px;
     text-align: center;
-    background-color: $color-4;
+    background-color: $text-success;
+    color: $text-info;
     padding: auto;
   }
 
   .table {
-    background-color: $color-4;
-    border: 2px $color-2;
-    border-radius: 20px;
-    color: $color-7;
+    background-color: $secondary-color !important;
+    border-radius: 5px;
+    color: $text-info;
     line-height: 15px;
     width: 75%;
-  }
 
-  .btn-group {
-    border-color: $text-warning;
-    background-color: $color-1;
-    align-content: center;
+    .btn-group {
+      border-color: $primary-color;
+      background-color: $secondary-color;
+      align-content: center;
 
-    a {
-      color: $color-4;
+      a {
+        color: $secondary-color;
+      }
     }
   }
 
   .badge-ingredient {
-    border-color: $color-2;
-    background-color: $color-5;
-    text-shadow: 1px 2px 5px $color-2;
-    color: $color-4;
+    border-color: $text-info;
+    background-color: $text-success;
+    text-shadow: 1px 2px 5px $text-info;
+    color: $secondary-color;
     font-size: 0.8rem;
   }
 
   .card-deck {
 
     .card {
-      background-color: $color-4;
+      background-color: $secondary-color;
       border-radius: 20px;
       color: $color-1;
 
       a {
-        color: $color-7;
+        color: $secondary-color;
       }
     }
   }
@@ -128,11 +131,11 @@ body {
       padding-top: 20px;
       padding-bottom: 40px;
       text-align: center;
-      color: $color-4;
+      color: $secondary-color;
     }
 
     a {
-      color: $color-7;
+      color: $secondary-color;
       font-size: 1rem;
       line-height: 30px;
     }
@@ -142,13 +145,11 @@ body {
 
 
 body > div > div > div > div > div.card-body > form > div:nth-child(1) > span > span.selection > span > ul {
-  color: $color-2;
+  color: $text-info;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  color: $color-2;
-
-
+  color: $text-info;
 }
 
 
@@ -187,17 +188,12 @@ body > div > div > div > div > div.card-body > form > div:nth-child(1) > span > 
       }
     }
 
-    .table {
-      background-color: $color-4;
-      color: $color-7;
-
-      h4 {
-        font-size: medium;
-      }
+    h4 {
+      font-size: medium;
     }
   }
-
 }
+
 
 @media (min-width: 768px) and (max-width: 1199px) {
   body {
