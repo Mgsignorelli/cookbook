@@ -45,6 +45,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+
 @app.route('/assets/<path:path>')
 def send_assets(path):
     return send_from_directory('public/assets', path)
@@ -157,7 +158,8 @@ def category_index():
 @app.route('/recipe/create')
 @login_required
 def recipe_create():
-    return render_template('recipe_create.html', ingredients=IngredientRepository.get(), categories=CategoryRepository.get())
+    return render_template('recipe_create.html', ingredients=IngredientRepository.get(),
+                           categories=CategoryRepository.get())
 
 
 @app.route('/recipe', methods=['POST'])
@@ -172,14 +174,17 @@ def recipe_store():
     )
     return redirect(url_for('recipe_index'))
 
+
 '''@TODO modify request to add a vote and get the votes from database'''
+
+
 @app.route('/recipe/<recipe_id>')
 def recipe_show(recipe_id):
     recipe = RecipeRepository.find(recipe_id)
     if recipe is None:
         return abort(404)
     votes = RecipeRepository.get_votes_for_recipe(recipe)
-    return render_template('recipe_show.html', recipe=recipe, votes=votes)
+    return render_template('recipe_show.html', recipe=recipe, votes=votes, allergies=set(recipe.ingredients.allergies))
 
 
 @app.route('/recipe/<recipe_id>/<vote>', methods=['POST'])
@@ -201,12 +206,27 @@ def recipe_edit(recipe_id):
     recipe = RecipeRepository.find(recipe_id)
     if recipe is None:
         return abort(404)
-    return render_template('recipe_edit.html', recipe=recipe)
+    allergies = AllergyRepository.get()
+    categories = CategoryRepository.get()
+    ingredients = IngredientRepository.get()
+    return render_template(
+        'recipe_edit.html',
+        recipe=recipe,
+        allergies=allergies,
+        categories=categories,
+        ingredients=ingredients
+    )
 
 
 @app.route('/recipe/<recipe_id>', methods=['POST'])
 def recipe_update(recipe_id):
-    recipe = RecipeRepository.update(recipe_id, request.form['name'])
+    recipe = RecipeRepository.update(
+        id=recipe_id,
+        title=request.form['title'],
+        ingredients=request.form.getlist('ingredients'),
+        categories=request.form.getlist('categories'),
+        method=request.form['method']
+    )
     if recipe is None:
         return abort(404)
     return redirect(url_for('recipe_index'))

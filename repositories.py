@@ -113,13 +113,34 @@ class RecipeRepository:
             return None
 
     @staticmethod
-    def update(id, title):
+    def update(id, title, categories, ingredients, method):
         try:
             recipe = Recipe[id]
         except ObjectNotFound:
             return None
 
         recipe.title = title
+        recipe.method = method
+        recipe.categories.clear()
+        recipe.ingredients.clear()
+        for ingredient in ingredients:
+            if ingredient.isdigit():
+                try:
+                    recipe.ingredients.add(Ingredient[ingredient])
+                except ObjectNotFound:
+                    continue
+            else:
+                recipe.ingredients.create(name=ingredient)
+
+        for category in categories:
+            if category.isdigit():
+                try:
+                    recipe.categories.add(Category[category])
+                except ObjectNotFound:
+                    continue
+            else:
+                recipe.categories.create(name=category)
+
         return recipe
 
 

@@ -20,10 +20,24 @@
                     <div class="card-body recipe text-center">
                         <p class="card-text">{{ recipe.method }}</p>
                         <p class="card-text">
-                            <small class="text-muted">{{ recipe.ingredient }}</small>
+                            <small class="text-muted">Ingredients</small>
                             {% for ingredient in recipe.ingredients %}
                                 <a class="badge badge-light"
                                    href="{{ url_for('ingredient_show', ingredient_id=ingredient.id) }}">{{ ingredient.name }}</a>
+                            {% endfor %}
+                        </p>
+                    <p class="card-text">
+                            <small class="text-muted">Categories</small>
+                            {% for category in recipe.categories %}
+                                <a class="badge badge-dark"
+                                   href="{{ url_for('category_show', category_id=category.id) }}">{{ category.name }}</a>
+                            {% endfor %}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">Allergens</small>
+                            {% for allergy in allergies %}
+                                <a class="badge badge-light"
+                                   href="{{ url_for('allergy_show', allergy_id=allergy.id) }}">{{ allergy.name }}</a>
                             {% endfor %}
                         </p>
                     </div>
