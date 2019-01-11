@@ -227,13 +227,15 @@ def recipe_index():
 
 @app.route('/ingredient/create')
 def ingredient_create():
-    return render_template('ingredient_create.html')
+    allergies=AllergyRepository.get()
+    return render_template('ingredient_create.html', allergies=allergies)
 
 
 @app.route('/ingredient', methods=['POST'])
 def ingredient_store():
     name = request.form['name']
-    IngredientRepository.create(name)
+    allergies = request.form.getlist('allergies')
+    IngredientRepository.create(name=name, allergies=allergies)
     return redirect(url_for('ingredient_index'))
 
 

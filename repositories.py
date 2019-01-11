@@ -151,8 +151,17 @@ class RecipeRepository():
 
 class IngredientRepository():
     @staticmethod
-    def create(name):
-        return Ingredient(name=name)
+    def create(name, allergies):
+        ingredient = Ingredient(name=name)
+        for allergy in allergies:
+            if allergy.isdigit():
+                try:
+                    ingredient.allergies.add(Allergy[allergy])
+                except ObjectNotFound:
+                    continue
+            else:
+                ingredient.allergies.create(name=allergy)
+        return ingredient
 
 
     @staticmethod
