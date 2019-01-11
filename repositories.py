@@ -197,16 +197,15 @@ class IngredientRepository:
             return None
 
         ingredient.name = name
-        newAllergies = []
         for allergy in allergies:
-            try:
-                newAllergies.append(Allergy[allergy])
-            except ObjectNotFound:
-                return None
+            if allergy.isdigit():
+                try:
+                    ingredient.allergies.add(Allergy[allergy])
+                except ObjectNotFound:
+                    continue
+            else:
+                ingredient.allergies.create(name=allergy)
 
-        ingredient.allergies.clear()
-        for allergy in newAllergies:
-            ingredient.allergies.add(allergy)
 
         return ingredient
 
