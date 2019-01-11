@@ -15,7 +15,9 @@
                                value="{{ ingredient.name }}"/>
                     </div>
                     <div class="form-group">
-                        <select name="allergies" class="select2 form-control" multiple>
+                        <label for="allergies">Allergies</label>
+
+                        <select name="allergies" id="allergies" class="select2 form-control" multiple data-tags="true">
                             {% for allergy in allergies %}
                                 <option value="{{ allergy.id }}"
                                         {% if allergy in ingredient.allergies %}
