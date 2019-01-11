@@ -23,7 +23,7 @@ body {
   }
 
   a:hover {
-    color: $primary-color;
+    color: $text-success;
     text-decoration: none;
     transition: all 0.75s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
@@ -69,17 +69,21 @@ body {
       padding-top: 3rem;
       padding-bottom: 2rem;
     }
+
+    a:hover {
+      color: $text-success;
+    }
   }
 
   .btn-create {
     border-radius: 25px;
     border-width: 1px;
     border-color: $text-info;
-    text-shadow: 2px 2px 4px $text-info;
-    font-size: 1rem;
+    text-shadow: 3px 3px 3px $text-danger;
+    font-size: 1.2rem;
     line-height: 30px;
     text-align: center;
-    background-color: $text-success;
+    background-color: $text-light;
     color: $text-info;
     padding: auto;
   }
@@ -98,6 +102,10 @@ body {
 
       a {
         color: $secondary-color;
+      }
+
+      a:hover {
+        color: $text-success;
       }
     }
   }
@@ -131,7 +139,6 @@ body {
       padding-top: 20px;
       padding-bottom: 40px;
       text-align: center;
-      color: $secondary-color;
     }
 
     a {
@@ -144,17 +151,13 @@ body {
 }
 
 
-body > div > div > div > div > div.card-body > form > div:nth-child(1) > span > span.selection > span > ul {
-  color: $text-info;
-}
-
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
-  color: $text-info;
-}
-
-
 .select2 {
   width: 100%;
+
+  li.select2-selection__choice {
+    color: $text-info;
+  }
+
 }
 
 /*-------------------------------------------------------------- Media queries*/
