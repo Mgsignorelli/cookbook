@@ -10,7 +10,7 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-auto text-left">
+            <div class="col-12 text-left">
                 <form action="{{ url_for('recipe_update', recipe_id=recipe.id) }}" method="POST">
                     <div class="form-group">
                         <label for="category">Category</label>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <label for="method">Cooking Method</label>
-                        <textarea id="method" class="form-control" name="method"
+                        <textarea rows="10" id="method" class="form-control" name="method"
                                  >{{ recipe.method }}</textarea>
                     </div>
                     <div class="form-group">
