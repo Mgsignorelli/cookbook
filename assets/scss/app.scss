@@ -110,6 +110,7 @@ body {
     }
   }
 
+
   .badge-ingredient {
     border-color: $text-info;
     background-color: $text-success;
@@ -146,6 +147,11 @@ body {
       font-size: 1rem;
       line-height: 30px;
     }
+  }
+
+  div > div:nth-child(2) > div > div.card.bg-dark.text-white > div.card-body.recipe.text-center > p:nth-child(1) {
+    line-height: 2.5rem;
+    text-align: justify;
   }
 
 }
