@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-8 offset-2">
 
                 <div class="card-recipe-show text-center">
                     <img class="my-5" src="https://via.placeholder.com/100" width="35%" align="center"
@@ -17,8 +17,8 @@
                     <div class="card-title text-center">
                         <h2 class="strong">{{ recipe.title }}</h2>
                     </div>
-                    <div class="card-body text-center">
-                        <h3 class="card-text">{{ recipe.method }}</h3>
+                    <div class="card-body recipe text-center">
+                        <p class="card-text">{{ recipe.method }}</p>
                         <p class="card-text">
                             <small class="text-muted">{{ recipe.ingredient }}</small>
                             {% for ingredient in recipe.ingredients %}
