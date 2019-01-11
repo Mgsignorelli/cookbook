@@ -1,11 +1,9 @@
-import sys
-
 from pony.orm import ObjectNotFound, select
 
 from models import *
 
 
-class AllergyRepository():
+class AllergyRepository:
     @staticmethod
     def create(name):
         return Allergy(name=name)
@@ -31,7 +29,6 @@ class AllergyRepository():
     def get():
         return select(a for a in Allergy).order_by(Allergy.name)[:]
 
-
     @staticmethod
     def delete(id):
         try:
@@ -43,11 +40,10 @@ class AllergyRepository():
         return True
 
 
-class CategoryRepository():
+class CategoryRepository:
     @staticmethod
     def create(name):
         return Category(name=name)
-
 
     @staticmethod
     def find(id):
@@ -70,7 +66,6 @@ class CategoryRepository():
     def get():
         return select(a for a in Category).order_by(Category.name)[:]
 
-
     @staticmethod
     def delete(id):
         try:
@@ -81,7 +76,8 @@ class CategoryRepository():
         category.delete()
         return True
 
-class RecipeRepository():
+
+class RecipeRepository:
     @staticmethod
     def create(title, user, method, ingredients, categories):
         recipe = user.recipes.create(
@@ -142,6 +138,7 @@ class RecipeRepository():
         recipe.delete()
         return True
 
+
     @staticmethod
     def get_votes_for_recipe(recipe):
         upvotes = len(recipe.recipe_votes.filter(lambda vote: vote.vote > 0)[:])
@@ -149,7 +146,7 @@ class RecipeRepository():
         return [upvotes, downvotes]
 
 
-class IngredientRepository():
+class IngredientRepository:
     @staticmethod
     def create(name, allergies):
         ingredient = Ingredient(name=name)
@@ -196,7 +193,6 @@ class IngredientRepository():
     def get():
         return select(a for a in Ingredient).order_by(Ingredient.name)[:]
 
-
     @staticmethod
     def delete(id):
         try:
@@ -208,11 +204,10 @@ class IngredientRepository():
         return True
 
 
-class UserRepository():
+class UserRepository:
     @staticmethod
     def create(name, email, password):
         return User(name=name, email=email, password=password)
-
 
     @staticmethod
     def find(id):
@@ -236,7 +231,6 @@ class UserRepository():
     @staticmethod
     def get():
         return select(a for a in User).order_by(User.name)[:]
-
 
     @staticmethod
     def delete(id):
