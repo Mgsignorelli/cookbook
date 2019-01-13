@@ -29,18 +29,28 @@
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <h5 class="nav-item">
-                    <a class="nav-link" href="{{ url_for('allergy_index') }}">Allergies</a>
-                </h5>
-                <h5 class="nav-item">
-                    <a class="nav-link hvr-underline-reveal" href="{{ url_for('ingredient_index') }}">Ingredients</a>
-                </h5>
-                <h5 class="nav-item">
-                    <a class="nav-link hvr-underline-reveal" href="{{ url_for('recipe_index') }}">Recipes</a>
-                </h5>
-                <h5 class="nav-item">
-                    <a class="nav-link" href="{{ url_for('category_index') }}">Categories</a>
-                </h5>
+                {% if can('allergy_index') %}
+                    <h5 class="nav-item">
+                        <a class="nav-link" href="{{ url_for('allergy_index') }}">Allergies</a>
+                    </h5>
+                {% endif %}
+                {% if can('ingredient_index') %}
+                    <h5 class="nav-item">
+                        <a class="nav-link hvr-underline-reveal"
+                           href="{{ url_for('ingredient_index') }}">Ingredients</a>
+                    </h5>
+                {% endif %}
+                {% if can('recipe_index') %}
+                    <h5 class="nav-item">
+                        <a class="nav-link hvr-underline-reveal" href="{{ url_for('recipe_index') }}">Recipes</a>
+                    </h5>
+                {% endif %}
+
+                {% if can('category_index') %}
+                    <h5 class="nav-item">
+                        <a class="nav-link" href="{{ url_for('category_index') }}">Categories</a>
+                    </h5>
+                {% endif %}
             </ul>
             <ul class="navbar-nav text-right">
                 {% if current_user.is_authenticated %}
