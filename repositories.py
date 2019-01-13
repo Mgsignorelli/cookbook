@@ -164,6 +164,11 @@ class RecipeRepository:
         return [upvotes, downvotes]
 
 
+    @staticmethod
+    def search(title=None):
+        if title is not None:
+            return select(r for r in Recipe if title in r.title).order_by(Recipe.title)[:]
+
 class IngredientRepository:
     @staticmethod
     def create(name, allergies):

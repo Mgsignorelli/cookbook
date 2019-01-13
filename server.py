@@ -287,9 +287,21 @@ def recipe_index():
     return render_template('recipe_index.html', recipes=RecipeRepository.get())
 
 
+@app.route('/search')
+def recipe_search():
+    recipes = RecipeRepository.get()
+
+    title = request.values.get('title')
+
+    if title is not None:
+        recipes = RecipeRepository.search(title=title)
+
+    return render_template('recipe_search.html', recipes=recipes)
+
+
 @app.route('/ingredient/create')
 def ingredient_create():
-    allergies=AllergyRepository.get()
+    allergies = AllergyRepository.get()
     return render_template('ingredient_create.html', allergies=allergies)
 
 

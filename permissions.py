@@ -7,6 +7,7 @@ anon_routes = [
     "send_assets",
     "send_images",
     "recipe_show",
+    "recipe_search",
 ]
 
 logged_in_routes = [
@@ -15,6 +16,7 @@ logged_in_routes = [
     "send_images",
     "logout",
     "recipe_show",
+    "recipe_search",
 ]
 
 
