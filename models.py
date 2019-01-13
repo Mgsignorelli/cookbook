@@ -44,6 +44,7 @@ class User(db.Entity, UserMixin):
     email = Required(str, unique=True)
     password = Required(str)
     recipe_votes = Set('RecipeVote')
+    is_admin = Required(int, size=8, default=0)
 
 
 class RecipeVote(db.Entity):

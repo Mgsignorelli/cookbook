@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import os
 import sys
+
+from permissions import can
 from repositories import *
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, abort, flash
 from dotenv import load_dotenv
@@ -351,4 +353,5 @@ if __name__ == '__main__':
     host = os.environ.get('IP') if os.environ.get('IP') else '0.0.0.0'
     port = int(os.environ.get('PORT') if os.environ.get('PORT') else 8080)
     debug = bool(os.environ.get('DEBUG') if os.environ.get('DEBUG') else False)
+    app.jinja_env.globals.update(can=can)
     app.run(host, port, debug)
