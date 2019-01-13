@@ -16,6 +16,18 @@ class AllergyRepository:
             return None
 
     @staticmethod
+    def find_many(ids):
+        found = set()
+
+        for id in ids:
+            try:
+                found.add(Allergy[id])
+            except ObjectNotFound:
+                continue
+
+        return found
+
+    @staticmethod
     def update(id, name):
         try:
             allergy = Allergy[id]
@@ -51,6 +63,18 @@ class CategoryRepository:
             return Category[id]
         except ObjectNotFound:
             return None
+
+    @staticmethod
+    def find_many(ids):
+        found = set()
+
+        for id in ids:
+            try:
+                found.add(Category[id])
+            except ObjectNotFound:
+                continue
+
+        return found
 
     @staticmethod
     def update(id, name):
@@ -113,6 +137,18 @@ class RecipeRepository:
             return None
 
     @staticmethod
+    def find_many(ids):
+        found = set()
+
+        for id in ids:
+            try:
+                found.add(Recipe[id])
+            except ObjectNotFound:
+                continue
+
+        return found
+
+    @staticmethod
     def update(id, title, categories, ingredients, method):
         try:
             recipe = Recipe[id]
@@ -163,11 +199,23 @@ class RecipeRepository:
         downvotes = len(recipe.recipe_votes.filter(lambda vote: vote.vote < 0)[:])
         return [upvotes, downvotes]
 
-
     @staticmethod
-    def search(title=None):
-        if title is not None:
-            return select(r for r in Recipe if title in r.title).order_by(Recipe.title)[:]
+    def search(title='', categories=None, ingredients=None):
+        query = set(Recipe.select(lambda r: title.lower() in r.title.lower()))
+        query_sets = []
+
+        if categories:
+            for category in categories:
+                category = Category[category]
+                query_sets.append(set(category.recipes))
+
+        if ingredients:
+            for ingredient in ingredients:
+                ingredient = Ingredient[ingredient]
+                query_sets.append(set(ingredient.recipes))
+
+        return query.intersection(*query_sets)
+
 
 class IngredientRepository:
     @staticmethod
@@ -189,6 +237,18 @@ class IngredientRepository:
             return Ingredient[id]
         except ObjectNotFound:
             return None
+
+    @staticmethod
+    def find_many(ids):
+        found = set()
+
+        for id in ids:
+            try:
+                found.add(Ingredient[id])
+            except ObjectNotFound:
+                continue
+
+        return found
 
     @staticmethod
     def update(id, name, allergies):
@@ -237,6 +297,19 @@ class UserRepository:
             return User[id]
         except ObjectNotFound:
             return None
+
+    @staticmethod
+    def find_many(ids):
+        found = set()
+
+        for id in ids:
+            try:
+                found.add(User[id])
+            except ObjectNotFound:
+                continue
+
+        return found
+
 
     @staticmethod
     def update(id, name, email, password):
