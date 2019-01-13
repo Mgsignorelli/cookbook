@@ -2,6 +2,7 @@
 import os
 import sys
 
+from forms import RegisterForm
 from permissions import can
 from repositories import *
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, abort, flash
@@ -55,18 +56,13 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
+    form = RegisterForm(request.form)
+
+    if request.method == 'POST' and form.validate():
         user = UserRepository.get_by_email(request.values.get('email'))
         if user is not None:
             flash('Already registered, please log in')
             return redirect(url_for('login'))
-        if request.values.get('password') != request.values.get('password_confirm'):
-            flash('Passwords did no match')
-            return render_template(
-                'register.html',
-                name=request.values.get('name'),
-                email=request.values.get('email'),
-            )
 
         user = UserRepository.create(
             email=request.values.get('email'),
@@ -78,7 +74,7 @@ def register():
             login_user(user)
             return redirect(url_for('index'))
 
-    return render_template('register.html')
+    return render_template('register.html', form=form)
 
 
 @app.route('/logout')
