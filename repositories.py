@@ -1,4 +1,4 @@
-from pony.orm import ObjectNotFound, select
+from pony.orm import ObjectNotFound, select, flush
 
 from models import *
 
@@ -143,11 +143,9 @@ class RecipeRepository:
 
         return recipe
 
-
     @staticmethod
     def get():
         return select(a for a in Recipe).order_by(Recipe.title)[:]
-
 
     @staticmethod
     def delete(id):
@@ -158,7 +156,6 @@ class RecipeRepository:
 
         recipe.delete()
         return True
-
 
     @staticmethod
     def get_votes_for_recipe(recipe):
@@ -180,7 +177,6 @@ class IngredientRepository:
             else:
                 ingredient.allergies.create(name=allergy)
         return ingredient
-
 
     @staticmethod
     def find(id):
@@ -206,7 +202,6 @@ class IngredientRepository:
             else:
                 ingredient.allergies.create(name=allergy)
 
-
         return ingredient
 
     @staticmethod
@@ -227,7 +222,9 @@ class IngredientRepository:
 class UserRepository:
     @staticmethod
     def create(name, email, password):
-        return User(name=name, email=email, password=password)
+        user = User(name=name, email=email, password=password)
+        flush()
+        return user
 
     @staticmethod
     def find(id):
@@ -264,7 +261,11 @@ class UserRepository:
 
     @staticmethod
     def authenticate(email, password):
-        user = User.get(email=email)
+        user = UserRepository.get_by_email(email=email)
         if user is not None and user.password == password:
             return user
         return None
+
+    @staticmethod
+    def get_by_email(email):
+        return User.get(email=email)

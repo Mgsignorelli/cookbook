@@ -49,7 +49,36 @@ def login():
             flash('Logged in successfully.')
             return redirect(request.args.get('next') or url_for('index'))
 
+    flash('Login failed')
     return render_template('login.html')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        user = UserRepository.get_by_email(request.values.get('email'))
+        if user is not None:
+            flash('Already registered, please log in')
+            return redirect(url_for('login'))
+        if request.values.get('password') != request.values.get('password_confirm'):
+            flash('Passwords did no match')
+            return render_template(
+                'register.html',
+                name=request.values.get('name'),
+                email=request.values.get('email'),
+            )
+
+        user = UserRepository.create(
+            email=request.values.get('email'),
+            name=request.values.get('name'),
+            password=request.values.get('password'),
+        )
+
+        if user is not None:
+            login_user(user)
+            return redirect(url_for('index'))
+
+    return render_template('register.html')
 
 
 @app.route('/logout')
