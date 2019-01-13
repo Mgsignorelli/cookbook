@@ -3,15 +3,39 @@
 
         <div class="row mt-3">
             <div class="col-md-8 offset-md-2">
-                <div class="card">
+                <div class="card search-form">
                     <div class="card-body">
-                        <form action="{{ url_for('recipe_search') }}" class="form-inline">
+                        <form action="{{ url_for('recipe_search') }}"
+                              class="form-inline d-flex justify-content-between">
+
                             <div class="form-group">
                                 <label for="title" class="sr-only">Title</label>
                                 <input class="form-control form-control-sm" type="text" name="title" id="title"
                                        placeholder="Search recipes..."
-                                value="{{ request.values.get('title') }}"
+                                       value="{{ title }}"
                                 />
+                            </div>
+                            <div class="form-group">
+                                <label for="categories" class="sr-only">Categories</label>
+                                <select id="categories" class="select2" name="categories" multiple
+                                        title="Categories">
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}"
+                                                {% if category in selected_categories %} selected {% endif %}
+                                        >{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="ingredients" class="sr-only">Ingredients</label>
+                                <select id="ingredients" class="select2" name="ingredients" multiple
+                                        title="Ingredients">
+                                    {% for ingredient in ingredients %}
+                                        <option value="{{ ingredient.id }}"
+                                                {% if ingredient in selected_ingredients %} selected {% endif %}
+                                        >{{ ingredient.name }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-sm btn-primary">
@@ -33,7 +57,8 @@
                                 <p>{{ recipe.method|truncate(100) }}</p>
                             </div>
                             <div class="card-footer">
-                                <a href="{{ url_for('recipe_show', recipe_id=recipe.id) }}" class="w-100 d-flex justify-content-between">
+                                <a href="{{ url_for('recipe_show', recipe_id=recipe.id) }}"
+                                   class="w-100 d-flex justify-content-between">
                                     View recipe
                                     <i class="fas fa-angle-double-right my-auto"></i>
                                 </a>
