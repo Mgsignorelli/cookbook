@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from pony.flask import Pony
 
+from request_gates import controller_exists_gate, permission_gate
+
 load_dotenv()
 
 app = Flask('Cookbook')
@@ -22,6 +24,15 @@ login_manager.login_view = 'login'
 @login_manager.user_loader
 def load_user(user_id):
     return UserRepository.find(user_id)
+
+
+@app.before_request
+def before_request():
+    if not controller_exists_gate(app=app, request=request):
+        return render_template('error.html', error="Not found")
+
+    if not permission_gate(app=app, request=request):
+        return render_template('error.html', error="Permission Denied.")
 
 
 @app.route('/')
