@@ -29,7 +29,7 @@
                     <p class="card-text">
                             <small class="text-muted">Categories</small>
                             {% for category in recipe.categories %}
-                                <a class="badge badge-dark"
+                                <a class="badge badge-light"
                                    href="{{ url_for('category_show', category_id=category.id) }}">{{ category.name }}</a>
                             {% endfor %}
                         </p>
