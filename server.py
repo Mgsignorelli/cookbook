@@ -289,14 +289,23 @@ def recipe_index():
 
 @app.route('/search')
 def recipe_search():
-    recipes = RecipeRepository.get()
-
     title = request.values.get('title')
+    title = title if title else ''
 
-    if title is not None:
-        recipes = RecipeRepository.search(title=title)
+    categories = request.values.getlist('categories')
+    ingredients = request.values.getlist('ingredients')
 
-    return render_template('recipe_search.html', recipes=recipes)
+    recipes = RecipeRepository.search(title=title, categories=categories, ingredients=ingredients)
+
+    return render_template(
+        'recipe_search.html',
+        recipes=recipes,
+        title=title,
+        selected_categories=CategoryRepository.find_many(categories),
+        selected_ingredients=IngredientRepository.find_many(ingredients),
+        categories=CategoryRepository.get(),
+        ingredients=IngredientRepository.get(),
+    )
 
 
 @app.route('/ingredient/create')
