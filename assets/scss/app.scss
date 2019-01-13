@@ -118,19 +118,15 @@ body {
     color: $secondary-color;
     font-size: 0.8rem;
   }
-
-  .card-deck {
-
     .card {
       background-color: $secondary-color;
       border-radius: 20px;
       color: $color-1;
 
       a {
-        color: $secondary-color;
+        color: $text-info;
       }
     }
-  }
 
 
   footer {
