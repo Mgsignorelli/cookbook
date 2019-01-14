@@ -50,7 +50,7 @@ def login():
             flash('Logged in successfully.')
             return redirect(request.args.get('next') or url_for('index'))
 
-    flash('Login failed')
+        flash('Login failed')
     return render_template('login.html')
 
 
