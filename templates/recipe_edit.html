@@ -16,6 +16,13 @@
                         <label for="name" class="sr-only">Title of Recipe</label>
                         <input id="name" class="form-control form-control-lg" type="text" name="title"
                                value="{{ recipe.title }}"/>
+                        {% if form.title.errors %}
+                            <ul class=errors>
+                                {% for error in form.title.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
                     <div class="form-group">
                         <label for="category">Category</label>
@@ -23,16 +30,25 @@
                                 title="Select Categories">
                             {% for category in categories %}
                                 <option value="{{ category.id }}"
-                                        {% if category in recipe.categories %} selected {% endif %}
+                                        {% if category in recipe.categories or category.id|string in form.categories.data %}
+                                        selected {% endif %}
                                 >{{ category.name }}</option>
                             {% endfor %}
                         </select>
+                        {% if form.categories.errors %}
+                            <ul class=errors>
+                                {% for error in form.categories.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
 
 
                     <div class="form-group">
                         <label for="method">Cooking Method</label>
-                        <textarea rows="10" id="method" class="form-control" name="method">{{ recipe.method }}</textarea>
+                        <textarea rows="10" id="method" class="form-control"
+                                  name="method">{{ recipe.method }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="ingredients">Ingredients</label>
@@ -44,6 +60,13 @@
                                 >{{ ingredient.name }}</option>
                             {% endfor %}
                         </select>
+                        {% if form.ingredients.errors %}
+                            <ul class=errors>
+                                {% for error in form.ingredients.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-dark">

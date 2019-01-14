@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-sm-8 offset-sm-2" align="center">
 
-            <div class="card text-white bg-dark mb-3 mt-5">
+                <div class="card text-white bg-dark mb-3 mt-5">
                     <div class="card-header">
                         <h1 class="index-title align-content-center">
                             Recipes
@@ -15,7 +15,15 @@
                         <form action="{{ url_for('recipe_store') }}" method="POST">
                             <div class="form-group">
                                 <label for="title">Title of Recipe</label>
-                                <input id="title" class="form-control" type="text" name="title" placeholder="Title"/>
+                                <input id="title" class="form-control" type="text" name="title" placeholder="Title"
+                                       value="{{ form.title.data }}"/>
+                                {% if form.title.errors %}
+                                    <ul class=errors>
+                                        {% for error in form.title.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
                             </div>
                             <div class="form-group">
                                 <label for="category">Category</label>
@@ -26,21 +34,42 @@
                                         >{{ category.name }}</option>
                                     {% endfor %}
                                 </select>
+                                {% if form.categories.errors %}
+                                    <ul class=errors>
+                                        {% for error in form.categories.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
                             </div>
 
                             <div class="form-group">
                                 <label for="method">Cooking Method</label>
-                                <textarea id="method" class="form-control" name="method"
+                                <textarea rows="10" id="method" class="form-control" name="method"
                                           placeholder="Method..."></textarea>
+                                {% if form.method.errors %}
+                                    <ul class=errors>
+                                        {% for error in form.method.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
                             </div>
                             <div class="form-group">
                                 <label for="ingredients">Ingredients</label>
                                 <select id="tags" class="select2" name="ingredients" multiple data-tags="true"
-                                        title="Select Ingredients">
+                                        title="Ingredients">
                                     {% for ingredient in ingredients %}
                                         <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
                                     {% endfor %}
                                 </select>
+                                {% if form.ingredients.errors %}
+                                    <ul class=errors>
+                                        {% for error in form.ingredients.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-light">

@@ -2,7 +2,7 @@
 import os
 import sys
 
-from forms import RegisterForm
+from forms import RegisterForm, RecipeCreateForm, RecipeEditForm
 from permissions import can
 from repositories import *
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, abort, flash
@@ -196,21 +196,27 @@ def category_index():
 @app.route('/recipe/create')
 @login_required
 def recipe_create():
+    form = RecipeCreateForm(request.form)
     return render_template('recipe_create.html', ingredients=IngredientRepository.get(),
-                           categories=CategoryRepository.get())
+                           categories=CategoryRepository.get(), form=form)
 
 
 @app.route('/recipe', methods=['POST'])
 @login_required
 def recipe_store():
-    RecipeRepository.create(
-        user=current_user,
-        title=request.form['title'],
-        method=request.form['method'],
-        ingredients=request.form.getlist('ingredients'),
-        categories=request.form.getlist('categories'),
-    )
-    return redirect(url_for('recipe_index'))
+    form = RecipeCreateForm(request.form)
+    if form.validate():
+        RecipeRepository.create(
+            user=current_user,
+            title=request.form['title'],
+            method=request.form['method'],
+            ingredients=request.form.getlist('ingredients'),
+            categories=request.form.getlist('categories'),
+        )
+        return redirect(url_for('recipe_index'))
+
+    return render_template('recipe_create.html', ingredients=IngredientRepository.get(),
+                           categories=CategoryRepository.get(), form=form)
 
 
 '''@TODO modify request to add a vote and get the votes from database'''
@@ -241,6 +247,7 @@ def recipe_vote(recipe_id, vote):
 
 @app.route('/recipe/<recipe_id>/edit')
 def recipe_edit(recipe_id):
+    form = RecipeEditForm(request.form)
     recipe = RecipeRepository.find(recipe_id)
     if recipe is None:
         return abort(404)
@@ -252,23 +259,39 @@ def recipe_edit(recipe_id):
         recipe=recipe,
         allergies=allergies,
         categories=categories,
-        ingredients=ingredients
+        ingredients=ingredients,
+        form=form,
     )
 
 
 @app.route('/recipe/<recipe_id>', methods=['POST'])
 def recipe_update(recipe_id):
-    recipe = RecipeRepository.update(
-        id=recipe_id,
-        title=request.form['title'],
-        ingredients=request.form.getlist('ingredients'),
-        categories=request.form.getlist('categories'),
-        method=request.form['method']
-    )
-    if recipe is None:
-        return abort(404)
-    return redirect(url_for('recipe_index'))
+    form = RecipeEditForm(request.form)
+    if form.validate():
 
+        recipe = RecipeRepository.update(
+            id=recipe_id,
+            title=request.form['title'],
+            ingredients=request.form.getlist('ingredients'),
+            categories=request.form.getlist('categories'),
+            method=request.form['method']
+        )
+        if recipe is None:
+            return abort(404)
+        return redirect(url_for('recipe_index'))
+    allergies = AllergyRepository.get()
+    categories = CategoryRepository.get()
+    ingredients = IngredientRepository.get()
+    recipe = RecipeRepository.find(recipe_id)
+
+    return render_template(
+        'recipe_edit.html',
+        recipe=recipe,
+        allergies=allergies,
+        categories=categories,
+        ingredients=ingredients,
+        form=form
+    )
 
 @app.route('/recipe/<recipe_id>/delete', methods=['POST'])
 def recipe_delete(recipe_id):
