@@ -9,15 +9,27 @@
     </div>
 
     <div class="container">
-            <div class="col-auto text-center form-group">
-                <form action="{{ url_for('allergy_update', allergy_id=allergy.id) }}" method="POST">
+        <div class="col-auto text-center">
+            <form action="{{ url_for('allergy_update', allergy_id=allergy.id) }}" method="POST">
+                <div class="form-group">
                     <input type="text" class="form-control" name="name" placeholder="Allergy"
                            value="{{ allergy.name }}"/>
-                    <br>
-                    <br>
-                    <button type="submit" class="btn btn-secondary my-2 my-sm-0">Send</button>
-                </form>
-            </div>
+                    {% if form.name.errors %}
+                        <ul class=errors>
+                            {% for error in form.name.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-secondary my-2 my-sm-0">Edit</button>
+
+                </div>
+
+
+            </form>
+        </div>
     </div>
 
 {% endblock %}

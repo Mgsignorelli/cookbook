@@ -35,3 +35,17 @@ class RecipeEditForm(Form):
     categories = Select2FormField('Category', [validators.DataRequired()])
     method = StringField('Method', [validators.Length(min=6)])
     ingredients = Select2FormField('Ingredient', [validators.DataRequired()])
+
+class IngredientCreateForm(Form):
+    name = StringField('Name', [validators.Length(min=3)])
+    allergies = Select2FormField('Allergy', [validators.Optional()])
+
+class IngredientEditForm(Form):
+    name = StringField('Name', [validators.Length(min=3)])
+    allergies = Select2FormField('Allergy', [validators.Optional()])
+
+class AllergyCreateForm(Form):
+    name = StringField('Name', [validators.Length(min=3)])
+
+class AllergyEditForm(Form):
+    name = StringField('Name', [validators.Length(min=3)])

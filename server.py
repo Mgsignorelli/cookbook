@@ -2,7 +2,8 @@
 import os
 import sys
 
-from forms import RegisterForm, RecipeCreateForm, RecipeEditForm
+from forms import RegisterForm, RecipeCreateForm, RecipeEditForm, IngredientCreateForm, AllergyCreateForm, \
+    AllergyEditForm
 from permissions import can
 from repositories import *
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, abort, flash
@@ -97,14 +98,18 @@ def send_images(path):
 @app.route('/allergy/create')
 @login_required
 def allergy_create():
-    return render_template('allergy_create.html')
+    form = AllergyCreateForm(request.form)
+    return render_template('allergy_create.html', form=form)
 
 
 @app.route('/allergy', methods=['POST'])
 def allergy_store():
-    name = request.form['name']
-    AllergyRepository.create(name)
-    return redirect(url_for('allergy_index'))
+    form = AllergyCreateForm(request.form)
+    if form.validate():
+        name = form.name.data
+        AllergyRepository.create(name)
+        return redirect(url_for('allergy_index'))
+    return render_template('allergy_create.html', form=form)
 
 
 @app.route('/allergy/<allergy_id>')
@@ -117,18 +122,25 @@ def allergy_show(allergy_id):
 
 @app.route('/allergy/<allergy_id>/edit')
 def allergy_edit(allergy_id):
+    form = AllergyEditForm(request.form)
     allergy = AllergyRepository.find(allergy_id)
     if allergy is None:
         return abort(404)
-    return render_template('allergy_edit.html', allergy=allergy)
+    return render_template('allergy_edit.html', allergy=allergy, form=form)
 
 
 @app.route('/allergy/<allergy_id>', methods=['POST'])
 def allergy_update(allergy_id):
-    allergy = AllergyRepository.update(allergy_id, request.form['name'])
+    form = AllergyEditForm(request.form)
+
+    allergy = AllergyRepository.find(allergy_id)
     if allergy is None:
         return abort(404)
-    return redirect(url_for('allergy_index'))
+
+    if form.validate():
+        AllergyRepository.update(allergy.id, form.name.data)
+        return redirect(url_for('allergy_index'))
+    return render_template('allergy_edit.html', allergy=allergy, form=form)
 
 
 @app.route('/allergy/<allergy_id>/delete', methods=['POST'])
@@ -293,6 +305,7 @@ def recipe_update(recipe_id):
         form=form
     )
 
+
 @app.route('/recipe/<recipe_id>/delete', methods=['POST'])
 def recipe_delete(recipe_id):
     deleted = RecipeRepository.delete(recipe_id)
@@ -329,16 +342,22 @@ def recipe_search():
 
 @app.route('/ingredient/create')
 def ingredient_create():
+    form = IngredientCreateForm(request.form)
     allergies = AllergyRepository.get()
-    return render_template('ingredient_create.html', allergies=allergies)
+    return render_template('ingredient_create.html', allergies=allergies, form=form)
 
 
 @app.route('/ingredient', methods=['POST'])
 def ingredient_store():
-    name = request.form['name']
-    allergies = request.form.getlist('allergies')
-    IngredientRepository.create(name=name, allergies=allergies)
-    return redirect(url_for('ingredient_index'))
+    form = IngredientCreateForm(request.form)
+    if form.validate():
+        name = form.name.data
+        allergies = form.allergies.data('allergies')
+        IngredientRepository.create(name=name, allergies=allergies)
+        return redirect(url_for('ingredient_index'))
+
+    allergies = AllergyRepository.get()
+    return render_template('ingredient_create.html', allergies=allergies, form=form)
 
 
 @app.route('/ingredient/<ingredient_id>')
@@ -351,18 +370,26 @@ def ingredient_show(ingredient_id):
 
 @app.route('/ingredient/<ingredient_id>/edit')
 def ingredient_edit(ingredient_id):
+    form = IngredientCreateForm(request.form)
     ingredient = IngredientRepository.find(ingredient_id)
+
     if ingredient is None:
         return abort(404)
-    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository.get())
+    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository.get(), form=form)
 
 
 @app.route('/ingredient/<ingredient_id>', methods=['POST'])
 def ingredient_update(ingredient_id):
-    ingredient = IngredientRepository.update(ingredient_id, request.form['name'], request.form.getlist('allergies'))
+    form = IngredientCreateForm(request.form)
+    ingredient = IngredientRepository.find(ingredient_id)
     if ingredient is None:
         return abort(404)
-    return redirect(url_for('ingredient_index'))
+
+    if form.validate():
+        IngredientRepository.update(ingredient.id, form.name.data, form.allergies.data)
+        return redirect(url_for('ingredient_index'))
+
+    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository.get(), form=form)
 
 
 @app.route('/ingredient/<ingredient_id>/delete', methods=['POST'])
