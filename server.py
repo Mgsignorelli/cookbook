@@ -93,6 +93,16 @@ def send_images(path):
     return send_from_directory('public/images', path)
 
 
+@app.route('/browserconfig.xml')
+def send_images(path):
+    return send_from_directory('public/images', path)
+
+
+@app.route('/manifest.json')
+def send_images(path):
+    return send_from_directory('public/images', path)
+
+
 @app.route('/allergy/create')
 @login_required
 def allergy_create():
