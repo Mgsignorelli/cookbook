@@ -258,6 +258,8 @@ class IngredientRepository:
             return None
 
         ingredient.name = name
+        ingredient.allergies.clear()
+
         for allergy in allergies:
             if allergy.isdigit():
                 try:
