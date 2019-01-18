@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-import os
-import sys
 
 from forms import RegisterForm, RecipeCreateForm, RecipeEditForm, IngredientCreateForm, AllergyCreateForm, \
-    AllergyEditForm
+    AllergyEditForm, CategoryCreateForm, CategoryEditForm, UserEditForm
 from permissions import can
 from repositories import *
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, abort, flash
@@ -158,14 +156,17 @@ def allergy_index():
 
 @app.route('/category/create')
 def category_create():
-    return render_template('category_create.html')
+    form = CategoryCreateForm(request.form)
+    return render_template('category_create.html', form=form)
 
 
 @app.route('/category', methods=['POST'])
 def category_store():
-    name = request.form['name']
-    CategoryRepository.create(name)
-    return redirect(url_for('category_index'))
+    form = CategoryCreateForm(request.form)
+    if form.validate():
+        CategoryRepository.create(form.name.data)
+        return redirect(url_for('category_index'))
+    return render_template('category_create.html', form=form)
 
 
 @app.route('/category/<category_id>')
@@ -178,18 +179,23 @@ def category_show(category_id):
 
 @app.route('/category/<category_id>/edit')
 def category_edit(category_id):
+    form = CategoryEditForm(request.form)
     category = CategoryRepository.find(category_id)
     if category is None:
         return abort(404)
-    return render_template('category_edit.html', category=category)
+    return render_template('category_edit.html', category=category, form=form)
 
 
 @app.route('/category/<category_id>', methods=['POST'])
 def category_update(category_id):
-    category = CategoryRepository.update(category_id, request.form['name'])
+    form = CategoryCreateForm(request.form)
+    category = CategoryRepository.find(category_id)
     if category is None:
         return abort(404)
-    return redirect(url_for('category_index'))
+    if form.validate():
+        CategoryRepository.update(category_id, form.name.data)
+        return redirect(url_for('category_index'))
+    return render_template('category_edit.html', category=category, form=form)
 
 
 @app.route('/category/<category_id>/delete', methods=['POST'])
@@ -405,20 +411,6 @@ def ingredient_index():
     return render_template('ingredient_index.html', ingredients=IngredientRepository.get())
 
 
-@app.route('/user/create')
-def user_create():
-    return render_template('user_create.html')
-
-
-@app.route('/user', methods=['POST'])
-def user_store():
-    name = request.form['name']
-    email = request.form['email']
-    password = request.form['password']
-    UserRepository.create(name, email, password)
-    return redirect(url_for('user_index'))
-
-
 @app.route('/user/<user_id>')
 def user_show(user_id):
     user = UserRepository.find(user_id)
@@ -429,18 +421,23 @@ def user_show(user_id):
 
 @app.route('/user/<user_id>/edit')
 def user_edit(user_id):
+    form = UserEditForm(request.form)
     user = UserRepository.find(user_id)
     if user is None:
         return abort(404)
-    return render_template('user_edit.html', user=user)
+    return render_template('user_edit.html', user=user, form=form)
 
 
 @app.route('/user/<user_id>', methods=['POST'])
 def user_update(user_id):
-    user = UserRepository.update(user_id, request.form['name'], request.form['email'], request.form['password'])
+    form = UserEditForm(request.form)
+    user = UserRepository.find(user_id)
     if user is None:
         return abort(404)
-    return redirect(url_for('user_index'))
+    if form.validate():
+        UserRepository.update(id=user.id, name=form.name.data, email=form.email.data, password=form.password.data)
+        return redirect(url_for('user_index'))
+    return render_template('user_edit.html', user=user, form=form)
 
 
 @app.route('/user/<user_id>/delete', methods=['POST'])

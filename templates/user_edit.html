@@ -2,25 +2,75 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h1 class="index-title align-content-center my-5">Edit User</h1>
+            <div class="col-sm-8 offset-sm-2" align="center">
+                <div class="card text-white bg-dark mb-3 mt-5">
+                    <div class="card-header">
+                        <h1 class="index-title align-content-center my-5">Edit User</h1>
+                    </div>
+
+                    <div class="card-body">
+                        <form action="{{ url_for('user_update', user_id=user.id) }}" method="POST">
+                            <div class="form-group">
+                                <label for="name-input">Name</label>
+                                <input type="text" name="name" placeholder="User" value="{{ user.name }}"/>
+                                {% if form.name.errors %}
+                                    <ul class=errors>
+                                        {% for error in form.name.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="name-input">Email</label>
+                                <input type="email" name="email" placeholder="Email" value="{{ user.email }}"/>
+                                {% if form.email.errors %}
+                                    <ul class=errors>
+                                        {% for error in form.email.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="name-input">Password</label>
+                                <input type="password" name="password" placeholder="Password"
+                                       value="{{ user.password }}"/>
+                                {% if form.password.errors %}
+                                    <ul class=errors>
+                                        {% for error in form.password.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name-input">Password Confirm</label>
+                                <input type="password" name="password_confirm" placeholder="Password Confirm"
+                                       value="{{ user.password }}"/>
+                                {% if form.password_confirm.errors %}
+                                    <ul class=errors>
+                                        {% for error in form.password_confirm.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-light my-2 my-sm-0">Edit</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="container">
-            <div class="col-auto text-center form-group">
-                <form action="{{ url_for('user_update', user_id=user.id) }}" method="POST">
-                    <input type="text" name="name" placeholder="User" value="{{ user.name }}" />
-                    <br>
-                    <input type="email" name="email" placeholder="Email" value="{{ user.email }}" />
-                    <br>
-                    <input type="password" name="password" placeholder="Password" value="{{ user.password }}" />
-                    <br>
-                    <button type="submit" class="btn btn-secondary my-2 my-sm-0">Send</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
 {% endblock %}

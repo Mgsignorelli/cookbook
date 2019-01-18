@@ -5,40 +5,38 @@
             <div class="col-8 offset-2">
                 <h1 class="index-title align-content-center mt-5 mb-5">Users</h1>
             </div>
-
-            <div class="col-8 offset-2">
-                <a class="btn btn-create mb-5 align-content-center" href="{{ url_for('user_create') }}">Create</a>
-            </div>
-
-                    <div class="col-10 offset-2">
-                        <table class="table table-dark">
-                            <thead>
-                            <tr>
-                                <th>User</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                    {% for user in users %}    <tr>
-                                        <td>{{ user.name }}</td>
-                                        <td class="text-right">
-                                            <form class="d-none" action="{{ url_for('user_delete', user_id=user.id) }}" method="POST">
-                                            </form>
-                                        <div class="btn-group btn-group-sm">
-                                        <a class="btn btn-light btn-edit" href="{{ url_for('user_edit', user_id=user.id) }}"><i
+            <div class="col-10 offset-2">
+                <table class="table table-dark">
+                    <thead>
+                    <tr>
+                        <th>User</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.name }}</td>
+                            <td class="text-right">
+                                <form class="d-none" action="{{ url_for('user_delete', user_id=user.id) }}"
+                                      method="POST">
+                                </form>
+                                <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-light btn-edit"
+                                       href="{{ url_for('user_edit', user_id=user.id) }}"><i
                                             class="far fa-edit"></i></a>
-                                        <a class="btn btn-dark btn-delete onClickSubmitDeleteRequest"><i
+                                    <a class="btn btn-dark btn-delete onClickSubmitDeleteRequest"><i
                                             class="far fa-trash-alt"></i></a>
 
-                            </div>
+                                </div>
                             </td>
-                                    </tr>
-                                    {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
+        </div>
+    </div>
 
 
 {% endblock %}

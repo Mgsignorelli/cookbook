@@ -36,16 +36,38 @@ class RecipeEditForm(Form):
     method = StringField('Method', [validators.Length(min=6)])
     ingredients = Select2FormField('Ingredient', [validators.DataRequired()])
 
+
 class IngredientCreateForm(Form):
     name = StringField('Name', [validators.Length(min=3)])
     allergies = Select2FormField('Allergy', [validators.Optional()])
+
 
 class IngredientEditForm(Form):
     name = StringField('Name', [validators.Length(min=3)])
     allergies = Select2FormField('Allergy', [validators.Optional()])
 
+
 class AllergyCreateForm(Form):
     name = StringField('Name', [validators.Length(min=3)])
 
+
 class AllergyEditForm(Form):
     name = StringField('Name', [validators.Length(min=3)])
+
+
+class CategoryCreateForm(Form):
+    name = StringField('Name', [validators.Length(min=3)])
+
+
+class CategoryEditForm(Form):
+    name = StringField('Name', [validators.Length(min=3)])
+
+
+class UserEditForm(Form):
+    name = StringField('Name', [validators.Length(min=4, max=25)])
+    email = StringField('Email Address', [validators.Email()])
+    password = PasswordField('New Password', [
+        validators.DataRequired(),
+        validators.EqualTo('password_confirm', message='Passwords must match')
+    ])
+    password_confirm = PasswordField('Repeat Password')

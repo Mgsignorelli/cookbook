@@ -12,7 +12,8 @@
                         <form action="{{ url_for('allergy_store') }}" method="POST">
                             <div class="form-group">
                                 <label for="allergy">Allergy</label>
-                                <input class="form-control" type="text" name="name" placeholder="Allergy" value="{{ form.name.data }}"/>
+                                <input class="form-control" type="text" name="name" placeholder="Allergy"
+                                       value="{{ form.name.data }}"/>
                                 {% if form.name.errors %}
                                     <ul class=errors>
                                         {% for error in form.name.errors %}
@@ -21,6 +22,7 @@
                                     </ul>
                                 {% endif %}
                             </div>
+
                             <div class="form-group">
                                 <button type="submit" class="btn btn-light">Create</button>
                             </div>
