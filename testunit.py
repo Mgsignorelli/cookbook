@@ -1,8 +1,8 @@
 import unittest
-from pony.orm import db_session, commit
+from pony.orm import db_session
 from faker import Faker
 import repositories
-from tests.test_seeder import TestSeeder
+from testseeder import TestSeeder
 TestSeeder.backup()
 TestSeeder.seed()
 
