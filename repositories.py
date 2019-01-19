@@ -1,4 +1,4 @@
-from pony.orm import ObjectNotFound, select, flush
+from pony.orm import ObjectNotFound, select, flush, commit
 
 from models import *
 
@@ -35,7 +35,8 @@ class AllergyRepository:
             return None
 
         allergy.name = name
-        return allergy
+        commit()
+        return Allergy[id]
 
     @staticmethod
     def get():
@@ -84,7 +85,8 @@ class CategoryRepository:
             return None
 
         category.name = name
-        return category
+        commit()
+        return Category[id]
 
     @staticmethod
     def get():
@@ -149,33 +151,36 @@ class RecipeRepository:
         return found
 
     @staticmethod
-    def update(id, title, categories, ingredients, method):
+    def update(id, title=None, categories=None, ingredients=None, method=None):
         try:
             recipe = Recipe[id]
         except ObjectNotFound:
             return None
 
-        recipe.title = title
-        recipe.method = method
-        recipe.categories.clear()
-        recipe.ingredients.clear()
-        for ingredient in ingredients:
-            if ingredient.isdigit():
-                try:
-                    recipe.ingredients.add(Ingredient[ingredient])
-                except ObjectNotFound:
-                    continue
-            else:
-                recipe.ingredients.create(name=ingredient)
-
-        for category in categories:
-            if category.isdigit():
-                try:
-                    recipe.categories.add(Category[category])
-                except ObjectNotFound:
-                    continue
-            else:
-                recipe.categories.create(name=category)
+        if title:
+            recipe.title = title
+        if method:
+            recipe.method = method
+        if categories:
+            recipe.categories.clear()
+            for category in categories:
+                if category.isdigit():
+                    try:
+                        recipe.categories.add(Category[category])
+                    except ObjectNotFound:
+                        continue
+                else:
+                    recipe.categories.create(name=category)
+        if ingredients:
+            recipe.ingredients.clear()
+            for ingredient in ingredients:
+                if ingredient.isdigit():
+                    try:
+                        recipe.ingredients.add(Ingredient[ingredient])
+                    except ObjectNotFound:
+                        continue
+                else:
+                    recipe.ingredients.create(name=ingredient)
 
         return recipe
 
@@ -251,7 +256,7 @@ class IngredientRepository:
         return found
 
     @staticmethod
-    def update(id, name, allergies):
+    def update(id, name, allergies=[]):
         try:
             ingredient = Ingredient[id]
         except ObjectNotFound:
@@ -269,7 +274,8 @@ class IngredientRepository:
             else:
                 ingredient.allergies.create(name=allergy)
 
-        return ingredient
+        commit()
+        return Ingredient[id]
 
     @staticmethod
     def get():
@@ -312,18 +318,22 @@ class UserRepository:
 
         return found
 
-
     @staticmethod
-    def update(id, name, email, password):
+    def update(id, name=None, email=None, password=None):
         try:
             user = User[id]
         except ObjectNotFound:
             return None
 
-        user.name = name
-        user.email = email
-        user.password = password
-        return user
+        if name:
+            user.name = name
+        if email:
+            user.email = email
+        if password:
+            user.password = password
+
+        commit()
+        return User[id]
 
     @staticmethod
     def get():

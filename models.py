@@ -75,5 +75,5 @@ elif provider == 'postgres':
 else:
     raise EnvironmentError('DB_PROVIDER not set to either postgres or sqlite')
 
-
 db.generate_mapping(create_tables=True)
+
