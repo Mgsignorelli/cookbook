@@ -219,7 +219,7 @@ class RecipeRepository:
 
 class IngredientRepository:
     @staticmethod
-    def create(name, allergies):
+    def create(name, allergies=[]):
         ingredient = Ingredient(name=name)
         for allergy in allergies:
             if allergy.isdigit():
