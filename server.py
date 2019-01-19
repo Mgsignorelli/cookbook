@@ -83,22 +83,22 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route('/browserconfig.xml')
+def send_browserconfig(path):
+    return send_from_directory('public', path)
+
+
+@app.route('/manifest.json')
+def send_manifestjson(path):
+    return send_from_directory('public', path)
+
+
 @app.route('/assets/<path:path>')
 def send_assets(path):
     return send_from_directory('public/assets', path)
 
 
 @app.route('/images/<path:path>')
-def send_images(path):
-    return send_from_directory('public/images', path)
-
-
-@app.route('/browserconfig.xml')
-def send_images(path):
-    return send_from_directory('public/images', path)
-
-
-@app.route('/manifest.json')
 def send_images(path):
     return send_from_directory('public/images', path)
 
