@@ -37,7 +37,10 @@ def before_request():
 
 @app.route('/')
 def index():
-    return render_template('home.html')
+    return render_template('home.html',
+                           categories=CategoryRepository.get(),
+                           ingredients=IngredientRepository.get(),
+                           )
 
 
 @app.route('/login', methods=['GET', 'POST'])
