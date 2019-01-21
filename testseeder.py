@@ -54,6 +54,48 @@ class TestSeeder:
             user.recipes.create(title='Pasta Bake', ingredients=[peanut, wheat, sugar], categories=[tea],
                                 method="\n".join(fake.paragraphs(nb=3)))
 
+            user.recipes.create(title='Pasta', ingredients=[milk, wheat, sugar], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 1', ingredients=[peanut, wheat, sugar], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 2', ingredients=[peanut, wheat, milk], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 3', ingredients=[milk, wheat, sugar], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 4', ingredients=[peanut, steak, sugar], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 5', ingredients=[peanut, wheat, steak], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 6', ingredients=[milk, wheat, steak], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 7', ingredients=[sugar, wheat, milk], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 8', ingredients=[peanut, wheat, milk], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 9', ingredients=[milk, wheat, sugar], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 10', ingredients=[peanut, steak, sugar], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 11', ingredients=[peanut, wheat, steak], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 12', ingredients=[milk, wheat, steak], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
+            user.recipes.create(title='RECIPE 13', ingredients=[sugar, wheat, milk], categories=[tea],
+                                method="\n".join(fake.paragraphs(nb=3)))
+
             user = User(name='gamma', email=fake.email(), password='g123qwe')
             user = User(name='delta', email=fake.email(), password='d123qwe', is_admin=1)
             commit()
