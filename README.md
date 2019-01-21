@@ -27,6 +27,16 @@ ensure safety.
 
 ## Technologies Used
 
+- Python, backend language, to create the server of the game application.
+
+- Flask, microframework for frontend.
+
+- PonyORM, Python Object-Relational Mapper.  
+    
+- Sqlite3, Database engine. 
+
+- TravisCI (https://travis-ci.org/). for automated testing.
+
 - HTML language, to write the web page layout. 
 
 - CSS language to style the application.
@@ -40,22 +50,12 @@ ensure safety.
 - Bootstrap 4 (https://getbootstrap.com/docs/4.0/getting-started/introduction/)
     This framework was used for responsiveness of the site 
 
-- Bootswatch Minty (https://bootswatch.com/minty/)
-    Theme for Bootstrap that allows for a simple yet attractive design to be applied to the project
+- GitKraken (https://support.gitkraken.com/), for management of Branch and Git commits.
 
-- Python, backend language, to create the server of the game application.
 
-- Flask, microframework for frontend.
-
-- PonyORM, Python Object-Relational Mapper.  
-    *Online tool for database design*
-    
-- Sqlite3, Database engine. 
 
 *- Flake (http://flake8.pycqa.org/en/latest/index.html#quickstart) 
     For validation of Python code.*
-
-- GitKraken (https://support.gitkraken.com/), for management of Branch and Git commits.
 
 ## Testing
 
@@ -63,10 +63,11 @@ Testing was performed through automated and manual tests.
 
 - Validity of Python code was tested through Flake. 
 
+- Unittests were performed on the Recipe Repositories, 
+the actions of Create, Read, Update and Delete were tested on each Repository.
 
-- Media Queries were defined to improve responsiveness of the webpage, particularly 
-for smartphones and tablets. This was extensively tested in different browsers, 
-screen sizes and Operative Systems, since it was originally designed in a Mac Laptop.
+- This application was extensively tested in different browsers, 
+screen sizes and Operative Systems, since it was originally designed in a Mac Desktop.
 
 - Manual Browser testing was performed through acting like a user in the webpage, 
 utilizing all the features.
@@ -75,14 +76,13 @@ utilizing all the features.
 An example of a manual test was User creation.
 1. User Creation:
     1. Go to Home page
-    2. Submit a user name *usertest*
-    3. Submit a password *userpass*
-    4. See a welcome message in the Navbar
-    5. Be allowed to submit a recipe
-    6. Logout with Logout link+icon in Navbar
+    2. Submit a user name
+    3. Submit an email address, must be valid.
+    4. Submit a password and confirm it
+    5. See a welcome message in the Navbar
+    6. Be allowed to submit a recipe
+    7. Logout with Logout link+icon in Navbar
 
-*- Thought: allowing any user handle could affect spamming in other contexts, 
-but it does not affect the game features.*
 
 
 ## Deployment
