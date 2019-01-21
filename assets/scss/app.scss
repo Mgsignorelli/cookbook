@@ -35,27 +35,25 @@ body {
   .main-title {
     font-family: 'Indie Flower', cursive;
     color: $text-light;
-    padding-top: 120px;
-    padding-bottom: 150px;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
     text-shadow: 4px 5px 6px $text-success;
-    font-size: 7rem;
-    line-height: 30px;
+    font-size: 6rem;
     text-align: center;
   }
 
   .row-chicken {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
   }
 
   .index-title {
     font-family: 'Indie Flower', cursive;
     color: $text-light;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
     text-shadow: 3px 3px 5px $text-success;
     font-size: 4rem;
-    line-height: 30px;
     text-align: center;
   }
 
@@ -65,10 +63,9 @@ body {
       color: $secondary-color;
       text-shadow: 2px 2px 4px $text-info;
       font-size: 3rem;
-      line-height: 30px;
+      line-height: 3.2rem !important;
       text-align: center;
-      padding-top: 3rem;
-      padding-bottom: 2rem;
+      padding-bottom: 3rem;
     }
 
     a:hover {
@@ -119,15 +116,16 @@ body {
     color: $secondary-color;
     font-size: 0.8rem;
   }
-    .card {
-      background-color: $secondary-color;
-      border-radius: 20px;
-      color: $color-1;
 
-      a {
-        color: $text-info;
-      }
+  .card {
+    background-color: $secondary-color;
+    border-radius: 20px;
+    color: $color-1;
+
+    a {
+      color: $text-info;
     }
+  }
 
 
   footer {
@@ -180,17 +178,12 @@ body {
       padding-top: 10px
     }
 
-    .row-chicken {
-      padding-top: 0.2rem;
-      padding-bottom: 3rem;
-    }
 
     .main-link {
       a {
+        padding-top: 1rem !important;
         font-family: 'Josefin Slab', serif;
         font-size: 2rem;
-        line-height: 10px;
-        align: center;
       }
     }
 
@@ -201,30 +194,24 @@ body {
 }
 
 
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   body {
     .main-title {
-      padding-top: 50px;
-      padding-bottom: 50px;
-      font-size: 6rem;
-      line-height: 80px;
+      font-size: 5rem;
+      line-height: 70px;
       text-align: center;
     }
 
-    .row-chicken {
-      padding-top: 0.2rem;
-      padding-bottom: 3rem;
-    }
 
     .main-link {
       a {
         font-family: 'Josefin Slab', serif;
-        font-size: 2.5rem;
+        font-size: 2rem;
         line-height: 20px;
         text-align: center;
       }
     }
+
+
   }
-
-
 }
