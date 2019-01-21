@@ -9,18 +9,33 @@
         </div>
 
         <div class="row text-center my-5">
-            <div class="col-sm offset-md-1 col-offset-1 main-link mt-5">
-                <a href={{ url_for('allergy_index') }}>Allergies</a>
-            </div>
-            <div class="col-sm main-link mt-5">
-                <a href={{ url_for('ingredient_index') }}>Ingredients</a>
-            </div>
-            <div class="col-sm main-link mt-5">
-                <a href={{ url_for('recipe_index') }}>Recipes</a>
-            </div>
-            <div class="col-sm main-link mt-5">
-                <a href={{ url_for('category_index') }}>Categories</a>
-            </div>
+            {% if can('allergy_index') %}
+                <div class="col-sm offset-md-1 col-offset-1 main-link">
+                    <a href={{ url_for('allergy_index') }}>Allergies</a>
+                </div>
+            {% endif %}
+
+            {% if can('ingredient_index') %}
+                <div class="col-sm main-link">
+                    <a href={{ url_for('ingredient_index') }}>Ingredients</a>
+                </div>
+            {% endif %}
+
+            {% if can('recipe_index') %}
+                <div class="col-sm main-link">
+                    <a href={{ url_for('recipe_index') }}>Recipes</a>
+                </div>
+            {% endif %}
+
+            {% if can('category_index') %}
+                <div class="col-sm main-link">
+                    <a href={{ url_for('category_index') }}>Categories</a>
+                </div>
+            {% endif %}
+
+        </div>
+
+
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="card search-form my-5">
