@@ -10,6 +10,7 @@ from flask_login import LoginManager, login_required, login_user, logout_user, c
 from pony.flask import Pony
 
 from request_gates import controller_exists_gate, permission_gate
+from flask_paginate import Pagination, get_page_parameter
 
 load_dotenv()
 
@@ -335,7 +336,11 @@ def recipe_delete(recipe_id):
 
 @app.route('/recipe')
 def recipe_index():
-    return render_template('recipe_index.html', recipes=RecipeRepository.get())
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    recipes = RecipeRepository.get()
+    pagination = Pagination(page=page, total=len(recipes), record_name='recipes', css_framework='bootstrap4')
+    page_index = (page-1)*10
+    return render_template('recipe_index.html', recipes=recipes[page_index:page_index+10], pagination=pagination)
 
 
 @app.route('/search')
