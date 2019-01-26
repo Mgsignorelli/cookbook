@@ -9,58 +9,98 @@
         <div class="row">
             <div class="col-8 offset-2">
 
-                <div class="card-recipe-show text-center">
-                    <img class="my-5" src="https://via.placeholder.com/100" width="35%" align="center"
-                         alt="Card image cap">
-                </div>
-                <div class="card bg-dark text-white">
-                    <div class="card-title text-center">
+                <div class="card bg-dark text-white ">
+                    <div class="card-title text-center mt-3">
                         <h2 class="strong">{{ recipe.title }}</h2>
                     </div>
                     <div class="card-body recipe text-center">
                         <p class="card-text">{{ recipe.method }}</p>
-                        <p class="card-text">
-                            <small class="text-muted">Ingredients</small>
-                            {% for ingredient in recipe.ingredients %}
-                                <a class="badge badge-light"
-                                   href="{{ url_for('ingredient_show', ingredient_id=ingredient.id) }}">{{ ingredient.name }}</a>
-                            {% endfor %}
-                        </p>
-                    <p class="card-text">
-                            <small class="text-muted">Categories</small>
-                            {% for category in recipe.categories %}
-                                <a class="badge badge-light"
-                                   href="{{ url_for('category_show', category_id=category.id) }}">{{ category.name }}</a>
-                            {% endfor %}
-                        </p>
-                        <p class="card-text">
-                            <small class="text-muted">Allergens</small>
-                            {% for allergy in allergies %}
-                                <a class="badge badge-light"
-                                   href="{{ url_for('allergy_show', allergy_id=allergy.id) }}">{{ allergy.name }}</a>
-                            {% endfor %}
-                        </p>
-                    </div>
-                    <div class="card-footer text-right text-muted">
-                        <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='up') }}"
-                              method="post">
-                            <p> Upvotes : {{ votes[0] }}
-                                <button class="btn-success ml-3" type="submit"><i
-                                        class="far fa-thumbs-up"></i></button>
-                            </p>
-                        </form>
-                        <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='down') }}"
-                              method="post">
-                            <p>Downvotes : {{ votes[1] }}
-                                <button class="btn-danger ml-3" type="submit"><i
-                                        class=" far fa-thumbs-down"></i></button>
-                            </p>
-                        </form>
 
-                        <a class="btn btn-light" href="{{ url_for('recipe_edit', recipe_id=recipe.id) }}">Edit
-                            Recipe</a>
+                        {% if can('recipe_index') %}
 
-                    </div>
+                            <p class="card-text">
+                                <small class="text-muted">Ingredients</small>
+                                {% for ingredient in recipe.ingredients %}
+                                    <a class="badge badge-light"
+                                       href="{{ url_for('ingredient_show', ingredient_id=ingredient.id) }}">{{ ingredient.name }}</a>
+                                {% endfor %}
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Categories</small>
+                                {% for category in recipe.categories %}
+                                    <a class="badge badge-light"
+                                       href="{{ url_for('category_show', category_id=category.id) }}">{{ category.name }}</a>
+                                {% endfor %}
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Allergens</small>
+                                {% for allergy in allergies %}
+                                    <a class="badge badge-light"
+                                       href="{{ url_for('allergy_show', allergy_id=allergy.id) }}">{{ allergy.name }}</a>
+                                {% endfor %}
+                            </p>
+                            </div>
+                            <div class="card-footer text-right text-muted">
+                                <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='up') }}"
+                                      method="post">
+                                    <p> Upvotes : {{ votes[0] }}
+                                        <button class="btn-success ml-3" type="submit"><i
+                                                class="far fa-thumbs-up"></i></button>
+                                    </p>
+                                </form>
+                                <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='down') }}"
+                                      method="post">
+                                    <p>Downvotes : {{ votes[1] }}
+                                        <button class="btn-danger ml-3" type="submit"><i
+                                                class=" far fa-thumbs-down"></i></button>
+                                    </p>
+                                </form>
+                                <a class="btn btn-light" href="{{ url_for('recipe_edit', recipe_id=recipe.id) }}">Edit
+                                    Recipe</a>
+
+
+                                {% else %}
+
+                                <p class="card-text">
+                                    <small class="text-muted">Ingredients</small>
+                                    {% for ingredient in recipe.ingredients %}
+                                        <span class="badge badge-light"
+                                        >{{ ingredient.name }}</span>
+                                    {% endfor %}
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">Categories</small>
+                                    {% for category in recipe.categories %}
+                                        <span class="badge badge-light"
+                                        >{{ category.name }}</span>
+                                    {% endfor %}
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">Allergens</small>
+                                    {% for allergy in allergies %}
+                                        <span class="badge badge-light"
+                                        >{{ allergy.name }}</span>
+                                    {% endfor %}
+                                </p>
+                            </div>
+                            <div class="card-footer text-right text-muted">
+                            <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='up') }}"
+                                  method="post">
+                                <p> Upvotes : {{ votes[0] }}
+                                    <button class="btn-success ml-3" type="submit"><i
+                                            class="far fa-thumbs-up"></i></button>
+                                </p>
+                            </form>
+                            <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='down') }}"
+                                  method="post">
+                                <p>Downvotes : {{ votes[1] }}
+                                    <button class="btn-danger ml-3" type="submit"><i
+                                            class=" far fa-thumbs-down"></i></button>
+                                </p>
+                            </form>
+                        {% endif %}
+
+                        </div>
                 </div>
             </div>
         </div>
