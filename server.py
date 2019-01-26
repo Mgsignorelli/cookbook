@@ -33,7 +33,8 @@ def before_request():
         return render_template('error.html', error="Not found")
 
     if not permission_gate(app=app, request=request):
-        return render_template('error.html', error="Permission Denied.")
+        flash('Permission denied. You are not an Admin!')
+        return redirect(url_for('index'))
 
 
 @app.route('/')
