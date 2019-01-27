@@ -24,7 +24,7 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return UserRepository.find(user_id)
+    return UserRepository().find(user_id)
 
 
 @app.before_request
@@ -40,8 +40,8 @@ def before_request():
 @app.route('/')
 def index():
     return render_template('home.html',
-                           categories=CategoryRepository.get(),
-                           ingredients=IngredientRepository.get(),
+                           categories=CategoryRepository().get(),
+                           ingredients=IngredientRepository().get(),
                            )
 
 
@@ -68,7 +68,7 @@ def register():
             flash('Already registered, please log in')
             return redirect(url_for('login'))
 
-        user = UserRepository.create(
+        user = UserRepository().create(
             email=request.values.get('email'),
             name=request.values.get('name'),
             password=request.values.get('password'),
@@ -120,14 +120,14 @@ def allergy_store():
     form = AllergyCreateForm(request.form)
     if form.validate():
         name = form.name.data
-        AllergyRepository.create(name)
+        AllergyRepository().create(name)
         return redirect(url_for('allergy_index'))
     return render_template('allergy_create.html', form=form)
 
 
 @app.route('/allergy/<allergy_id>')
 def allergy_show(allergy_id):
-    allergy = AllergyRepository.find(allergy_id)
+    allergy = AllergyRepository().find(allergy_id)
     if allergy is None:
         return abort(404)
     return render_template('allergy_show.html', allergy=allergy)
@@ -136,7 +136,7 @@ def allergy_show(allergy_id):
 @app.route('/allergy/<allergy_id>/edit')
 def allergy_edit(allergy_id):
     form = AllergyEditForm(request.form)
-    allergy = AllergyRepository.find(allergy_id)
+    allergy = AllergyRepository().find(allergy_id)
     if allergy is None:
         return abort(404)
     return render_template('allergy_edit.html', allergy=allergy, form=form)
@@ -146,19 +146,19 @@ def allergy_edit(allergy_id):
 def allergy_update(allergy_id):
     form = AllergyEditForm(request.form)
 
-    allergy = AllergyRepository.find(allergy_id)
+    allergy = AllergyRepository().find(allergy_id)
     if allergy is None:
         return abort(404)
 
     if form.validate():
-        AllergyRepository.update(allergy.id, form.name.data)
+        AllergyRepository().update(allergy.id, form.name.data)
         return redirect(url_for('allergy_index'))
     return render_template('allergy_edit.html', allergy=allergy, form=form)
 
 
 @app.route('/allergy/<allergy_id>/delete', methods=['POST'])
 def allergy_delete(allergy_id):
-    deleted = AllergyRepository.delete(allergy_id)
+    deleted = AllergyRepository().delete(allergy_id)
     if deleted is None:
         return abort(404)
     return redirect(url_for('allergy_index'))
@@ -166,7 +166,7 @@ def allergy_delete(allergy_id):
 
 @app.route('/allergy')
 def allergy_index():
-    return render_template('allergy_index.html', allergies=AllergyRepository.get())
+    return render_template('allergy_index.html', allergies=AllergyRepository().get())
 
 
 @app.route('/category/create')
@@ -179,14 +179,14 @@ def category_create():
 def category_store():
     form = CategoryCreateForm(request.form)
     if form.validate():
-        CategoryRepository.create(form.name.data)
+        CategoryRepository().create(form.name.data)
         return redirect(url_for('category_index'))
     return render_template('category_create.html', form=form)
 
 
 @app.route('/category/<category_id>')
 def category_show(category_id):
-    category = CategoryRepository.find(category_id)
+    category = CategoryRepository().find(category_id)
     if category is None:
         return abort(404)
     return render_template('category_show.html', category=category)
@@ -195,7 +195,7 @@ def category_show(category_id):
 @app.route('/category/<category_id>/edit')
 def category_edit(category_id):
     form = CategoryEditForm(request.form)
-    category = CategoryRepository.find(category_id)
+    category = CategoryRepository().find(category_id)
     if category is None:
         return abort(404)
     return render_template('category_edit.html', category=category, form=form)
@@ -204,18 +204,18 @@ def category_edit(category_id):
 @app.route('/category/<category_id>', methods=['POST'])
 def category_update(category_id):
     form = CategoryCreateForm(request.form)
-    category = CategoryRepository.find(category_id)
+    category = CategoryRepository().find(category_id)
     if category is None:
         return abort(404)
     if form.validate():
-        CategoryRepository.update(category_id, form.name.data)
+        CategoryRepository().update(category_id, form.name.data)
         return redirect(url_for('category_index'))
     return render_template('category_edit.html', category=category, form=form)
 
 
 @app.route('/category/<category_id>/delete', methods=['POST'])
 def category_delete(category_id):
-    deleted = CategoryRepository.delete(category_id)
+    deleted = CategoryRepository().delete(category_id)
     if deleted is None:
         return abort(404)
     return redirect(url_for('category_index'))
@@ -223,15 +223,15 @@ def category_delete(category_id):
 
 @app.route('/category')
 def category_index():
-    return render_template('category_index.html', categories=CategoryRepository.get())
+    return render_template('category_index.html', categories=CategoryRepository().get())
 
 
 @app.route('/recipe/create')
 @login_required
 def recipe_create():
     form = RecipeCreateForm(request.form)
-    return render_template('recipe_create.html', ingredients=IngredientRepository.get(),
-                           categories=CategoryRepository.get(), form=form)
+    return render_template('recipe_create.html', ingredients=IngredientRepository().get(),
+                           categories=CategoryRepository().get(), form=form)
 
 
 @app.route('/recipe', methods=['POST'])
@@ -239,7 +239,7 @@ def recipe_create():
 def recipe_store():
     form = RecipeCreateForm(request.form)
     if form.validate():
-        RecipeRepository.create(
+        RecipeRepository().create(
             user=current_user,
             title=request.form['title'],
             method=request.form['method'],
@@ -248,8 +248,8 @@ def recipe_store():
         )
         return redirect(url_for('recipe_index'))
 
-    return render_template('recipe_create.html', ingredients=IngredientRepository.get(),
-                           categories=CategoryRepository.get(), form=form)
+    return render_template('recipe_create.html', ingredients=IngredientRepository().get(),
+                           categories=CategoryRepository().get(), form=form)
 
 
 '''@TODO modify request to add a vote and get the votes from database'''
@@ -257,7 +257,7 @@ def recipe_store():
 
 @app.route('/recipe/<recipe_id>')
 def recipe_show(recipe_id):
-    recipe = RecipeRepository.find(recipe_id)
+    recipe = RecipeRepository().find(recipe_id)
     if recipe is None:
         return abort(404)
     votes = RecipeRepository.get_votes_for_recipe(recipe)
@@ -266,7 +266,7 @@ def recipe_show(recipe_id):
 
 @app.route('/recipe/<recipe_id>/<vote>', methods=['POST'])
 def recipe_vote(recipe_id, vote):
-    recipe = RecipeRepository.find(recipe_id)
+    recipe = RecipeRepository().find(recipe_id)
     if recipe is None:
         return abort(404)
     if vote == 'up':
@@ -281,12 +281,12 @@ def recipe_vote(recipe_id, vote):
 @app.route('/recipe/<recipe_id>/edit')
 def recipe_edit(recipe_id):
     form = RecipeEditForm(request.form)
-    recipe = RecipeRepository.find(recipe_id)
+    recipe = RecipeRepository().find(recipe_id)
     if recipe is None:
         return abort(404)
-    allergies = AllergyRepository.get()
-    categories = CategoryRepository.get()
-    ingredients = IngredientRepository.get()
+    allergies = AllergyRepository().get()
+    categories = CategoryRepository().get()
+    ingredients = IngredientRepository().get()
     return render_template(
         'recipe_edit.html',
         recipe=recipe,
@@ -302,7 +302,7 @@ def recipe_update(recipe_id):
     form = RecipeEditForm(request.form)
     if form.validate():
 
-        recipe = RecipeRepository.update(
+        recipe = RecipeRepository().update(
             id=recipe_id,
             title=request.form['title'],
             ingredients=request.form.getlist('ingredients'),
@@ -312,10 +312,10 @@ def recipe_update(recipe_id):
         if recipe is None:
             return abort(404)
         return redirect(url_for('recipe_index'))
-    allergies = AllergyRepository.get()
-    categories = CategoryRepository.get()
-    ingredients = IngredientRepository.get()
-    recipe = RecipeRepository.find(recipe_id)
+    allergies = AllergyRepository().get()
+    categories = CategoryRepository().get()
+    ingredients = IngredientRepository().get()
+    recipe = RecipeRepository().find(recipe_id)
 
     return render_template(
         'recipe_edit.html',
@@ -329,7 +329,7 @@ def recipe_update(recipe_id):
 
 @app.route('/recipe/<recipe_id>/delete', methods=['POST'])
 def recipe_delete(recipe_id):
-    deleted = RecipeRepository.delete(recipe_id)
+    deleted = RecipeRepository().delete(recipe_id)
     if deleted is None:
         return abort(404)
     return redirect(url_for('recipe_index'))
@@ -338,7 +338,7 @@ def recipe_delete(recipe_id):
 @app.route('/recipe')
 def recipe_index():
     page = request.args.get(get_page_parameter(), type=int, default=1)
-    recipes = RecipeRepository.get()
+    recipes = RecipeRepository().get()
     pagination = Pagination(page=page, total=len(recipes), record_name='recipes', css_framework='bootstrap4')
     page_index = (page - 1) * 10
     return render_template('recipe_index.html', recipes=recipes[page_index:page_index + 10], pagination=pagination)
@@ -362,10 +362,10 @@ def recipe_search():
         'recipe_search.html',
         recipes=list(recipes)[page_index:page_index + 9],
         title=title,
-        selected_categories=CategoryRepository.find_many(categories),
-        selected_ingredients=IngredientRepository.find_many(ingredients),
-        categories=CategoryRepository.get(),
-        ingredients=IngredientRepository.get(),
+        selected_categories=CategoryRepository().find_many(categories),
+        selected_ingredients=IngredientRepository().find_many(ingredients),
+        categories=CategoryRepository().get(),
+        ingredients=IngredientRepository().get(),
         pagination=pagination
     )
 
@@ -373,7 +373,7 @@ def recipe_search():
 @app.route('/ingredient/create')
 def ingredient_create():
     form = IngredientCreateForm(request.form)
-    allergies = AllergyRepository.get()
+    allergies = AllergyRepository().get()
     return render_template('ingredient_create.html', allergies=allergies, form=form)
 
 
@@ -383,16 +383,16 @@ def ingredient_store():
     if form.validate():
         name = form.name.data
         allergies = form.allergies.data('allergies')
-        IngredientRepository.create(name=name, allergies=allergies)
+        IngredientRepository().create(name=name, allergies=allergies)
         return redirect(url_for('ingredient_index'))
 
-    allergies = AllergyRepository.get()
+    allergies = AllergyRepository().get()
     return render_template('ingredient_create.html', allergies=allergies, form=form)
 
 
 @app.route('/ingredient/<ingredient_id>')
 def ingredient_show(ingredient_id):
-    ingredient = IngredientRepository.find(ingredient_id)
+    ingredient = IngredientRepository().find(ingredient_id)
     if ingredient is None:
         return abort(404)
     return render_template('ingredient_show.html', ingredient=ingredient)
@@ -401,30 +401,30 @@ def ingredient_show(ingredient_id):
 @app.route('/ingredient/<ingredient_id>/edit')
 def ingredient_edit(ingredient_id):
     form = IngredientCreateForm(request.form)
-    ingredient = IngredientRepository.find(ingredient_id)
+    ingredient = IngredientRepository().find(ingredient_id)
 
     if ingredient is None:
         return abort(404)
-    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository.get(), form=form)
+    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository().get(), form=form)
 
 
 @app.route('/ingredient/<ingredient_id>', methods=['POST'])
 def ingredient_update(ingredient_id):
     form = IngredientCreateForm(request.form)
-    ingredient = IngredientRepository.find(ingredient_id)
+    ingredient = IngredientRepository().find(ingredient_id)
     if ingredient is None:
         return abort(404)
 
     if form.validate():
-        IngredientRepository.update(ingredient.id, form.name.data, form.allergies.data)
+        IngredientRepository().update(ingredient.id, form.name.data, form.allergies.data)
         return redirect(url_for('ingredient_index'))
 
-    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository.get(), form=form)
+    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository().get(), form=form)
 
 
 @app.route('/ingredient/<ingredient_id>/delete', methods=['POST'])
 def ingredient_delete(ingredient_id):
-    deleted = IngredientRepository.delete(ingredient_id)
+    deleted = IngredientRepository().delete(ingredient_id)
     if deleted is None:
         return abort(404)
     return redirect(url_for('ingredient_index'))
@@ -432,12 +432,12 @@ def ingredient_delete(ingredient_id):
 
 @app.route('/ingredient')
 def ingredient_index():
-    return render_template('ingredient_index.html', ingredients=IngredientRepository.get())
+    return render_template('ingredient_index.html', ingredients=IngredientRepository().get())
 
 
 @app.route('/user/<user_id>')
 def user_show(user_id):
-    user = UserRepository.find(user_id)
+    user = UserRepository().find(user_id)
     if user is None:
         return abort(404)
     return render_template('user_show.html', user=user)
@@ -446,7 +446,7 @@ def user_show(user_id):
 @app.route('/user/<user_id>/edit')
 def user_edit(user_id):
     form = UserEditForm(request.form)
-    user = UserRepository.find(user_id)
+    user = UserRepository().find(user_id)
     if user is None:
         return abort(404)
     return render_template('user_edit.html', user=user, form=form)
@@ -455,18 +455,18 @@ def user_edit(user_id):
 @app.route('/user/<user_id>', methods=['POST'])
 def user_update(user_id):
     form = UserEditForm(request.form)
-    user = UserRepository.find(user_id)
+    user = UserRepository().find(user_id)
     if user is None:
         return abort(404)
     if form.validate():
-        UserRepository.update(id=user.id, name=form.name.data, email=form.email.data, password=form.password.data)
+        UserRepository().update(id=user.id, name=form.name.data, email=form.email.data, password=form.password.data)
         return redirect(url_for('user_index'))
     return render_template('user_edit.html', user=user, form=form)
 
 
 @app.route('/user/<user_id>/delete', methods=['POST'])
 def user_delete(user_id):
-    deleted = UserRepository.delete(user_id)
+    deleted = UserRepository().delete(user_id)
     if deleted is None:
         return abort(404)
     return redirect(url_for('user_index'))
@@ -474,7 +474,7 @@ def user_delete(user_id):
 
 @app.route('/user')
 def user_index():
-    return render_template('user_index.html', users=UserRepository.get())
+    return render_template('user_index.html', users=UserRepository().get())
 
 
 if __name__ == '__main__':
