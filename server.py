@@ -340,8 +340,8 @@ def recipe_index():
     page = request.args.get(get_page_parameter(), type=int, default=1)
     recipes = RecipeRepository.get()
     pagination = Pagination(page=page, total=len(recipes), record_name='recipes', css_framework='bootstrap4')
-    page_index = (page-1)*10
-    return render_template('recipe_index.html', recipes=recipes[page_index:page_index+10], pagination=pagination)
+    page_index = (page - 1) * 10
+    return render_template('recipe_index.html', recipes=recipes[page_index:page_index + 10], pagination=pagination)
 
 
 @app.route('/search')

@@ -1,0 +1,19 @@
+.pagination {
+  color: $secondary-color;
+}
+
+body > div > div > div.col-sm-10.offset-sm-2 > nav > ul:nth-child(1) > nav > ul > li.page-item.active > a {
+  color: $primary-color;
+  background: $secondary-color;
+  border-color: $text-info !important;
+
+  body > div > div > div.col-sm-10.offset-sm-2 > nav > ul:nth-child(1) > nav > ul > li:nth-child(3) > a {
+    color: $primary-color;
+  }
+}
+
+.pagination-page-info b {
+  color: $text-info;
+  background: $secondary-color;
+}
+
