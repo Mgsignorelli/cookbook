@@ -1,19 +1,16 @@
 @import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/slate/bootswatch";
 @import "~select2/src/scss/core";
 @import url('https://fonts.googleapis.com/css?family=Cardo');
-
 @import "variables";
 @import "./base/base";
 @import "./base/fonts";
 @import "./base/typography";
-
 @import "./components/badge";
 @import "./components/btncreate";
 @import "./components/card";
 @import "./components/logo";
-@import "./components/pagination";
 @import "./components/select2";
 @import "./components/search-form";
-
 @import "./layouts/footer";
 @import "./layouts/table";

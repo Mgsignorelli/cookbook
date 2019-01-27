@@ -40,4 +40,26 @@ body {
     color: $text-info;
   }
 
+  .pagination {
+    color: $secondary-color;
+
+    .page-item .page-link {
+      //background: $secondary-color;
+      border-color: $color-dark !important;
+    }
+
+    a {
+      color: $primary-color;
+      border-color: $secondary-color;
+      text-shadow: 2px 2px 4px $text-info;
+
+
+    }
+
+  }
+
+  //.pagination-page-link a b {
+  //  color: $text-info;
+  //  background: $secondary-color;
+  //}
 }
