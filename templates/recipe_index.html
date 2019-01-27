@@ -45,14 +45,28 @@
                                     <a class="btn btn-dark btn-delete onClickSubmitDeleteRequest"><i
                                             class="far fa-trash-alt"></i></a>
                                 </div>
+
                             </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-                {{ pagination.links }}
+
+                <nav aria-label="Page navigation" class="text-secondary">
+                    <ul class="pagination pagination-sm">
+                        {{ pagination.links }}
+                    </ul>
+                    <ul class="pagination pagination-sm ">
+
+                        {{ pagination.info }}
+                    </ul>
+                </nav>
+
             </div>
+
         </div>
+    </div>
+
     </div>
 
 
