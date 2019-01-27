@@ -1,0 +1,20 @@
+$font-stack: 'Montserrat', 'Cardo', 'Indie Flower', 'Josefin Slab', sans-serif !important;
+
+body {
+  font-family: 'Montserrat', sans-serif;
+
+  .main-title {
+    font-family: 'Indie Flower', cursive;
+  }
+
+  .index-title {
+    font-family: 'Indie Flower', cursive;
+  }
+
+  .main-link {
+    a {
+      font-family: 'Josefin Slab', serif;
+    }
+
+  }
+}

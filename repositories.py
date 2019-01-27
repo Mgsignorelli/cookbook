@@ -1,230 +1,198 @@
-import sys
+from pony.orm import ObjectNotFound, select, flush, commit
+
 from models import *
 
 
-class AllergyRepository():
-    @staticmethod
-    @db_session
-    def create(name):
-        return Allergy(name=name)
+class Repository:
+    def get_repository_model(self):
+        return self.repository_model
 
-    @staticmethod
-    @db_session
-    def find(id):
+    def get_repository_fields(self):
+        return self.repository_fields
+
+    def get_assignable_fields_from_kwargs(self, kwargs):
+        derived_fields = {}
+        for field, options in self.get_repository_fields().items():
+            if field in kwargs and options['type'] != 'collection' and options['type'] != 'model':
+                derived_fields[field] = kwargs[field]
+
+        return derived_fields
+
+    def get_collection_fields_from_kwargs(self, kwargs):
+        derived_fields = {}
+        for field, options in self.get_repository_fields().items():
+            if field in kwargs and options['type'] == 'collection':
+                derived_fields[field] = kwargs[field]
+
+        return derived_fields
+
+    def get_model_field_from_kwargs(self, kwargs):
+        for field, options in self.get_repository_fields().items():
+            if field in kwargs and options['type'] == 'model':
+                return kwargs[field]
+        return None
+
+    def get_repository_model_field(self):
+        for field, options in self.get_repository_fields().items():
+            if options['type'] == 'model':
+                return options
+        return None
+
+    def create(self, **kwargs):
+        owner_model = self.get_model_field_from_kwargs(kwargs)
+        if owner_model is None:
+            model = self.get_repository_model()(**self.get_assignable_fields_from_kwargs(kwargs=kwargs))
+        else:
+            model = getattr(owner_model, self.get_repository_model_field()['key']) \
+                .create(**self.get_assignable_fields_from_kwargs(kwargs=kwargs))
+
+        for field, value in self.get_collection_fields_from_kwargs(kwargs).items():
+            for item in value:
+                if item.isdigit():
+                    try:
+                        getattr(model, field).add(self.repository_fields[field]['model'][item])
+                    except ObjectNotFound:
+                        continue
+                else:
+                    getattr(model, field).create(**{self.repository_fields[field]['key']: item})
+
+        return model
+
+    def find(self, model_id):
         try:
-            return Allergy[id]
+            return self.get_repository_model()[model_id]
         except ObjectNotFound:
             return None
 
-    @staticmethod
-    @db_session
-    def update(id, name):
-        try:
-            allergy = Allergy[id]
-        except ObjectNotFound:
-            return None
+    def find_many(self, model_ids):
+        found = set()
 
-        allergy.name = name
-        return allergy
-
-    @staticmethod
-    @db_session
-    def get():
-        return select(a for a in Allergy).order_by(Allergy.name)[:]
-
-
-    @staticmethod
-    @db_session
-    def delete(id):
-        try:
-            allergy = Allergy[id]
-        except ObjectNotFound:
-            return None
-
-        allergy.delete()
-        return True
-
-
-class CategoryRepository():
-    @staticmethod
-    @db_session
-    def create(name):
-        return Category(name=name)
-
-
-    @staticmethod
-    @db_session
-    def find(id):
-        try:
-            return Category[id]
-        except ObjectNotFound:
-            return None
-
-    @staticmethod
-    @db_session
-    def update(id, name):
-        try:
-            category = Category[id]
-        except ObjectNotFound:
-            return None
-
-        category.name = name
-        return category
-
-    @staticmethod
-    @db_session
-    def get():
-        return select(a for a in Category).order_by(Category.name)[:]
-
-
-    @staticmethod
-    @db_session
-    def delete(id):
-        try:
-            category = Category[id]
-        except ObjectNotFound:
-            return None
-
-        category.delete()
-        return True
-
-class IngredientRepository():
-    @staticmethod
-    @db_session
-    def create(name):
-        return Ingredient(name=name)
-
-
-    @staticmethod
-    @db_session
-    def find(id):
-        try:
-            return Ingredient[id]
-        except ObjectNotFound:
-            return None
-
-    @staticmethod
-    @db_session
-    def update(id, name, allergies):
-        try:
-            ingredient = Ingredient[id]
-        except ObjectNotFound:
-            return None
-
-        ingredient.name = name
-        newAllergies = []
-        for allergy in allergies:
-            print(allergy, file=sys.stderr)
-
+        for model_id in model_ids:
             try:
-                newAllergies.append(Allergy[allergy])
+                found.add(self.get_repository_model()[model_id])
             except ObjectNotFound:
-                return None
+                continue
 
-        ingredient.allergies.clear()
-        for allergy in newAllergies:
-            ingredient.allergies.add(allergy)
+        return found
 
-        return ingredient
-
-    @staticmethod
-    @db_session
-    def get():
-        return select(a for a in Ingredient).order_by(Ingredient.name)[:]
-
-
-    @staticmethod
-    @db_session
-    def delete(id):
+    def update(self, model_id, **kwargs):
         try:
-            ingredients = Ingredient[id]
+            model = self.get_repository_model()[model_id]
         except ObjectNotFound:
             return None
 
-        ingredients.delete()
+        for field, value in self.get_assignable_fields_from_kwargs(kwargs).items():
+            setattr(model, field, value)
+
+        for field, value in self.get_collection_fields_from_kwargs(kwargs).items():
+            getattr(model, field).clear()
+            for item in value:
+                if item.isdigit():
+                    try:
+                        getattr(model, field).add(self.repository_fields[field]['model'][item])
+                    except ObjectNotFound:
+                        continue
+                else:
+                    getattr(model, field).create(**{self.repository_fields[field]['key']: item})
+
+        commit()
+        return self.find(model_id=model_id)
+
+    def get(self):
+        return select(m for m in self.get_repository_model()).order_by(getattr(self.get_repository_model(), self.default_sort_field))[:]
+
+    def delete(self, model_id):
+        try:
+            model = self.get_repository_model()[model_id]
+        except ObjectNotFound:
+            return None
+
+        model.delete()
         return True
 
 
-class RecipeRepository():
-    @staticmethod
-    @db_session
-    def create(name):
-        return Recipe(name=name)
-
-class UserRepository():
-    @staticmethod
-    @db_session
-    def create(name, email, password):
-        return User(name=name, email=email, password=password)
+class AllergyRepository(Repository):
+    def __init__(self):
+        self.repository_model = Allergy
+        self.default_sort_field = 'name'
+        self.repository_fields = {
+            'name': {'type': 'string'}
+        }
 
 
-    @staticmethod
-    @db_session
-    def find(id):
-        try:
-            return User[id]
-        except ObjectNotFound:
-            return None
+class CategoryRepository(Repository):
+    def __init__(self):
+        self.repository_model = Category
+        self.default_sort_field = 'name'
+        self.repository_fields = {
+            'name': {'type': 'string'}
+        }
 
-    @staticmethod
-    @db_session
-    def update(id, name, email, password):
-        try:
-            user = User[id]
-        except ObjectNotFound:
-            return None
 
-        user.name = name
-        user.email = email
-        user.password = password
-        return user
+class RecipeRepository(Repository):
+    def __init__(self):
+        self.repository_model = Recipe
+        self.default_sort_field = 'title'
+        self.repository_fields = {
+            'title': {'type': 'string'},
+            'method': {'type': 'string'},
+            'ingredients': {'type': 'collection', 'model': Ingredient, 'key': 'name'},
+            'categories': {'type': 'collection', 'model': Category, 'key': 'name'},
+            'user': {'type': 'model', 'model': User, 'key': 'recipes'},
+        }
 
     @staticmethod
-    @db_session
-    def get():
-        return select(a for a in User).order_by(User.name)[:]
-
+    def get_votes_for_recipe(recipe):
+        upvotes = len(recipe.recipe_votes.filter(lambda vote: vote.vote > 0)[:])
+        downvotes = len(recipe.recipe_votes.filter(lambda vote: vote.vote < 0)[:])
+        return [upvotes, downvotes]
 
     @staticmethod
-    @db_session
-    def delete(id):
-        try:
-            users = User[id]
-        except ObjectNotFound:
-            return None
+    def search(title='', categories=None, ingredients=None):
+        query = set(Recipe.select(lambda r: title.lower() in r.title.lower()))
+        query_sets = []
 
-        users.delete()
-        return True
+        if categories:
+            for category in categories:
+                category = Category[category]
+                query_sets.append(set(category.recipes))
 
+        if ingredients:
+            for ingredient in ingredients:
+                ingredient = Ingredient[ingredient]
+                query_sets.append(set(ingredient.recipes))
 
-
-'''
-@db_session
-def add_allergy(name):
-    Allergy(name=name)
-
+        return query.intersection(*query_sets)
 
 
-@db_session
-def add_ingredient(name):
-    Ingredient(name=name)
+class IngredientRepository(Repository):
+    def __init__(self):
+        self.repository_model = Ingredient
+        self.default_sort_field = 'name'
+        self.repository_fields = {
+            'name': {'type': 'string'},
+            'allergies': {'type': 'collection', 'model': Allergy, 'key': 'name'},
+        }
 
 
-@db_session
-def add_peanuts():
-    allergy = Allergy.select(lambda a: a.name == 'nuts').first()
-    ingredient = Ingredient.select(lambda i: i.name == 'peanuts').first()
-    ingredient.allergies.add(allergy)
+class UserRepository(Repository):
+    def __init__(self):
+        self.repository_model = User
+        self.default_sort_field = 'name'
+        self.repository_fields = {
+            'name': {'type': 'string'},
+            'email': {'type': 'string'},
+            'password': {'type': 'password'},
+            'is_admin': {'type': 'boolean'},
+        }
 
-#add_peanuts()
+    @staticmethod
+    def authenticate(email, password):
+        user = UserRepository.get_by_email(email=email)
+        if user is not None and user.password == password:
+            return user
+        return None
 
-@db_session
-def get_ingredients():
-    ingredients = Ingredient.select()
-    for i in ingredients:
-        print(i.name)
-        for a in i.allergies:
-            print(a.name)
-
-get_ingredients()
-'''
+    @staticmethod
+    def get_by_email(email):
+        return User.get(email=email)

@@ -1,23 +1,37 @@
 {% extends 'base.html' %} {% block content %}
 
     <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1>Create allergy</h1>
+        <div class="row">
+            <div class="col-sm-8 offset-sm-2" align="center">
+                <div class="card text-white bg-dark mb-3 mt-5">
+                    <div class="card-header">
+                        <h1 class="index-title align-content-center">Allergies</h1>
+                    </div>
+
+                    <div class="card-body">
+                        <form action="{{ url_for('allergy_store') }}" method="POST">
+                            <div class="form-group">
+                                <label for="allergy">Allergy</label>
+                                <input class="form-control" type="text" name="name" placeholder="Allergy"
+                                       value="{{ form.name.data }}"/>
+                                {% if form.name.errors %}
+                                    <ul class=errors>
+                                        {% for error in form.name.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-light">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
     </div>
 
-    <div class="container">
-    <div class="row justify-content-center mt-5 mb-5">
-        <div class="col-auto text-center">
-            <form action="{{ url_for('allergy_store') }}" method="POST">
-                <input type="text" name="name" placeholder="Allergy" />
-                <br>
-                <br>
-                <button type="submit" class="btn btn-secondary my-2 my-sm-0">Send</button>
-            </form>
-        </div>
-    </div>
 
 {% endblock %}

@@ -1,0 +1,65 @@
+
+body {
+  background-color: $primary-color;
+  color: $text-info;
+
+  a {
+    color: $text-info;
+  }
+
+  a:hover {
+    color: $text-success;
+
+  }
+
+  .main-title {
+    color: $text-light;
+    text-shadow: 4px 5px 6px $text-success;
+  }
+
+  .index-title {
+    color: $text-light;
+    text-shadow: 3px 3px 5px $text-success;
+  }
+
+  .main-link {
+    a {
+      color: $secondary-color;
+      text-shadow: 2px 2px 4px $text-info;
+    }
+
+    a:hover {
+      color: $text-success;
+    }
+  }
+
+  .btn-create {
+    border-color: $text-info;
+    text-shadow: 3px 3px 3px $text-danger;
+    background-color: $text-light;
+    color: $text-info;
+  }
+
+  .pagination {
+    color: $secondary-color;
+
+    .page-item .page-link {
+      //background: $secondary-color;
+      border-color: $color-dark !important;
+    }
+
+    a {
+      color: $primary-color;
+      border-color: $secondary-color;
+      text-shadow: 2px 2px 4px $text-info;
+
+
+    }
+
+  }
+
+  //.pagination-page-link a b {
+  //  color: $text-info;
+  //  background: $secondary-color;
+  //}
+}
