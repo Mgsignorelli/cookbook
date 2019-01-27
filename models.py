@@ -38,6 +38,7 @@ class Ingredient(db.Entity):
 
 
 class User(db.Entity, UserMixin):
+    _table_ = "users"
     id = PrimaryKey(int, auto=True)
     recipes = Set(Recipe)
     name = Required(str)
