@@ -354,14 +354,19 @@ def recipe_search():
 
     recipes = RecipeRepository.search(title=title, categories=categories, ingredients=ingredients)
 
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    pagination = Pagination(page=page, total=len(recipes), record_name='recipes', css_framework='bootstrap4')
+    page_index = (page - 1) * 9
+
     return render_template(
         'recipe_search.html',
-        recipes=recipes,
+        recipes=list(recipes)[page_index:page_index + 9],
         title=title,
         selected_categories=CategoryRepository.find_many(categories),
         selected_ingredients=IngredientRepository.find_many(ingredients),
         categories=CategoryRepository.get(),
         ingredients=IngredientRepository.get(),
+        pagination=pagination
     )
 
 
