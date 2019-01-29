@@ -34,56 +34,59 @@
 <header>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ url_for('index') }}"><img
-                src="https://i.pinimg.com/originals/1c/33/35/1c3335436c5bbcd5d1843a7d8a43d47e.png"
-                alt="Click for random recipe"
-                class="img-fluid rounded"></a>
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+            <img
+                    src="https://i.pinimg.com/originals/1c/33/35/1c3335436c5bbcd5d1843a7d8a43d47e.png"
+                    alt="Click for random recipe"
+                    class="img-fluid rounded" width="70%">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
                 aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <ul class="navbar-nav mr-auto mt-lg-0">
                 {% if can('allergy_index') %}
-                    <h5 class="nav-item">
+                    <li>
                         <a class="nav-link" href="{{ url_for('allergy_index') }}">Allergies</a>
-                    </h5>
+                    </li>
                 {% endif %}
                 {% if can('ingredient_index') %}
-                    <h5 class="nav-item">
+                    <li>
                         <a class="nav-link hvr-underline-reveal"
                            href="{{ url_for('ingredient_index') }}">Ingredients</a>
-                    </h5>
+                    </li>
                 {% endif %}
                 {% if can('recipe_index') %}
-                    <h5 class="nav-item">
+                    <li>
                         <a class="nav-link hvr-underline-reveal" href="{{ url_for('recipe_index') }}">Recipes</a>
-                    </h5>
+                    </li>
                 {% endif %}
 
                 {% if can('category_index') %}
-                    <h5 class="nav-item">
+                    <li>
                         <a class="nav-link" href="{{ url_for('category_index') }}">Categories</a>
-                    </h5>
+                    </li>
                 {% endif %}
             </ul>
             <ul class="navbar-nav text-right">
+                <li class="divider"></li>
                 {% if current_user.is_authenticated %}
-                    <h5 class="nav-link user-hello">Hello {{ current_user.name }}!
+                    <h5 class="nav-link text-warning">Hello {{ current_user.name }}!
                     </h5>
 
-                    <h5>
+                    <li>
                         <a class="nav-link" href="{{ url_for('logout') }}">Logout <i
                                 class="fas fa-door-open ml-2"></i></a>
-                    </h5>
-                {% else %}
-                    <h5>
+
+                        {% else %}
+
                         <a class="nav-link" href="{{ url_for('register') }}">Register<i
                                 class="fas fa-door-open ml-2"></i></a>
                         <a class="nav-link" href="{{ url_for('login') }}">Login <i
                                 class="fas fa-door-closed ml-2"></i></a>
-                    </h5>
+                    </li>
                 {% endif %}
             </ul>
         </div>
@@ -95,7 +98,7 @@
 
     {% if messages %}
 
-        <div class="alert alert-dark">
+        <div class="alert alertsecondary text-dark">
             <ul class="list-group-flush">
                 {% for message in messages %}
                     <li class="list-group-item">{{ message }}</li>
