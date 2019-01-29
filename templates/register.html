@@ -1,15 +1,20 @@
 {% extends 'base.html' %} {% block content %}
     <div class="container mt-5">
         <div class="row">
+            <div class="col-sm-8 offset-sm-2">
+                <h1 class="index-title align-content-center mt-5 mb-5">Register</h1>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card">
-                    <div class="card-header">Register</div>
                     <div class="card-body">
                         <form action="{{ url_for('register') }}" method="post">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input class="form-control" type="text" name="name" id="name" value="{{ form.name.data }}"/>
-                                 {% if form.name.errors %}
+                                <input class="form-control" type="text" name="name" id="name"
+                                       value="{{ form.name.data }}"/>
+                                {% if form.name.errors %}
                                     <ul class=errors>
                                         {% for error in form.name.errors %}
                                             <li>{{ error }}</li>
@@ -20,7 +25,8 @@
 
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input class="form-control" type="email" name="email" id="email" value="{{ form.email.data }}"/>
+                                <input class="form-control" type="email" name="email" id="email"
+                                       value="{{ form.email.data }}"/>
                                 {% if form.email.errors %}
                                     <ul class=errors>
                                         {% for error in form.email.errors %}
@@ -33,7 +39,7 @@
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input class="form-control" type="password" name="password" id="password"/>
-                                 {% if form.password.errors %}
+                                {% if form.password.errors %}
                                     <ul class=errors>
                                         {% for error in form.password.errors %}
                                             <li>{{ error }}</li>
@@ -45,8 +51,8 @@
                             <div class="form-group">
                                 <label for="password_confirm">Password Confirm</label>
                                 <input class="form-control" type="password" name="password_confirm"
-                                       id="password_confirm" />
-                                 {% if form.password_confirm.errors %}
+                                       id="password_confirm"/>
+                                {% if form.password_confirm.errors %}
                                     <ul class=errors>
                                         {% for error in form.password_confirm.errors %}
                                             <li>{{ error }}</li>
