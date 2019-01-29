@@ -59,6 +59,8 @@ class Repository:
         return model
 
     def find(self, model_id):
+        if model_id is None:
+            return None
         try:
             return self.get_repository_model()[model_id]
         except ObjectNotFound:
@@ -99,7 +101,8 @@ class Repository:
         return self.find(model_id=model_id)
 
     def get(self):
-        return select(m for m in self.get_repository_model()).order_by(getattr(self.get_repository_model(), self.default_sort_field))[:]
+        return select(m for m in self.get_repository_model()).order_by(
+            getattr(self.get_repository_model(), self.default_sort_field))[:]
 
     def delete(self, model_id):
         try:
@@ -188,11 +191,8 @@ class UserRepository(Repository):
 
     @staticmethod
     def authenticate(email, password):
-        user = UserRepository.get_by_email(email=email)
+        user = User.get(email=email)
         if user is not None and user.password == password:
             return user
         return None
 
-    @staticmethod
-    def get_by_email(email):
-        return User.get(email=email)
