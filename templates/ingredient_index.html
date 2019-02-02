@@ -52,6 +52,16 @@
                     {% endfor %}
                     </tbody>
                 </table>
+
+                <nav aria-label="Page navigation" class="text-secondary">
+                    <ul class="pagination pagination-sm">
+                        {{ pagination.links }}
+                    </ul>
+                    <ul class="pagination pagination-sm ">
+
+                        {{ pagination.info }}
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

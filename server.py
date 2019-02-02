@@ -442,7 +442,12 @@ def ingredient_delete(ingredient_id):
 
 @app.route('/ingredient')
 def ingredient_index():
-    return render_template('ingredient_index.html', ingredients=IngredientRepository().get())
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    ingredients = IngredientRepository().get()
+    pagination = Pagination(page=page, total=len(ingredients), record_name='ingredients', css_framework='bootstrap4')
+    page_index = (page - 1) * 10
+    return render_template('ingredient_index.html', ingredients=ingredients[page_index:page_index + 10],
+                       pagination=pagination)
 
 
 @app.route('/user/<user_id>')
