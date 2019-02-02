@@ -8,11 +8,19 @@ from flask import Flask, request, redirect, url_for, render_template, send_from_
 from dotenv import load_dotenv
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from pony.flask import Pony
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 from request_gates import controller_exists_gate, permission_gate
 from flask_paginate import Pagination, get_page_parameter
 
 load_dotenv()
+
+sentry_sdk.init(
+    dsn=os.environ.get('SENTRY_DSN'),
+    integrations=[FlaskIntegration()],
+    environment=os.environ.get('APP_ENV')
+)
 
 app = Flask('Cookbook')
 app.secret_key = os.environ.get('APP_SECRET') if os.environ.get('APP_SECRET') else 'notsecurekey'
@@ -24,7 +32,7 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return UserRepository().find(user_id)
+    return UserRepository().find(model_id=user_id)
 
 
 @app.before_request
@@ -63,7 +71,7 @@ def register():
     form = RegisterForm(request.form)
 
     if request.method == 'POST' and form.validate():
-        user = UserRepository.get_by_email(request.values.get('email'))
+        user = User.get(email=request.values.get('email'))
         if user is not None:
             flash('Already registered, please log in')
             return redirect(url_for('login'))
@@ -120,7 +128,7 @@ def allergy_store():
     form = AllergyCreateForm(request.form)
     if form.validate():
         name = form.name.data
-        AllergyRepository().create(name)
+        AllergyRepository().create(name=name)
         return redirect(url_for('allergy_index'))
     return render_template('allergy_create.html', form=form)
 
@@ -151,7 +159,7 @@ def allergy_update(allergy_id):
         return abort(404)
 
     if form.validate():
-        AllergyRepository().update(allergy.id, form.name.data)
+        AllergyRepository().update(allergy.id, name=form.name.data)
         return redirect(url_for('allergy_index'))
     return render_template('allergy_edit.html', allergy=allergy, form=form)
 
@@ -179,7 +187,7 @@ def category_create():
 def category_store():
     form = CategoryCreateForm(request.form)
     if form.validate():
-        CategoryRepository().create(form.name.data)
+        CategoryRepository().create(name=form.name.data)
         return redirect(url_for('category_index'))
     return render_template('category_create.html', form=form)
 
@@ -208,7 +216,7 @@ def category_update(category_id):
     if category is None:
         return abort(404)
     if form.validate():
-        CategoryRepository().update(category_id, form.name.data)
+        CategoryRepository().update(model_id=category_id, name=form.name.data)
         return redirect(url_for('category_index'))
     return render_template('category_edit.html', category=category, form=form)
 
@@ -303,7 +311,7 @@ def recipe_update(recipe_id):
     if form.validate():
 
         recipe = RecipeRepository().update(
-            id=recipe_id,
+            model_id=recipe_id,
             title=request.form['title'],
             ingredients=request.form.getlist('ingredients'),
             categories=request.form.getlist('categories'),
@@ -405,7 +413,8 @@ def ingredient_edit(ingredient_id):
 
     if ingredient is None:
         return abort(404)
-    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository().get(), form=form)
+    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository().get(),
+                           form=form)
 
 
 @app.route('/ingredient/<ingredient_id>', methods=['POST'])
@@ -416,10 +425,11 @@ def ingredient_update(ingredient_id):
         return abort(404)
 
     if form.validate():
-        IngredientRepository().update(ingredient.id, form.name.data, form.allergies.data)
+        IngredientRepository().update(model_id=ingredient.id, name=form.name.data, allergies=form.allergies.data)
         return redirect(url_for('ingredient_index'))
 
-    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository().get(), form=form)
+    return render_template('ingredient_edit.html', ingredient=ingredient, allergies=AllergyRepository().get(),
+                           form=form)
 
 
 @app.route('/ingredient/<ingredient_id>/delete', methods=['POST'])
@@ -459,7 +469,8 @@ def user_update(user_id):
     if user is None:
         return abort(404)
     if form.validate():
-        UserRepository().update(id=user.id, name=form.name.data, email=form.email.data, password=form.password.data)
+        UserRepository().update(model_id=user.id, name=form.name.data, email=form.email.data,
+                                password=form.password.data)
         return redirect(url_for('user_index'))
     return render_template('user_edit.html', user=user, form=form)
 
