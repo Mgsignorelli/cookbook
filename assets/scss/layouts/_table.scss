@@ -1,22 +1,24 @@
 
-  .table {
-    background-color: $secondary-color !important;
-    border-radius: 5px;
-    color: $text-info;
-    line-height: 15px;
-    width: 75%;
+.table {
+  background-color: $secondary-color !important;
+  border-radius: 5px;
+  color: $text-info;
+  line-height: 25px;
+  width: 75%;
 
-    .btn-group {
-      border-color: $primary-color;
-      background-color: $secondary-color;
-      align-content: center;
 
-      a {
-        color: $secondary-color;
-      }
+  .btn-group {
+    border-color: $primary-color;
+    background-color: $secondary-color;
+    align-content: center;
 
-      a:hover {
-        color: $text-success;
-      }
+    a {
+      color: $secondary-color;
+    }
+
+    a:hover {
+      color: $text-success;
     }
   }
+
+}
