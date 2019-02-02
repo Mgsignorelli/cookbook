@@ -8,11 +8,19 @@ from flask import Flask, request, redirect, url_for, render_template, send_from_
 from dotenv import load_dotenv
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from pony.flask import Pony
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 from request_gates import controller_exists_gate, permission_gate
 from flask_paginate import Pagination, get_page_parameter
 
 load_dotenv()
+
+sentry_sdk.init(
+    dsn=os.environ.get('SENTRY_DSN'),
+    integrations=[FlaskIntegration()],
+    environment=os.environ.get('APP_ENV')
+)
 
 app = Flask('Cookbook')
 app.secret_key = os.environ.get('APP_SECRET') if os.environ.get('APP_SECRET') else 'notsecurekey'
