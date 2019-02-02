@@ -55,7 +55,7 @@ class Repository:
                         continue
                 else:
                     getattr(model, field).create(**{self.repository_fields[field]['key']: item})
-
+        commit()
         return model
 
     def find(self, model_id):
