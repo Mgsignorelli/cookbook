@@ -260,16 +260,17 @@ def recipe_store():
                            categories=CategoryRepository().get(), form=form)
 
 
-'''@TODO modify request to add a vote and get the votes from database'''
-
-
 @app.route('/recipe/<recipe_id>')
 def recipe_show(recipe_id):
     recipe = RecipeRepository().find(recipe_id)
     if recipe is None:
         return abort(404)
     votes = RecipeRepository.get_votes_for_recipe(recipe)
-    return render_template('recipe_show.html', recipe=recipe, votes=votes, allergies=set(recipe.ingredients.allergies))
+    can_vote = True
+    if current_user.id in recipe.recipe_votes.user.id:
+        can_vote = False
+    return render_template('recipe_show.html', recipe=recipe, votes=votes, allergies=set(recipe.ingredients.allergies),
+                           can_vote=can_vote)
 
 
 @app.route('/recipe/<recipe_id>/<vote>', methods=['POST'])
@@ -277,12 +278,13 @@ def recipe_vote(recipe_id, vote):
     recipe = RecipeRepository().find(recipe_id)
     if recipe is None:
         return abort(404)
-    if vote == 'up':
-        vote = 1
-    elif vote == 'down':
-        vote = -1
-    vote = recipe.recipe_votes.create(vote=vote)
-    current_user.recipe_votes.add(vote)
+    if current_user.id not in recipe.recipe_votes.user.id:
+        if vote == 'up':
+            vote = 1
+        elif vote == 'down':
+            vote = -1
+        vote = recipe.recipe_votes.create(vote=vote)
+        current_user.recipe_votes.add(vote)
     return redirect(url_for('recipe_show', recipe_id=recipe.id))
 
 
@@ -447,7 +449,7 @@ def ingredient_index():
     pagination = Pagination(page=page, total=len(ingredients), record_name='ingredients', css_framework='bootstrap4')
     page_index = (page - 1) * 10
     return render_template('ingredient_index.html', ingredients=ingredients[page_index:page_index + 10],
-                       pagination=pagination)
+                           pagination=pagination)
 
 
 @app.route('/user/<user_id>')
