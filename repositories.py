@@ -1,4 +1,4 @@
-from pony.orm import ObjectNotFound, select, flush, commit
+from pony.orm import ObjectNotFound, select, flush, commit, desc
 
 from models import *
 
@@ -166,6 +166,10 @@ class RecipeRepository(Repository):
                 query_sets.append(set(ingredient.recipes))
 
         return query.intersection(*query_sets)
+
+    @staticmethod
+    def get_recipe_by_vote_count(limit=5):
+        return select(m for m in Recipe).order_by(lambda r: desc(sum(r.recipe_votes.vote))).limit(limit)
 
 
 class IngredientRepository(Repository):
