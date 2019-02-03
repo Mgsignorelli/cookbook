@@ -84,20 +84,25 @@
                                 </p>
                             </div>
                             <div class="card-footer text-right text-muted">
-                            <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='up') }}"
-                                  method="post">
-                                <p> Upvotes : {{ votes[0] }}
-                                    <button class="btn-success ml-3" type="submit"><i
-                                            class="far fa-thumbs-up"></i></button>
-                                </p>
-                            </form>
-                            <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='down') }}"
-                                  method="post">
-                                <p>Downvotes : {{ votes[1] }}
-                                    <button class="btn-danger ml-3" type="submit"><i
-                                            class=" far fa-thumbs-down"></i></button>
-                                </p>
-                            </form>
+                            <p> Upvotes : {{ votes[0] }}
+                                {% if can_vote %}
+                                    <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='up') }}"
+                                          method="post">
+                                        <button class="btn-success ml-3" type="submit"><i
+                                                class="far fa-thumbs-up"></i></button>
+                                    </form>
+                                {% endif %}
+                            </p>
+                            <p>Downvotes : {{ votes[1] }}
+                                {% if can_vote %}
+                                    <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='down') }}"
+                                          method="post">
+                                        <button class="btn-danger ml-3" type="submit"><i
+                                                class=" far fa-thumbs-down"></i></button>
+                                    </form>
+                                {% endif %}
+
+                            </p>
                         {% endif %}
 
                         </div>
