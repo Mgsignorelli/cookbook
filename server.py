@@ -48,10 +48,13 @@ def before_request():
 @app.route('/')
 def index():
     most_voted_for_recipes = RecipeRepository.get_recipe_by_vote_count(3)
+    most_voted_for_categories = CategoryRepository.get_most_popular_categories_with_recipe(3)
+
     return render_template('home.html',
                            categories=CategoryRepository().get(),
                            ingredients=IngredientRepository().get(),
-                           most_voted_for_recipes=most_voted_for_recipes
+                           most_voted_for_recipes=most_voted_for_recipes,
+                           most_voted_for_categories=most_voted_for_categories
                            )
 
 

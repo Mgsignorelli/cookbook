@@ -131,6 +131,20 @@ class CategoryRepository(Repository):
             'name': {'type': 'string'}
         }
 
+    @staticmethod
+    def get_most_popular_categories_with_recipe(limit=5):
+        categories = select(m for m in Category).order_by(lambda c: desc(sum(c.recipes.recipe_votes.vote))).limit(limit)
+
+        most_voted_for_category_recipes = []
+
+        for c in categories:
+            most_voted_for_category_recipes.append({
+                "recipe": RecipeRepository.get_most_popular_recipe_in_category(c),
+                "category": c
+            })
+
+        return most_voted_for_category_recipes
+
 
 class RecipeRepository(Repository):
     def __init__(self):
@@ -168,8 +182,12 @@ class RecipeRepository(Repository):
         return query.intersection(*query_sets)
 
     @staticmethod
-    def get_recipe_by_vote_count(limit=5):
+    def get_recipe_by_vote_count(limit=3):
         return select(m for m in Recipe).order_by(lambda r: desc(sum(r.recipe_votes.vote))).limit(limit)
+
+    @staticmethod
+    def get_most_popular_recipe_in_category(category):
+        return category.recipes.order_by(lambda c: desc(sum(c.recipe_votes.vote))).first()
 
 
 class IngredientRepository(Repository):
@@ -199,4 +217,3 @@ class UserRepository(Repository):
         if user is not None and user.password == password:
             return user
         return None
-
