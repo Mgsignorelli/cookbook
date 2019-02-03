@@ -182,10 +182,12 @@ class RecipeRepository(Repository):
         return query.intersection(*query_sets)
 
     @staticmethod
+    # gets all the recipes and orders them by vote
     def get_recipe_by_vote_count(limit=3):
         return select(m for m in Recipe).order_by(lambda r: desc(sum(r.recipe_votes.vote))).limit(limit)
 
     @staticmethod
+    # retrieves the most voted recipe per category
     def get_most_popular_recipe_in_category(category):
         return category.recipes.order_by(lambda c: desc(sum(c.recipe_votes.vote))).first()
 
