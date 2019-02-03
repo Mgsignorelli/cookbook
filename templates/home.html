@@ -35,6 +35,43 @@
 
         </div>
 
+        <div class="row text-center mx-auto">
+            <div class="col-md-8 offset-md-2">
+
+                <div class="card-deck">
+                    <div class="card card-popular text-center mb-3">
+                        <div class="card-header my-1">
+                            <h4 class="text-warning"><strong>Popular recipes</strong></h4>
+                        </div>
+                        <div class="my-auto mx-auto ">
+                            {% for recipe in most_voted_for_recipes %}
+                                <a href="{{ url_for('recipe_show', recipe_id=recipe.id) }}">
+                                    <h6 class="mx-auto my-3">{{ recipe.title }} :
+                                        <span class="badge badge-pill badge-dark">{{ recipe.recipe_votes|sum(attribute='vote') }}</span>
+                                    </h6>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="card card-popular mb-3">
+                        <div class="card-header">
+                            <h4 class="text-warning"><strong>Popular categories</strong></h4>
+                        </div>
+                        <div class="card-subtitle my-1 mx-auto">
+                            {% for c in most_voted_for_categories %}
+                                <h4 class="text-left">{{ c.category.name }}</h4>
+                                <a href="{{ url_for('recipe_show', recipe_id=c.recipe.id) }}">
+                                    <h6 class="text-right my-1"> {{ c.recipe.title }} :
+                                        <span class="badge badge-pill badge-dark my-1">{{ c.recipe.recipe_votes|sum(attribute='vote') }}  </span>
+                                    </h6>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-8 offset-md-2">
