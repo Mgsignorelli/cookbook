@@ -17,6 +17,7 @@ logged_in_routes = [
     "logout",
     "recipe_show",
     "recipe_search",
+    "recipe_vote",
 ]
 
 
