@@ -1,10 +1,15 @@
 
-  .card {
-    background-color: $secondary-color;
-    border-radius: 20px;
-    color: $color-1;
+.card {
+  background-color: $secondary-color;
+  border-radius: 20px;
+  color: $color-1;
 
-    a {
-      color: $text-info;
-    }
+  .card-body {
+    padding: 0.4rem !important;
+
   }
+
+  a {
+    color: $text-info;
+  }
+}
