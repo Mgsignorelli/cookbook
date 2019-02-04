@@ -271,9 +271,10 @@ def recipe_show(recipe_id):
     if recipe is None:
         return abort(404)
     votes = RecipeRepository.get_votes_for_recipe(recipe)
-    can_vote = True
-    if current_user.id in recipe.recipe_votes.user.id:
-        can_vote = False
+    can_vote = False
+    if not current_user.is_anonymous and current_user.id not in recipe.recipe_votes.user.id:
+        can_vote = True
+
     return render_template('recipe_show.html', recipe=recipe, votes=votes, allergies=set(recipe.ingredients.allergies),
                            can_vote=can_vote)
 

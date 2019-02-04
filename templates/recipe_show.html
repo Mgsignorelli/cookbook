@@ -15,11 +15,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-8 offset-2">
+            <div class="col-10 offset-1">
 
                 <div class="card bg-dark text-white ">
                     <div class="card-title text-center mt-3">
-                        <h2 class="strong">{{ recipe.title }}</h2>
+                        <h2 class="text-warning">{{ recipe.title }}</h2>
                     </div>
                     <div class="card-body recipe text-center">
                         <p class="card-text">{{ recipe.method }}</p>
@@ -65,33 +65,31 @@
                                 </form>
                                 <a class="btn btn-light" href="{{ url_for('recipe_edit', recipe_id=recipe.id) }}">Edit
                                     Recipe</a>
-
-
                                 {% else %}
 
                                 <p class="card-text">
-                                    <small class="text-muted">Ingredients</small>
+                                    <span>Ingredients</span>
                                     {% for ingredient in recipe.ingredients %}
                                         <span class="badge badge-light"
                                         >{{ ingredient.name }}</span>
                                     {% endfor %}
                                 </p>
                                 <p class="card-text">
-                                    <small class="text-muted">Categories</small>
+                                    <span>Categories</span>
                                     {% for category in recipe.categories %}
                                         <span class="badge badge-light"
                                         >{{ category.name }}</span>
                                     {% endfor %}
                                 </p>
                                 <p class="card-text">
-                                    <small class="text-muted">Allergens</small>
+                                    <span>Allergens</span>
                                     {% for allergy in allergies %}
                                         <span class="badge badge-light"
                                         >{{ allergy.name }}</span>
                                     {% endfor %}
                                 </p>
                             </div>
-                            <div class="card-footer text-right text-muted">
+                            <div class="card-columns card-footer text-right text-muted">
                             <p> Upvotes : {{ votes[0] }}
                                 {% if can_vote %}
                                     <form action="{{ url_for('recipe_vote', recipe_id=recipe.id, vote='up') }}"
