@@ -1,9 +1,17 @@
 {% extends 'base.html' %} {% block content %}
 
     <div class="container">
-        <div class="row">
+        <div class="row mx-auto my-5">
             <div class="col-12">
-                <h1 class="index-title align-content-center mt-5">Recipe</h1>
+                {% if can('recipe_index') %}
+                    <a href={{ url_for('recipe_index') }}>
+                        <h1 class="index-title align-content-center mt-5">Recipe</h1>
+                    </a>
+                {% endif %}
+                {% if not can('recipe_index') %}
+                    <h1 class="index-title align-content-center mt-5">Recipe</h1>
+                {% endif %}
+
             </div>
         </div>
         <div class="row">
@@ -107,6 +115,13 @@
 
                         </div>
                 </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-7 offset-5">
+                <a href="{{ url_for('recipe_search') }}">
+                    <button type="button" class="btn btn-lg btn-secondary">Back to Search</button>
+                </a>
             </div>
         </div>
 

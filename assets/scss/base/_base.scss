@@ -62,13 +62,14 @@ body {
         text-align: center;
       }
     }
+  }
 
-    .index-title {
-      padding-top: 3rem;
-      padding-bottom: 3rem;
-      font-size: 4rem;
-      text-align: center;
-    }
+  .index-title {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    font-size: 4rem;
+    text-align: center;
+
 
     @media (max-width: 767px) {
       font-size: 3rem;
@@ -81,4 +82,5 @@ body {
     line-height: 2.5rem;
     text-align: justify;
   }
+
 }
