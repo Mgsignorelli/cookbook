@@ -62,6 +62,7 @@ class CategoryTest(unittest.TestCase):
         repositories.CategoryRepository().delete(model_id=category.id)
         self.assertIsNone(repositories.CategoryRepository().find(model_id=found_category_id))
 
+
 class IngredientTest(unittest.TestCase):
     @db_session
     def test_inserting_an_ingredient_in_the_database(self):
@@ -88,6 +89,7 @@ class IngredientTest(unittest.TestCase):
         found_ingredient_id = ingredient.id
         repositories.IngredientRepository().delete(model_id=ingredient.id)
         self.assertIsNone(repositories.IngredientRepository().find(model_id=found_ingredient_id))
+
 
 class RecipeTest(unittest.TestCase):
     @db_session
@@ -142,6 +144,7 @@ class RecipeTest(unittest.TestCase):
         repositories.RecipeRepository().delete(model_id=recipe.id)
         self.assertIsNone(repositories.RecipeRepository().find(model_id=found_recipe_id))
 
+
 class UserTest(unittest.TestCase):
     @db_session
     def test_inserting_a_user_in_the_database(self):
@@ -172,7 +175,6 @@ class UserTest(unittest.TestCase):
         repositories.UserRepository().update(model_id=user.id, password=fake.password())
         user = repositories.UserRepository().find(user.id)
         self.assertNotEqual(user.password, found_user_password)
-
 
     @db_session
     def test_deleting_a_user_in_the_database(self):

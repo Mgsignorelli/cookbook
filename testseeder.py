@@ -9,7 +9,6 @@ class TestSeeder:
         if os.path.isfile('../database.sqlite'):
             os.rename('../database.sqlite', '../database.sqlite.backup')
 
-
     @staticmethod
     def restore():
         if os.path.isfile('../database.sqlite.backup'):
