@@ -36,7 +36,10 @@ The user can click on the recipe title and read the recipe.
 - User creation and login, which allows users to vote
 - Recipe Search
 - Voting system
+- Non admin user can Read
 - Admin can Create, Edit and Delete
+- Admin can associate an Allergy to an Ingredient
+
 
 
 ## Technologies Used
