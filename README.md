@@ -156,9 +156,6 @@ Recipes sourced from:
 - https://itdoesnttastelikechicken.com
 - https://www.delish.com
 
-I received inspiration for this project from:
-https://docs.ponyorm.org/integration_with_flask.html
-
 
 ### Media
 - The logo image was made by me.
