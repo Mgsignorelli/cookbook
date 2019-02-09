@@ -37,7 +37,7 @@ The user can click on the recipe title and read the recipe.
 - Recipe Search
 - Voting system
 - Non admin user can Read
-- Admin can Create, Edit and Delete
+- Admin can Create, Edit and Delete allergies, ingredients,recipes and categories
 - Admin can associate an Allergy to an Ingredient
 
 
